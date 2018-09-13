@@ -32,7 +32,10 @@ namespace Oblig1theAteam
 
             // Lagt til slik at UserService opprettes per request.
             // må ha AddScoped for at HomeController og andre klasser skal få tak i disse:
+
+            // services.AddDbContext<DBModels.DbService>(options => options.UseSqlServer(Configuration.GetConnectionString("DbService")));
             services.AddScoped<DBModels.DbService>();
+
             services.AddScoped<UserService>();
             services.AddScoped<OrderService>();
 

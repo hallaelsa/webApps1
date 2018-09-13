@@ -4,6 +4,7 @@ namespace Oblig1theAteam.DBModels
 {
     public class DbService
     {
+        // HUSK! Modeller er kun data, de gjør ingenting. Ikke bland modellklasser og logikklasser.
         // psudocode av ef/dbcontext
         public DbSet<User> Users { get; set; }
         public DbSet<Order> Orders { get; set; }

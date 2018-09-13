@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+// Logikklasser gjør ting. De skal ikke holde på data, kun bruke dem.
 namespace Oblig1theAteam.Business.Orders
 {
     public class OrderService
