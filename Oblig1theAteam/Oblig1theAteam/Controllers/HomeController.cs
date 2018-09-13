@@ -1,37 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Oblig1theAteam.Business.Orders;
+using Oblig1theAteam.Business.Users;
+using Oblig1theAteam.DependencyInjectionDemo;
 using Oblig1theAteam.Models;
+using Oblig1theAteam.ViewModels.Home;
 
 namespace Oblig1theAteam.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly UserService userService;
+        private readonly OrderService orderService;
+        private readonly IDemoService demoService;
+
+        public HomeController(
+            UserService userService,
+            OrderService orderService,
+            IDemoService demoService)
+        {
+            // Vi henter inn userService for å jobbe med brukere. Vi skal aldri bruke dbModels direkte. 
+            // det er bare service som vet om databasen
+            // viewModel skal bruke User fra service, og ikke fra dbModel!
+            this.userService = userService;
+            this.orderService = orderService;
+            this.demoService = demoService;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            // Her bruker vi businesslogikken (altså servicemodellene) til å fikse ViewModel
+            var model = new IndexViewModel();
+            model.User = userService.Get(1);
+            model.Orders = orderService.ListByUser(model.User.Id);
+
+            return View(model);
         }
-
-        public IActionResult About()
+        
+        public IActionResult Demo()
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            return new JsonResult(demoService.Add());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

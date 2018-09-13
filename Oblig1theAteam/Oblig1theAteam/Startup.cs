@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Oblig1theAteam.Business.Orders;
+using Oblig1theAteam.Business.Users;
+using Oblig1theAteam.DependencyInjectionDemo;
+
+// NOTE! En av tingene med core er at man må konfigurere hva man skal bruke i startup.cs
 
 namespace Oblig1theAteam
 {
@@ -31,8 +30,18 @@ namespace Oblig1theAteam
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // Lagt til slik at UserService opprettes per request.
+            // må ha AddScoped for at HomeController og andre klasser skal få tak i disse:
+            services.AddScoped<DBModels.DbService>();
+            services.AddScoped<UserService>();
+            services.AddScoped<OrderService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //services.AddSingleton legger til en instanse som gjenbrukes for alle requests
+            // EKSEMPEL på singleton. Sjekk ut ved å kjøre Home/Demo flere ganger(refresh).
+            // IDemoService er brukt HomeController, men HomeController kjenner ikke til DemoService
+            services.AddSingleton<IDemoService, DemoService>();
+
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
