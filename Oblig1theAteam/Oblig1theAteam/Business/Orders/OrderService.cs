@@ -1,4 +1,5 @@
-﻿using Oblig1theAteam.Extensions;
+﻿using Oblig1theAteam.DBModels;
+using Oblig1theAteam.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +24,24 @@ namespace Oblig1theAteam.Business.Orders
         //    return dbOrder.ToOrder();
         //}
 
-        public List<Models.Order> ListByUser(string email)
+        public List<Models.Order> GetOrders(string email)
         {
-            return dbService.Orders
+            var orders = dbService.Orders
                 .Where(o => o.User.Email == email)
                 .Select(dbOrder => dbOrder.ToOrder())
+                .ToList();
+
+            foreach(var order in orders)
+            {
+                order.Movies = GetMovies(order.Id);
+            }
+            return orders;
+        }
+
+        public List<Movie> GetMovies(int id)
+        {
+            return dbService.Movie
+                .Where(movie => movie.Id == id)
                 .ToList();
         }
 
