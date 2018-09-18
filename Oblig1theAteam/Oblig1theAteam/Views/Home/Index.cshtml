@@ -10,11 +10,11 @@
     @foreach (var movie in Model.Movies)
     {
         <li>@movie.Title</li>
-
-        @foreach (var genre in movie.Genre)
-        {
-            <li>@genre.GenreName</li>
-        }
-
+            <ul>
+                @foreach (var genre in movie.Genre)
+                {
+                    <li>@genre.GenreName</li>
+                }
+            </ul>
     }
 </ul>
