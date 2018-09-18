@@ -23,13 +23,13 @@ namespace Oblig1theAteam.Business.Orders
         //    return dbOrder.ToOrder();
         //}
 
-        //public List<Models.Order> ListByUser(int userId)
-        //{
-        //    return dbService.Orders
-        //        .Where(o => o.User.Id == userId)
-        //        .Select(dbOrder => dbOrder.ToOrder())
-        //        .ToList();
-        //}
+        public List<Models.Order> ListByUser(string email)
+        {
+            return dbService.Orders
+                .Where(o => o.User.Email == email)
+                .Select(dbOrder => dbOrder.ToOrder())
+                .ToList();
+        }
 
         //public List<Models.Order> ListByDate(DateTime date)
         //{
