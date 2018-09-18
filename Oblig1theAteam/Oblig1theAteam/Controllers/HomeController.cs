@@ -12,35 +12,32 @@ namespace Oblig1theAteam.Controllers
     {
         private readonly UserService userService;
         private readonly OrderService orderService;
-        private readonly IDemoService demoService;
 
         public HomeController(
             UserService userService,
-            OrderService orderService,
-            IDemoService demoService)
+            OrderService orderService)
         {
             // Vi henter inn userService for å jobbe med brukere. Vi skal aldri bruke dbModels direkte. 
             // det er bare service som vet om databasen
             // viewModel skal bruke User fra service, og ikke fra dbModel!
             this.userService = userService;
             this.orderService = orderService;
-            this.demoService = demoService;
         }
 
         public IActionResult Index()
         {
             // Her bruker vi businesslogikken (altså servicemodellene) til å fikse ViewModel
             var model = new IndexViewModel();
-            model.User = userService.Get(1);
-            model.Orders = orderService.ListByUser(model.User.Id);
+            //model.User = userService.Get(1);
+            //model.Orders = orderService.ListByUser(model.User.Id);
 
             return View(model);
         }
         
-        public IActionResult Demo()
-        {
-            return new JsonResult(demoService.Add());
-        }
+        //public IActionResult Demo()
+        //{
+        //    return new JsonResult(demoService.Add());
+        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

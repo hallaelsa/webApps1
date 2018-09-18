@@ -7,7 +7,7 @@ namespace Oblig1theAteam.DBModels
 {
     public class Movie
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public int Year { get; set; }
         public int AgeRestriction { get; set; }
@@ -15,7 +15,7 @@ namespace Oblig1theAteam.DBModels
         public string Description { get; set; }
         public string TrailerLink { get; set; }
 
-        public virtual IList<Genre> Genre {get; set;}
+        public virtual MovieGenre MovieGenre {get; set;}
         public virtual OrderItem OrderItem { get; set; }
     }
 }

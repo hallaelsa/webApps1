@@ -7,10 +7,10 @@ namespace Oblig1theAteam.DBModels
 {
     public class Genre
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public string GenreName { get; set; }
 
-        public virtual IList<Movie> Movie { get; set; }
+        public virtual MovieGenre MovieGenre { get; set; }
 
     }
 }

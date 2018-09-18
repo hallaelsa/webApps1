@@ -17,27 +17,27 @@ namespace Oblig1theAteam.Business.Orders
         }
 
         //Her bruker vi Extentions for å gjøre om DbModell til business modell.
-        public Models.Order Get(int id)
-        {
-            var dbOrder = dbService.Orders.First(o => o.Id == id);
-            return dbOrder.ToOrder();
-        }
+        //public Models.Order Get(int id)
+        //{
+        //    var dbOrder = dbService.Orders.First(o => o.Id == id);
+        //    return dbOrder.ToOrder();
+        //}
 
-        public List<Models.Order> ListByUser(int userId)
-        {
-            return dbService.Orders
-                .Where(o => o.User.Id == userId)
-                .Select(dbOrder => dbOrder.ToOrder())
-                .ToList();
-        }
+        //public List<Models.Order> ListByUser(int userId)
+        //{
+        //    return dbService.Orders
+        //        .Where(o => o.User.Id == userId)
+        //        .Select(dbOrder => dbOrder.ToOrder())
+        //        .ToList();
+        //}
 
-        public List<Models.Order> ListByDate(DateTime date)
-        {
-            return dbService.Orders
-                .Where(o => o.Date.Date == date)
-                .OrderBy(o => o.Date)
-                .Select(dbOrder => dbOrder.ToOrder())
-                .ToList();
-        }
+        //public List<Models.Order> ListByDate(DateTime date)
+        //{
+        //    return dbService.Orders
+        //        .Where(o => o.Date.Date == date)
+        //        .OrderBy(o => o.Date)
+        //        .Select(dbOrder => dbOrder.ToOrder())
+        //        .ToList();
+        //}
     }
 }
