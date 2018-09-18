@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Oblig1theAteam.DBModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,5 +15,6 @@ namespace Oblig1theAteam.Business.Movies.Models
         public int Time { get; set; }
         public string Description { get; set; }
         public string TrailerLink { get; set; }
+        public List<Genre> Genre { get; set; }
     }
 }

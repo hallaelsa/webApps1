@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Oblig1theAteam.Business.Movies.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,9 +17,24 @@ namespace Oblig1theAteam.Business.Movies
 
         public List<Models.Movie> GetMovies()
         {
-            return dbService.Movie
+            var allMovies = dbService.Movie
                 .Select(dbOrder => ToMovie(dbOrder))
                 .ToList();
+
+            foreach (var movie in allMovies)
+            {
+                movie.Genre = GetGenres(movie.Id);
+            }
+
+            return allMovies;
+        }
+
+        public List<Genre> GetGenres(int id) {
+            var genres = dbService.Genre
+                .Where(g => g.MovieGenre.Any(mg => mg.Movie.Id == id)
+                .ToList();
+
+            return genres;
         }
 
         private Models.Movie ToMovie(DBModels.Movie dbMovie)
@@ -31,7 +47,7 @@ namespace Oblig1theAteam.Business.Movies
                 AgeRestriction = dbMovie.AgeRestriction,
                 Time = dbMovie.Time,
                 Description = dbMovie.Description,
-                TrailerLink = dbMovie.TrailerLink
+                TrailerLink = dbMovie.TrailerLink,
 
             };
         }
