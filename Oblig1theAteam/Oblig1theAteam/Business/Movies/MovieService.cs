@@ -52,7 +52,6 @@ namespace Oblig1theAteam.Business.Movies
         {
             return new Genre
             {
-                Id = dbMovie.Id,
                 GenreName = dbMovie.GenreName
             };
         }
