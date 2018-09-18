@@ -25,7 +25,7 @@ namespace Oblig1theAteam.Business.Users
                 .ToList();
         }
 
-        // dette er en måte å konvertere objekter på. Kunne også vært laget som en Extention (Se OrderService)
+        // dette er en måte å konvertere objekter på. Kunne også vært laget som en Extension (Se OrderService)
         private Models.User ToUser(DBModels.User dbUser)
         {
             return new Models.User

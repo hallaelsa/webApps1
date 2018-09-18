@@ -9,7 +9,7 @@ namespace Oblig1theAteam.Extensions
             return new Order
             {
                 Id = dbOrder.Id,
-                Date = dbOrder.Date
+                Date = dbOrder.OrderDate
             };
         }
     }
