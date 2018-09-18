@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 namespace Oblig1theAteam.DBModels
 {
-    public class Genre
+    public class MovieGenre
     {
         public int Id { get; set; }
-        public string GenreName { get; set; }
 
-        public virtual IList<MovieGenre> MovieGenre { get; set; }
-
+        public virtual Movie Movie { get; set; }
+        public virtual Genre Genre { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Oblig1theAteam.DBModels
+namespace Oblig1theAteam.Business.Movies.Models
 {
     public class Movie
     {
@@ -14,8 +14,5 @@ namespace Oblig1theAteam.DBModels
         public int Time { get; set; }
         public string Description { get; set; }
         public string TrailerLink { get; set; }
-
-        public virtual IList<MovieGenre> MovieGenre {get; set;}
-        public virtual IList<OrderItem> OrderItem { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Oblig1theAteam.Business.Movies;
 using Oblig1theAteam.Business.Orders;
 using Oblig1theAteam.Business.Users;
 using Oblig1theAteam.DependencyInjectionDemo;
@@ -12,35 +13,36 @@ namespace Oblig1theAteam.Controllers
     {
         private readonly UserService userService;
         private readonly OrderService orderService;
-        private readonly IDemoService demoService;
+        private readonly MovieService movieService;
 
         public HomeController(
             UserService userService,
             OrderService orderService,
-            IDemoService demoService)
+            MovieService movieService)
         {
             // Vi henter inn userService for å jobbe med brukere. Vi skal aldri bruke dbModels direkte. 
             // det er bare service som vet om databasen
             // viewModel skal bruke User fra service, og ikke fra dbModel!
             this.userService = userService;
             this.orderService = orderService;
-            this.demoService = demoService;
+            this.movieService = movieService;
         }
 
         public IActionResult Index()
         {
             // Her bruker vi businesslogikken (altså servicemodellene) til å fikse ViewModel
             var model = new IndexViewModel();
-            model.User = userService.Get(1);
-            model.Orders = orderService.ListByUser(model.User.Id);
+            //model.User = userService.Get(1);
+            //model.Orders = orderService.ListByUser(model.User.Id);
+            model.Movies = movieService.GetMovies();
 
             return View(model);
         }
         
-        public IActionResult Demo()
-        {
-            return new JsonResult(demoService.Add());
-        }
+        //public IActionResult Demo()
+        //{
+        //    return new JsonResult(demoService.Add());
+        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
