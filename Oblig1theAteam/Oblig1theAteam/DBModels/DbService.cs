@@ -20,20 +20,6 @@ namespace Oblig1theAteam.DBModels
         // db-modeller og business-modeller ser ofte like ut i starten. Men ikke gjenbruk de bare fordi de ser like ut!
         // De endrer seg ofte over tid, og da er det kjipt å være låst til det.
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<OrderItem>()
-                .HasKey(oi => new { oi.Movie, oi.Order });
 
-            modelBuilder.Entity<OrderItem>()
-                .HasOne(oi => oi.Order)
-                .WithMany(o => o.OrderItem)
-                .HasForeignKey(oi => oi);
-
-            modelBuilder.Entity<BookCategory>()
-                .HasOne(bc => bc.Category)
-                .WithMany(c => c.BookCategories)
-                .HasForeignKey(bc => bc.CategoryId);
-        }
     }
 }

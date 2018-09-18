@@ -15,7 +15,7 @@ namespace Oblig1theAteam.DBModels
         public string Description { get; set; }
         public string TrailerLink { get; set; }
 
-        public virtual MovieGenre MovieGenre {get; set;}
-        public virtual OrderItem OrderItem { get; set; }
+        public virtual IList<MovieGenre> MovieGenre {get; set;}
+        public virtual IList<OrderItem> OrderItem { get; set; }
     }
 }
