@@ -1,8 +1,6 @@
 ﻿using Oblig1theAteam.Business.Movies.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Oblig1theAteam.Business.Movies
 {
@@ -15,7 +13,7 @@ namespace Oblig1theAteam.Business.Movies
             this.dbService = dbService;
         }
 
-        public List<Models.Movie> GetMovies()
+        public List<Movie> GetMovies()
         {
             var allMovies = dbService.Movie
                 .Select(dbOrder => ToMovie(dbOrder))
@@ -29,17 +27,16 @@ namespace Oblig1theAteam.Business.Movies
             return allMovies;
         }
 
-        public List<Genre> GetGenres(int id) {
-            var genres = dbService.Genre
-                .Where(g => g.MovieGenre.Any(mg => mg.Movie.Id == id)
-                .ToList();
-
-            return genres;
+        public List<Genre> GetGenres(int movieId) {
+            return dbService.MovieGenre
+            .Where(mg => mg.Movie.Id == movieId)
+            .Select(mg => ToGenre(mg.Genre))
+            .ToList();
         }
 
-        private Models.Movie ToMovie(DBModels.Movie dbMovie)
+        private Movie ToMovie(DBModels.Movie dbMovie)
         {
-            return new Models.Movie
+            return new Movie
             {
                 Id = dbMovie.Id,
                 Title = dbMovie.Title,
@@ -48,7 +45,15 @@ namespace Oblig1theAteam.Business.Movies
                 Time = dbMovie.Time,
                 Description = dbMovie.Description,
                 TrailerLink = dbMovie.TrailerLink,
+            };
+        }
 
+        private Genre ToGenre(DBModels.Genre dbMovie)
+        {
+            return new Genre
+            {
+                Id = dbMovie.Id,
+                GenreName = dbMovie.GenreName
             };
         }
 
