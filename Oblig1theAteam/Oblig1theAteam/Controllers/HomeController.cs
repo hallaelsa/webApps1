@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Oblig1theAteam.Business.Movies;
 using Oblig1theAteam.Business.Orders;
 using Oblig1theAteam.Business.Users;
 using Oblig1theAteam.DependencyInjectionDemo;
@@ -12,16 +13,19 @@ namespace Oblig1theAteam.Controllers
     {
         private readonly UserService userService;
         private readonly OrderService orderService;
+        private readonly MovieService movieService;
 
         public HomeController(
             UserService userService,
-            OrderService orderService)
+            OrderService orderService,
+            MovieService movieService)
         {
             // Vi henter inn userService for å jobbe med brukere. Vi skal aldri bruke dbModels direkte. 
             // det er bare service som vet om databasen
             // viewModel skal bruke User fra service, og ikke fra dbModel!
             this.userService = userService;
             this.orderService = orderService;
+            this.movieService = movieService;
         }
 
         public IActionResult Index()
@@ -30,6 +34,7 @@ namespace Oblig1theAteam.Controllers
             var model = new IndexViewModel();
             //model.User = userService.Get(1);
             //model.Orders = orderService.ListByUser(model.User.Id);
+            model.Movies = movieService.GetMovies();
 
             return View(model);
         }

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using Oblig1theAteam.Business.Users.Models;
+using Oblig1theAteam.Business.Movies.Models;
+using Oblig1theAteam.DBModels;
 
 namespace Oblig1theAteam.ViewModels.Home
 {
     public class IndexViewModel
     {
-        public User User { get; set; }
-        public List<Business.Orders.Models.Order> Orders { get; set; }
+        public List<Business.Movies.Models.Movie> Movies { get; set; }
     }
 }

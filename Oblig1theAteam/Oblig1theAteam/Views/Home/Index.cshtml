@@ -5,11 +5,10 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1>@Model.User.FirstName @Model.User.LastName</h1>
 
 <ul>
-    @foreach (var order in Model.Orders)
+    @foreach (var movie in Model.Movies)
     {
-        <li>@order.Date.ToShortDateString()</li>
+        <li>@movie.Title</li>
     }
 </ul>

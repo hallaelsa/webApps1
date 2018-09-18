@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Oblig1theAteam.Business.Movies;
 using Oblig1theAteam.Business.Orders;
 using Oblig1theAteam.Business.Users;
 using Oblig1theAteam.DependencyInjectionDemo;
@@ -39,6 +40,7 @@ namespace Oblig1theAteam
 
             services.AddScoped<UserService>();
             services.AddScoped<OrderService>();
+            services.AddScoped<MovieService>();
 
             //services.AddSingleton legger til en instanse som gjenbrukes for alle requests
             // EKSEMPEL på singleton. Sjekk ut ved å kjøre Home/Demo flere ganger(refresh).
@@ -81,7 +83,7 @@ namespace Oblig1theAteam
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<DBModels.DbService>();
-                dbContext.Database.Migrate();
+                dbContext.Database.EnsureCreated();
             }
         }
     }
