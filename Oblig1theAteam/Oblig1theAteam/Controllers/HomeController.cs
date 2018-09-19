@@ -46,7 +46,16 @@ namespace Oblig1theAteam.Controllers
 
             return View("Index",model);
         }
-        
+
+        [HttpGet("/genre/{genre}")]
+        public IActionResult MoviesByGenre(string genre)
+        {
+            var model = new IndexViewModel();
+            model.Movies = movieService.GetMoviesByGenre(genre);
+
+            return View("Index", model);
+        }
+
         //public IActionResult Demo()
         //{
         //    return new JsonResult(demoService.Add());

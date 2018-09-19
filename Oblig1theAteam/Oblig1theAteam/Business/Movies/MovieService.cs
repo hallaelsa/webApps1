@@ -12,8 +12,7 @@ namespace Oblig1theAteam.Business.Movies
         {
             this.dbService = dbService;
         }
-
-        // denne må testes!
+        
         public List<Movie> GetMoviesByGenre(string genre)
         {
             var movies = dbService.MovieGenre
@@ -23,8 +22,7 @@ namespace Oblig1theAteam.Business.Movies
 
             return AddGenreToMovieModel(movies);
         }
-
-        // denne må testes!
+        
         public List<Movie> GetMovies(string title)
         {
             var movies = dbService.Movie
