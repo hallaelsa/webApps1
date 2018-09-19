@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Oblig1theAteam.Business.Movies;
 using Oblig1theAteam.Business.Orders;
 using Oblig1theAteam.Business.Users;
+using Oblig1theAteam.DBModels;
 using Oblig1theAteam.DependencyInjectionDemo;
 
 // NOTE! En av tingene med core er at man må konfigurere hva man skal bruke i startup.cs
@@ -82,8 +83,7 @@ namespace Oblig1theAteam
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                var dbContext = serviceScope.ServiceProvider.GetRequiredService<DBModels.DbService>();
-                dbContext.Database.EnsureCreated();
+                DbInit.Initialize(serviceScope);
             }
         }
     }
