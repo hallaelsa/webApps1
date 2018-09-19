@@ -34,6 +34,7 @@ namespace Oblig1theAteam.Controllers
             // Her bruker vi businesslogikken (altså servicemodellene) til å fikse ViewModel
             var model = new IndexViewModel();
             model.Movies = movieService.GetMovies();
+            model.Genre = movieService.GetAllGenres();
 
             return View(model);
         }
@@ -43,15 +44,17 @@ namespace Oblig1theAteam.Controllers
         {
             var model = new IndexViewModel();
             model.Movies = movieService.GetMoviesByTitle(title);
+            model.Genre = movieService.GetAllGenres();
 
             return View("Index",model);
         }
 
-        [HttpGet("/genre/{genre}")]
+        [HttpPost]
         public IActionResult MoviesByGenre(string genre)
         {
             var model = new IndexViewModel();
             model.Movies = movieService.GetMoviesByGenre(genre);
+            model.Genre = movieService.GetAllGenres();
 
             return View("Index", model);
         }

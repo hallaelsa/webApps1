@@ -59,6 +59,16 @@ namespace Oblig1theAteam.Business.Movies
             .ToList();
         }
 
+        public List<Genre> GetAllGenres()
+        {
+            return dbService.Genre
+                .Select(g => new Genre
+                {
+                    GenreName = g.GenreName
+                })
+                .ToList();
+        }
+
         private Movie ToMovie(DBModels.Movie dbMovie)
         {
             return new Movie

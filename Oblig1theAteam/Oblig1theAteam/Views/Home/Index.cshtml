@@ -7,8 +7,17 @@
 
 @using (Html.BeginForm("MoviesByTitle", "Home", FormMethod.Post))
 {
-     @Html.TextBox("title", "")
+    <b>Search title: </b>
+    @Html.TextBox("title", "")
     <button>Search</button>
+}
+
+@using (Html.BeginForm("MoviesByGenre", "Home", FormMethod.Post))
+{
+    <b>Select Genre: </b>
+
+    @Html.DropDownList("genre", new SelectList(Model.Genre, "GenreName", "GenreName"))
+    <input type="submit" value="OK" />
 }
 
 
