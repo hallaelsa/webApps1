@@ -33,11 +33,18 @@ namespace Oblig1theAteam.Controllers
         {
             // Her bruker vi businesslogikken (altså servicemodellene) til å fikse ViewModel
             var model = new IndexViewModel();
-            //model.User = userService.Get(1);
-            //model.Orders = orderService.ListByUser(model.User.Id);
             model.Movies = movieService.GetMovies();
 
             return View(model);
+        }
+
+        [HttpGet("{title}")]
+        public IActionResult MoviesByTitle(string title)
+        {
+            var model = new IndexViewModel();
+            model.Movies = movieService.GetMovies(title);
+
+            return View("Index",model);
         }
         
         //public IActionResult Demo()
