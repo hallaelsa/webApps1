@@ -38,11 +38,11 @@ namespace Oblig1theAteam.Controllers
             return View(model);
         }
 
-        [HttpGet("{title}")]
+        [HttpPost]
         public IActionResult MoviesByTitle(string title)
         {
             var model = new IndexViewModel();
-            model.Movies = movieService.GetMovies(title);
+            model.Movies = movieService.GetMoviesByTitle(title);
 
             return View("Index",model);
         }

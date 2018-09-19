@@ -5,16 +5,22 @@
     ViewData["Title"] = "Home Page";
 }
 
+@using (Html.BeginForm("MoviesByTitle", "Home", FormMethod.Post))
+{
+     @Html.TextBox("title", "")
+    <button>Search</button>
+}
+
 
 <ul>
     @foreach (var movie in Model.Movies)
     {
         <li>@movie.Title</li>
-            <ul>
-                @foreach (var genre in movie.Genre)
-                {
-                    <li>@genre.GenreName</li>
-                }
-            </ul>
+        <ul>
+            @foreach (var genre in movie.Genre)
+            {
+                <li>@genre.GenreName</li>
+            }
+        </ul>
     }
 </ul>

@@ -23,7 +23,7 @@ namespace Oblig1theAteam.Business.Movies
             return AddGenreToMovieModel(movies);
         }
         
-        public List<Movie> GetMovies(string title)
+        public List<Movie> GetMoviesByTitle(string title)
         {
             var movies = dbService.Movie
                 .Where(m => m.Title.Contains(title))
