@@ -28,7 +28,7 @@ namespace Oblig1theAteam.Business.Orders
         {
             var orders = dbService.Orders
                 .Where(o => o.User.Email == email)
-                .Select(dbOrder => dbOrder.ToOrder())
+                .Select(o => o.ToOrder())
                 .ToList();
 
             foreach(var order in orders)
@@ -38,11 +38,26 @@ namespace Oblig1theAteam.Business.Orders
             return orders;
         }
 
-        public List<Movie> GetMovies(int id)
+        public List<Movie> GetMovies(int orderId)
         {
-            return dbService.Movie
-                .Where(movie => movie.Id == id)
-                .ToList();
+            return dbService.OrderItem
+            .Where(oi => oi.Order.Id == orderId)
+            .Select(oi => ToMovie(oi.Movie))
+            .ToList();
+        }
+
+        private Movie ToMovie(DBModels.Movie dbMovie)
+        {
+            return new Movie
+            {
+                Id = dbMovie.Id,
+                Title = dbMovie.Title,
+                Year = dbMovie.Year,
+                AgeRestriction = dbMovie.AgeRestriction,
+                Time = dbMovie.Time,
+                Description = dbMovie.Description,
+                TrailerLink = dbMovie.TrailerLink,
+            };
         }
 
         //public List<Models.Order> ListByDate(DateTime date)

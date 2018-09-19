@@ -80,7 +80,5 @@ namespace Oblig1theAteam.Business.Movies
                 GenreName = dbGenre.GenreName
             };
         }
-
-
     }
 }
