@@ -30,6 +30,19 @@ namespace Oblig1theAteam.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public IActionResult Register()
+        {
+            // View ikke laga!!!
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(string username, string password)
+        {
+            return View();
+        }
+
 
     }
 

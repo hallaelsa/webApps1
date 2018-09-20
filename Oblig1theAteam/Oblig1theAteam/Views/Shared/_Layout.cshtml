@@ -41,7 +41,16 @@
                     }
                     else
                     {
-                        <li><a asp-area="" asp-controller="Register" asp-action="Login">Login</a></li>
+                        @using (Html.BeginForm("Login", "User", FormMethod.Post))
+                        {
+                            @Html.TextBox("username", "", new
+                       {
+                           @class = "form-control",
+                           placeholder = "email"
+                       })
+                            @Html.TextBox("password", "", new { @class = "form-control", placeholder = "password"})
+                            <button>Login</button>
+                        }
                         <li><a asp-area="" asp-controller="Register" asp-action="Register">Register</a></li>
                     }
                 </ul>
