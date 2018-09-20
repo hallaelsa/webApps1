@@ -5,6 +5,7 @@
     ViewData["Title"] = "Home Page";
 }
 
+
 @using (Html.BeginForm("MoviesByTitle", "Home", FormMethod.Post))
 {
     <b>Search title: </b>
@@ -20,19 +21,30 @@
     <input type="submit" value="OK" />
 }
 
+    <div class="movies">
+        @foreach (var movie in Model.Movies)
+        {
+            <div class="movie-info">
+                <img class="movie-poster" src="~/images/posters/thumbnail/@movie.PosterName" alt="movie poster for @movie.PosterName" />
+                <h1 class="movie-title">@movie.Title</h1>
+                <p>@movie.Price</p>
+            </div>
+        }
+    </div>
+@*
+    <ul>
+        @foreach (var movie in Model.Movies)
+        {
+            <li>@movie.Title</li>
 
-<ul>
-    @foreach (var movie in Model.Movies)
-    {
-        <li>@movie.Title</li>
+                <ul>
+                    @foreach (var genre in movie.Genre)
+                    {
+                        <li>@genre.GenreName</li>
+                    }
+                </ul>
+            @Html.ActionLink("Legg i handlekurv", "AddToShoppingCart", new { id = movie.Id}, new { @class = "btn btn-primary"})
 
-            <ul>
-                @foreach (var genre in movie.Genre)
-                {
-                    <li>@genre.GenreName</li>
-                }
-            </ul>
-        @Html.ActionLink("Legg i handlekurv", "AddToShoppingCart", new { id = movie.Id}, new { @class = "btn btn-primary"})
-
-    }
-</ul>
+        }
+    </ul>
+*@
