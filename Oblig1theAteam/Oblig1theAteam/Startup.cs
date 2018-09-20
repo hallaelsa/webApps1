@@ -39,10 +39,7 @@ namespace Oblig1theAteam
 
             services.AddSession(options =>
             {
-                // Set a short timeout for easy testing.
-                // default cookie heter .AspNetCore.Session
-                // 10 sekund??? høres lite ut
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.IdleTimeout = TimeSpan.FromHours(10);
                 options.Cookie.HttpOnly = true;
             });
 
