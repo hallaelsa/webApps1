@@ -79,6 +79,8 @@ namespace Oblig1theAteam.Business.Movies
                 AgeRestriction = dbMovie.AgeRestriction,
                 Time = dbMovie.Time,
                 Description = dbMovie.Description,
+                PosterName = dbMovie.PosterName,
+                Price = dbMovie.Price,
                 TrailerLink = dbMovie.TrailerLink,
             };
         }
