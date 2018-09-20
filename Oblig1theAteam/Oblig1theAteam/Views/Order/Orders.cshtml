@@ -1,0 +1,21 @@
+﻿@model Oblig1theAteam.ViewModels.Order.OrdersViewModel
+@{
+    ViewData["Title"] = "Orders";
+}
+<h1>Orders!</h1>
+<table>
+    @foreach (var order in Model.Orders)
+    {
+    <tr>
+        <th>Ny ordre!</th>
+        <th>@order.Id</th>
+        <th>@order.Date</th>
+    </tr>
+    <tr>
+        @foreach(var movie in order.Movies)
+        {
+            <td>@movie.Title</td>
+        }
+    </tr>
+    }
+</table>

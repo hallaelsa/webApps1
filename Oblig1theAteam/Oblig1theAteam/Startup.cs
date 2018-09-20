@@ -9,6 +9,7 @@ using Oblig1theAteam.Business.Orders;
 using Oblig1theAteam.Business.Users;
 using Oblig1theAteam.DBModels;
 using Oblig1theAteam.DependencyInjectionDemo;
+using System;
 
 // NOTE! En av tingene med core er at man må konfigurere hva man skal bruke i startup.cs
 
@@ -31,7 +32,20 @@ namespace Oblig1theAteam
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+
             });
+
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                // default cookie heter .AspNetCore.Session
+                // 10 sekund??? høres lite ut
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+            });
+
 
             // Lagt til slik at UserService opprettes per request.
             // må ha AddScoped for at HomeController og andre klasser skal få tak i disse:
@@ -68,6 +82,7 @@ namespace Oblig1theAteam
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

@@ -16,5 +16,6 @@
                     <li>@genre.GenreName</li>
                 }
             </ul>
+        @Html.ActionLink("Legg i handlekurv", "AddToShoppingCart", new { id = movie.Id}, new { @class = "btn btn-primary"})
     }
 </ul>

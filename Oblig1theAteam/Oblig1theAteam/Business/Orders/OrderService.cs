@@ -10,11 +10,16 @@ namespace Oblig1theAteam.Business.Orders
 {
     public class OrderService
     {
-        private readonly DBModels.DbService dbService;
+        private readonly DbService dbService;
 
-        public OrderService(DBModels.DbService dbService)
+        public OrderService(DbService dbService)
         {
             this.dbService = dbService;
+        }
+
+        public bool saveOrder()
+        {
+            return true;
         }
 
         //Her bruker vi Extentions for å gjøre om DbModell til business modell.
@@ -46,7 +51,7 @@ namespace Oblig1theAteam.Business.Orders
             .ToList();
         }
 
-        private Movie ToMovie(DBModels.Movie dbMovie)
+        private Movie ToMovie(Movie dbMovie)
         {
             return new Movie
             {
