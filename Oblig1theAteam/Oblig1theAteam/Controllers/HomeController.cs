@@ -42,6 +42,7 @@ namespace Oblig1theAteam.Controllers
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(SessionUserEmail)))
             {
                 HttpContext.Session.SetString(SessionUserEmail, "eple@eple.no");
+                //HttpContext.Session.SetString(SessionLoggedIn, "eple@eple.no");
             }
             //HttpContext.Session.SetString(SessionUserEmail, "eple@eple.no");
             var email = HttpContext.Session.GetString(SessionUserEmail);

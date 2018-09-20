@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -34,6 +35,15 @@
                     <li><a asp-area="" asp-controller="Order" asp-action="Orders">Order</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     <li><a asp-area="" asp-controller="Order" asp-action="ShoppingCart">Shopping Cart</a></li>
+                    @if (!string.IsNullOrEmpty(Context.Session.GetString("_LoggedIn")))
+                    {
+                        <li><a asp-area="" asp-controller="User" asp-action="Index">My Profile</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-area="" asp-controller="Register" asp-action="Login">Login</a></li>
+                        <li><a asp-area="" asp-controller="Register" asp-action="Register">Register</a></li>
+                    }
                 </ul>
             </div>
         </div>

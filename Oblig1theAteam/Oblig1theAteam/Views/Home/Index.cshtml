@@ -25,7 +25,7 @@
     @foreach (var movie in Model.Movies)
     {
         <li>@movie.Title</li>
-<<<<<<< HEAD
+
             <ul>
                 @foreach (var genre in movie.Genre)
                 {
@@ -33,13 +33,6 @@
                 }
             </ul>
         @Html.ActionLink("Legg i handlekurv", "AddToShoppingCart", new { id = movie.Id}, new { @class = "btn btn-primary"})
-=======
-        <ul>
-            @foreach (var genre in movie.Genre)
-            {
-                <li>@genre.GenreName</li>
-            }
-        </ul>
->>>>>>> c99c6c72c6837edddb6ebbebbcb597760126f34a
+
     }
 </ul>
