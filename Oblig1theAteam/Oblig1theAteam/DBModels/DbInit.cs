@@ -40,9 +40,15 @@ namespace Oblig1theAteam.DBModels
         {
             using (var reader = new StreamReader(@".\DBModels\SeedData\movies.csv"))
             {
+<<<<<<< HEAD
                 var i = 0;
                 while(i < 30 && !reader.EndOfStream)
+=======
+                var count = 20;
+                while(count > 0)
+>>>>>>> c99c6c72c6837edddb6ebbebbcb597760126f34a
                 {
+                    count--;
                     var line = reader.ReadLine();
                     var columns = line.Split('|'); // 0: title, 1: year, 2: age, 3: time, 4: genre, 5: description, 6: poster
 

@@ -12,8 +12,7 @@ namespace Oblig1theAteam.Business.Movies
         {
             this.dbService = dbService;
         }
-
-        // denne må testes!
+        
         public List<Movie> GetMoviesByGenre(string genre)
         {
             var movies = dbService.MovieGenre
@@ -23,9 +22,8 @@ namespace Oblig1theAteam.Business.Movies
 
             return AddGenreToMovieModel(movies);
         }
-
-        // denne må testes!
-        public List<Movie> GetMovies(string title)
+        
+        public List<Movie> GetMoviesByTitle(string title)
         {
             var movies = dbService.Movie
                 .Where(m => m.Title.Contains(title))
@@ -59,6 +57,16 @@ namespace Oblig1theAteam.Business.Movies
             .Where(mg => mg.Movie.Id == movieId)
             .Select(mg => ToGenre(mg.Genre))
             .ToList();
+        }
+
+        public List<Genre> GetAllGenres()
+        {
+            return dbService.Genre
+                .Select(g => new Genre
+                {
+                    GenreName = g.GenreName
+                })
+                .ToList();
         }
 
         private Movie ToMovie(DBModels.Movie dbMovie)
