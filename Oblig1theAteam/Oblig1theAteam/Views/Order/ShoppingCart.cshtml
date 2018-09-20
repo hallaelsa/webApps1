@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Oblig1theAteam.Business.Movies.Models.Movie>
+﻿@model IList<Oblig1theAteam.Business.Movies.Models.Movie>
 
 @{
     ViewData["Title"] = "ShoppingCart";
@@ -13,27 +13,14 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                Id
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                Title
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Year)
+                Price
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AgeRestriction)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Time)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrailerLink)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -46,19 +33,7 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AgeRestriction)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Time)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TrailerLink)
+                @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

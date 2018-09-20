@@ -1,7 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Oblig1theAteam.Business.Orders;
 using Oblig1theAteam.Business.Users.Models;
 using Oblig1theAteam.ViewModels.Order;
+using System;
+using System.Collections.Generic;
+using Oblig1theAteam.Extensions;
+using Oblig1theAteam.Business.Movies.Models;
 
 namespace Oblig1theAteam.Controllers
 {
@@ -30,7 +35,14 @@ namespace Oblig1theAteam.Controllers
 
         public IActionResult ShoppingCart()
         {
-            return View();
+            List<Int32> moviesInCart;
+            moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
+            if (moviesInCart == null)
+            {
+                moviesInCart = new List<Int32>();
+            }
+            IList<Movie> moviesToPurchase = new List<Movie>();
+            return View(moviesToPurchase);
         }
 
         [HttpPost]
