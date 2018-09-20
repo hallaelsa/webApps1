@@ -34,10 +34,10 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Order" asp-action="Orders">Order</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    <li><a asp-area="" asp-controller="Order" asp-action="ShoppingCart">Shopping Cart</a></li>
                     @if (!string.IsNullOrEmpty(Context.Session.GetString("_LoggedIn")))
                     {
                         <li><a asp-area="" asp-controller="User" asp-action="Index">My Profile</a></li>
+                        <li><a asp-area="" asp-controller="Order" asp-action="ShoppingCart">Shopping Cart</a></li>
                     }
                     else
                     {

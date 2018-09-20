@@ -44,9 +44,8 @@ namespace Oblig1theAteam.Controllers
                 HttpContext.Session.SetString(SessionUserEmail, "eple@eple.no");
                 //HttpContext.Session.SetString(SessionLoggedIn, "eple@eple.no");
             }
-            //HttpContext.Session.SetString(SessionUserEmail, "eple@eple.no");
+            HttpContext.Session.SetString(SessionLoggedIn, "eple@eple.no");
             var email = HttpContext.Session.GetString(SessionUserEmail);
-            var eple = "her er et eple";
             // Her bruker vi businesslogikken (altså servicemodellene) til å fikse ViewModel
             var model = new IndexViewModel();
             model.Movies = movieService.GetMovies();
