@@ -7,6 +7,6 @@ namespace Oblig1theAteam.ViewModels.User
 {
     public class IndexViewModel
     {
-        public List<Business.Users.Models.User> User { get; set; }
+        public Business.Users.Models.User User { get; set; }
     }
 }
