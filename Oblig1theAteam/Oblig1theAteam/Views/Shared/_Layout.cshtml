@@ -32,11 +32,11 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Order" asp-action="Orders">Order</a></li>
-                    <li><a asp-area="" asp-controller="Order" asp-action="ShoppingCart">Shopping Cart</a></li>
                     @if (!string.IsNullOrEmpty(Context.Session.GetString("_LoggedIn")))
                     {
+                        <li><a asp-area="" asp-controller="Order" asp-action="MyOrders">My Orders</a></li>
                         <li><a asp-area="" asp-controller="User" asp-action="Index">My Profile</a></li>
+                        <li><a asp-area="" asp-controller="Order" asp-action="ShoppingCart">Shopping Cart</a></li>
                         <li><a asp-area="" asp-controller="User" asp-action="Logout">Log out</a></li>
                     }
                     else
@@ -44,11 +44,11 @@
                         <li>
                             @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "navbar-form" }))
                             {
-                            <div class="form-group">
-                                @Html.TextBox("username", "", new { @class = "form-control", placeholder = "email" })
-                                @Html.TextBox("password", "", new { @class = "form-control", placeholder = "password" })
-                                <button class="btn btn-default">Login</button>
-                            </div>
+                                <div class="form-group">
+                                    @Html.TextBox("username", "", new { @class = "form-control", placeholder = "email" })
+                                    @Html.TextBox("password", "", new { @class = "form-control", placeholder = "password" })
+                                    <button class="btn btn-default">Login</button>
+                                </div>
                             }
                         </li>
                         <li><a asp-area="" asp-controller="Register" asp-action="Register">Register</a></li>
