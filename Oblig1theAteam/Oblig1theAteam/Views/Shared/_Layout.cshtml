@@ -33,7 +33,6 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Order" asp-action="Orders">Order</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     <li><a asp-area="" asp-controller="Order" asp-action="ShoppingCart">Shopping Cart</a></li>
                     @if (!string.IsNullOrEmpty(Context.Session.GetString("_LoggedIn")))
                     {
@@ -43,15 +42,13 @@
                     else
                     {
                         <li>
-                            @using (Html.BeginForm("Login", "User", FormMethod.Post))
+                            @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "navbar-form" }))
                             {
-                                @Html.TextBox("username", "", new
-                           {
-                               @class = "login-form",
-                               placeholder = "email"
-                           })
-                                @Html.TextBox("password", "", new { @class = "login-form", placeholder = "password" })
-                                <button>Login</button>
+                            <div class="form-group">
+                                @Html.TextBox("username", "", new { @class = "form-control", placeholder = "email" })
+                                @Html.TextBox("password", "", new { @class = "form-control", placeholder = "password" })
+                                <button class="btn btn-default">Login</button>
+                            </div>
                             }
                         </li>
                         <li><a asp-area="" asp-controller="Register" asp-action="Register">Register</a></li>
