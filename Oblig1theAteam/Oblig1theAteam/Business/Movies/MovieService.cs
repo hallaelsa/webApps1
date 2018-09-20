@@ -17,6 +17,8 @@ namespace Oblig1theAteam.Business.Movies
         {
             var movies = dbService.MovieGenre
                 .Where(mg => mg.Genre.GenreName == genre)
+                /// Take() må være FØR select!! 
+                .Take(20)
                 .Select(mg => ToMovie(mg.Movie))
                 .ToList();
 
@@ -27,13 +29,24 @@ namespace Oblig1theAteam.Business.Movies
         {
             var movies = dbService.Movie
                 .Where(m => m.Title.Contains(title))
+                .Take(20)
                 .Select(dbMovie => ToMovie(dbMovie))
                 .ToList();            
 
             return AddGenreToMovieModel(movies);
         }
 
-        public List<Movie> AddGenreToMovieModel(List<Movie> movies)
+        public List<Movie> GetMovies()
+        {
+            var allMovies = dbService.Movie
+                .Take(20)
+                .Select(dbMovie => ToMovie(dbMovie))
+                .ToList();
+
+            return AddGenreToMovieModel(allMovies); ;
+        }
+
+        private List<Movie> AddGenreToMovieModel(List<Movie> movies)
         {
             foreach (var movie in movies)
             {
@@ -41,15 +54,6 @@ namespace Oblig1theAteam.Business.Movies
             }
 
             return movies;
-        }
-
-        public List<Movie> GetMovies()
-        {
-            var allMovies = dbService.Movie
-                .Select(dbMovie => ToMovie(dbMovie))
-                .ToList();
-
-            return AddGenreToMovieModel(allMovies); ;
         }
 
         public List<Genre> GetGenres(int movieId) {
