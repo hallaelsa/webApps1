@@ -89,6 +89,31 @@ namespace Oblig1theAteam.DBModels
             dbContext.SaveChanges();
         }
 
+        public static int generateRandomPrice()
+        {
+            Random rnd = new Random();
+            var random = rnd.Next(0, 4);
+            var price = 0;
+
+            switch(random)
+            {
+                case 0:
+                    price = 79;
+                    break;
+                case 1:
+                    price = 99;
+                    break;
+                case 2:
+                    price = 129;
+                    break;
+                default:
+                    price = 169;
+                    break;
+            }
+
+            return price;
+        }
+
         private static void seedMovies(DbService dbContext)
         {
             using (var reader = new StreamReader(@".\DBModels\SeedData\movies.csv"))
@@ -111,6 +136,7 @@ namespace Oblig1theAteam.DBModels
                             Time = Int32.Parse(columns[3]),
                             Description = columns[5],
                             PosterName = columns[6],
+                            Price = generateRandomPrice(),
                             TrailerLink = ""
                         };
 
