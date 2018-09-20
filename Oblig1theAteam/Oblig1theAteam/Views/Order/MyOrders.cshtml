@@ -2,20 +2,26 @@
 @{
     ViewData["Title"] = "Orders";
 }
-<h1>Orders!</h1>
-<table>
+<h1>My Orders</h1>
+<table class="table">
+    <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Order ID</th>
+        <th scope="col">Movies</th>
+    </tr>
     @foreach (var order in Model.Orders)
     {
     <tr>
-        <th>Ny ordre!</th>
-        <th>@order.Id</th>
-        <th>@order.Date</th>
-    </tr>
-    <tr>
-        @foreach(var movie in order.Movies)
-        {
-            <td>@movie.Title</td>
-        }
-    </tr>
+        <th scope="row">@order.Date</th>
+        <td>@order.Id</td>
+        <td>
+            <ul>
+                @foreach (var movie in order.Movies)
+                {
+                <li>@movie.Title</li>
+                }
+            </ul>
+        </td>
+</tr>
     }
 </table>

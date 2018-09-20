@@ -45,9 +45,9 @@
                             @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "navbar-form" }))
                             {
                                 <div class="form-group">
-                                    @Html.TextBox("username", "", new { @class = "form-control", placeholder = "email" })
-                                    @Html.Password("password", "", new { @class = "form-control", placeholder = "password" })
-                                    <button class="btn btn-default">Login</button>
+                                    @Html.TextBox("username", "", new { @class = "form-control layout-input", placeholder = "email" })
+                                    @Html.Password("password", "", new { @class = "form-control layout-input", placeholder = "password" })
+                                    <button class="btn btn-default layout-login-btn">Login</button>
                                 </div>
                             }
                         </li>

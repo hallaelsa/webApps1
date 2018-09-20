@@ -93,3 +93,23 @@ body {
     padding: 4px;
 }
 
+.home-forms {
+    margin-top: 1.5rem;
+}
+
+.home-dropdown {
+    margin-left: 2rem;
+}
+
+.layout-input {
+    height: 30px !important;
+}
+
+.layout-login-btn {
+    height: 30px;
+}
+
+#genre {
+    padding: 4px;
+}
+

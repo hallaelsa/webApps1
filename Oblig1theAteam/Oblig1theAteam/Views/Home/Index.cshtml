@@ -5,21 +5,22 @@
     ViewData["Title"] = "Home Page";
 }
 
+    <div class="form-inline home-forms">
+        @using (Html.BeginForm("MoviesByTitle", "Home", FormMethod.Post, new { @class = "form-group home-input" }))
+        {
+            <b>Search title: </b>
+            @Html.TextBox("title", "")
+            <button>Search</button>
+        }
 
-@using (Html.BeginForm("MoviesByTitle", "Home", FormMethod.Post))
-{
-    <b>Search title: </b>
-    @Html.TextBox("title", "")
-    <button>Search</button>
-}
+        @using (Html.BeginForm("MoviesByGenre", "Home", FormMethod.Post, new { @class = "form-group home-dropdown" }))
+        {
+            <b>Select Genre: </b>
 
-@using (Html.BeginForm("MoviesByGenre", "Home", FormMethod.Post))
-{
-    <b>Select Genre: </b>
-
-    @Html.DropDownList("genre", new SelectList(Model.Genre, "GenreName", "GenreName"))
-    <input type="submit" value="OK" />
-}
+            @Html.DropDownList("genre", new SelectList(Model.Genre, "GenreName", "GenreName"))
+            <input type="submit" value="OK" />
+        }
+    </div>
 
     <div class="movies-container">
         @foreach (var movie in Model.Movies)
@@ -37,20 +38,20 @@
             </div>
         }
     </div>
-@*
-    <ul>
-        @foreach (var movie in Model.Movies)
-        {
-            <li>@movie.Title</li>
+    @*
+        <ul>
+            @foreach (var movie in Model.Movies)
+            {
+                <li>@movie.Title</li>
 
-                <ul>
-                    @foreach (var genre in movie.Genre)
-                    {
-                        <li>@genre.GenreName</li>
-                    }
-                </ul>
-            @Html.ActionLink("Legg i handlekurv", "AddToShoppingCart", new { id = movie.Id}, new { @class = "btn btn-primary"})
+                    <ul>
+                        @foreach (var genre in movie.Genre)
+                        {
+                            <li>@genre.GenreName</li>
+                        }
+                    </ul>
+                @Html.ActionLink("Legg i handlekurv", "AddToShoppingCart", new { id = movie.Id}, new { @class = "btn btn-primary"})
 
-        }
-    </ul>
-*@
+            }
+        </ul>
+    *@
