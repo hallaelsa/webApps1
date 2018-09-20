@@ -21,13 +21,19 @@
     <input type="submit" value="OK" />
 }
 
-    <div class="movies">
+    <div class="movies-container">
         @foreach (var movie in Model.Movies)
         {
-            <div class="movie-info">
+            <div class="movie">
                 <img class="movie-poster" src="~/images/posters/thumbnail/@movie.PosterName" alt="movie poster for @movie.PosterName" />
-                <h1 class="movie-title">@movie.Title</h1>
-                <p>@movie.Price</p>
+                <div class="movie-info">
+                    <h1 class="movie-title">@movie.Title</h1>
+
+                    <div class="movie-purchase">
+                        <p>Price: @movie.Price,-</p>
+                        @Html.ActionLink("Buy Now", "AddToShoppingCart", new { id = movie.Id }, new { @class = "btn btn-primary btn-buy-movie" })
+                    </div>
+                </div>
             </div>
         }
     </div>
