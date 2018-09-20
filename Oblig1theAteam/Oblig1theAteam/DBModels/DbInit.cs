@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,8 @@ namespace Oblig1theAteam.DBModels
 {
     public static class DbInit
     {
+        public static CultureInfo NorwegianCultureInfo = new CultureInfo("nb-NO");
+
         public static void Initialize(IServiceScope serviceScope)
         {
             var dbContext = serviceScope.ServiceProvider.GetRequiredService<DBModels.DbService>();
@@ -16,24 +19,99 @@ namespace Oblig1theAteam.DBModels
 
             if (!dbContext.Movie.Any())
             {
-                seedGenres(dbContext);
                 seedMovies(dbContext);
-
+                seedUsers(dbContext);
+                seedOrders(dbContext);
             }
         }
 
-        private static void seedGenres(DbService dbContext)
+        private static void seedOrders(DbService dbContext)
         {
-            using (var reader = new StreamReader(@".\DBModels\SeedData\genres.csv"))
+            using (var reader = new StreamReader(@".\DBModels\SeedData\orders.csv"))
             {
                 while (!reader.EndOfStream)
                 {
-                    var genre = reader.ReadLine();
-                    dbContext.Add(new Genre { GenreName = genre });
+                    var line = reader.ReadLine();
+                    // 0: Email, 1: Date+Time (format dd/mm/yyyy hh:mm:ss)
+                    var columns = line.Split('|');
+
+                    List<string> movies = columns[2].Split(',').ToList();
+                    User user = dbContext.Users.Find(columns[1]);
+
+                    Order order = new Order
+                    {
+                        User = user,
+                        OrderDate = DateTime.Parse(columns[0], NorwegianCultureInfo, DateTimeStyles.NoCurrentDateDefault),
+                    };
+
+                    dbContext.Orders.Add(order);
+                    
+
+                    foreach(var movieId in movies)
+                    {
+                        Movie movie = dbContext.Movie.Find(System.Convert.ToInt32(movieId));
+                        OrderItem item = new OrderItem
+                        {
+                            Order = order,
+                            Movie = movie,
+                        };
+                        dbContext.OrderItem.Add(item);
+                    }
+
                     dbContext.SaveChanges();
                 }
-
             }
+        }
+
+        private static void seedUsers(DbService dbContext)
+        {
+            using (var reader = new StreamReader(@".\DBModels\SeedData\users.csv"))
+            {
+                
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    // 0: Email, 1: FirstName, 2: LastName, 3: Birthday, 4: Password, 5: PhoneNumber
+                    var columns = line.Split('|');
+
+                    var newUser = new User
+                    {
+                        Email = columns[0],
+                        FirstName = columns[1],
+                        LastName = columns[2],
+                        Birthday = DateTime.Parse(columns[3], NorwegianCultureInfo, DateTimeStyles.NoCurrentDateDefault),
+                        Password = columns[4],
+                        PhoneNumber = columns[5],
+                    };
+                    dbContext.Add(newUser);
+                }
+            }
+            dbContext.SaveChanges();
+        }
+
+        public static int generateRandomPrice()
+        {
+            Random rnd = new Random();
+            var random = rnd.Next(0, 4);
+            var price = 0;
+
+            switch(random)
+            {
+                case 0:
+                    price = 79;
+                    break;
+                case 1:
+                    price = 99;
+                    break;
+                case 2:
+                    price = 129;
+                    break;
+                default:
+                    price = 169;
+                    break;
+            }
+
+            return price;
         }
 
         private static void seedMovies(DbService dbContext)
@@ -45,7 +123,8 @@ namespace Oblig1theAteam.DBModels
                 {
                     count--;
                     var line = reader.ReadLine();
-                    var columns = line.Split('|'); // 0: title, 1: year, 2: age, 3: time, 4: genre, 5: description, 6: poster
+                    // 0: title, 1: year, 2: age, 3: time, 4: genre, 5: description, 6: poster
+                    var columns = line.Split('|'); 
 
                     try
                     {
@@ -57,6 +136,7 @@ namespace Oblig1theAteam.DBModels
                             Time = Int32.Parse(columns[3]),
                             Description = columns[5],
                             PosterName = columns[6],
+                            Price = generateRandomPrice(),
                             TrailerLink = ""
                         };
 
