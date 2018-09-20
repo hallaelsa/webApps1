@@ -20,6 +20,15 @@ namespace Oblig1theAteam.Business.Users
             return ToUser(dbUser);
         }
 
+        public bool Login(string email, string password)
+        {
+            // her må vi hashe passord!!!!!!!!!!!!!!!!
+            var userExists = dbService.Users
+                .Any(u => u.Email == email && u.Password == password);
+
+            return userExists;
+        }
+
         public List<Models.User> ListUsers()
         {
             return dbService.Users

@@ -38,20 +38,24 @@
                     @if (!string.IsNullOrEmpty(Context.Session.GetString("_LoggedIn")))
                     {
                         <li><a asp-area="" asp-controller="User" asp-action="Index">My Profile</a></li>
+                        <li><a asp-area="" asp-controller="User" asp-action="Logout">Log out</a></li>
                     }
                     else
                     {
-                        @using (Html.BeginForm("Login", "User", FormMethod.Post))
-                        {
-                            @Html.TextBox("username", "", new
-                       {
-                           @class = "form-control",
-                           placeholder = "email"
-                       })
-                            @Html.TextBox("password", "", new { @class = "form-control", placeholder = "password"})
-                            <button>Login</button>
-                        }
+                        <li>
+                            @using (Html.BeginForm("Login", "User", FormMethod.Post))
+                            {
+                                @Html.TextBox("username", "", new
+                           {
+                               @class = "login-form",
+                               placeholder = "email"
+                           })
+                                @Html.TextBox("password", "", new { @class = "form-control", placeholder = "password" })
+                                <button>Login</button>
+                            }
+                        </li>
                         <li><a asp-area="" asp-controller="Register" asp-action="Register">Register</a></li>
+
                     }
                 </ul>
             </div>
