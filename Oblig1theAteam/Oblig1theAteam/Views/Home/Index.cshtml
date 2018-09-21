@@ -38,20 +38,3 @@
             </div>
         }
     </div>
-    @*
-        <ul>
-            @foreach (var movie in Model.Movies)
-            {
-                <li>@movie.Title</li>
-
-                    <ul>
-                        @foreach (var genre in movie.Genre)
-                        {
-                            <li>@genre.GenreName</li>
-                        }
-                    </ul>
-                @Html.ActionLink("Legg i handlekurv", "AddToShoppingCart", new { id = movie.Id}, new { @class = "btn btn-primary"})
-
-            }
-        </ul>
-    *@
