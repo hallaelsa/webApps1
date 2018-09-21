@@ -119,7 +119,7 @@ namespace Oblig1theAteam.DBModels
             using (var reader = new StreamReader(@".\DBModels\SeedData\movies.csv"))
             {
                 var count = 20;
-                while(count > 0)
+                while(count > 0 || !reader.EndOfStream)
                 {
                     count--;
                     var line = reader.ReadLine();
