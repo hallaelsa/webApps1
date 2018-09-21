@@ -39,7 +39,7 @@ namespace Oblig1theAteam
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromHours(10);
+                options.IdleTimeout = TimeSpan.FromHours(1);
                 options.Cookie.HttpOnly = true;
             });
 

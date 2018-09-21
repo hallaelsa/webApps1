@@ -109,6 +109,10 @@ body {
     height: 30px;
 }
 
+.myprofile-table {
+    width: 50% !important;
+}
+
 #genre {
     padding: 4px;
 }
