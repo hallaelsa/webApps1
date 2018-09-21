@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Oblig1theAteam.Business.Orders.Models;
+using Oblig1theAteam.Business.Users;
+using Oblig1theAteam.Business.Movies;
 
 // Logikklasser gjør ting. De skal ikke holde på data, kun bruke dem.
 namespace Oblig1theAteam.Business.Orders
@@ -12,15 +14,12 @@ namespace Oblig1theAteam.Business.Orders
     public class OrderService
     {
         private readonly DbService dbService;
+        private readonly UserService userService;
 
-        public OrderService(DbService dbService)
+        public OrderService(DbService dbService, UserService userService)
         {
             this.dbService = dbService;
-        }
-
-        public bool saveOrder()
-        {
-            return true;
+            this.userService = userService;
         }
 
         //Her bruker vi Extentions for å gjøre om DbModell til business modell.
@@ -64,6 +63,31 @@ namespace Oblig1theAteam.Business.Orders
                 Description = dbMovie.Description,
                 TrailerLink = dbMovie.TrailerLink,
             };
+        }
+        
+        public bool CreateOrder(string user, List<Int32> moviesInCart)
+        {
+            List<OrderItem> orderItems = new List<OrderItem>();
+
+            var order = new DBModels.Order()
+            {
+                OrderDate = DateTime.Now,
+                User = userService.GetDbUser(user)
+            };
+            dbService.Add(order);
+            var first = dbService.SaveChanges();
+            var id = order.Id;
+
+            foreach(int movieId in moviesInCart)
+            {
+                orderItems.Add(new OrderItem
+                {
+                    Order = order,
+                    Movie = dbService.Movie.Find(movieId)
+                });
+            }
+            order.OrderItem = orderItems;
+            return dbService.SaveChanges() == 0 ? false : true;
         }
 
         private Models.Order ToOrder(DBModels.Order dbOrder)
