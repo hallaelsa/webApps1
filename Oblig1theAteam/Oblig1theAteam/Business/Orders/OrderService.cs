@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Oblig1theAteam.Business.Orders.Models;
+using Oblig1theAteam.Business.Users;
+using Oblig1theAteam.Business.Movies;
 
 // Logikklasser gjør ting. De skal ikke holde på data, kun bruke dem.
 namespace Oblig1theAteam.Business.Orders
@@ -12,15 +14,12 @@ namespace Oblig1theAteam.Business.Orders
     public class OrderService
     {
         private readonly DbService dbService;
+        private readonly UserService userService;
 
-        public OrderService(DbService dbService)
+        public OrderService(DbService dbService, UserService userService)
         {
             this.dbService = dbService;
-        }
-
-        public bool saveOrder()
-        {
-            return true;
+            this.userService = userService;
         }
 
         //Her bruker vi Extentions for å gjøre om DbModell til business modell.
@@ -65,49 +64,32 @@ namespace Oblig1theAteam.Business.Orders
                 TrailerLink = dbMovie.TrailerLink,
             };
         }
-
-<<<<<<< HEAD
-        public void CreateOrder()
+        
+        public bool CreateOrder(string user, List<Int32> moviesInCart)
         {
+            List<OrderItem> orderItems = new List<OrderItem>();
 
-        }
-
-        /*
-         * public bool settInn(Kunde innKunde)
-        {
-            var nyKunde = new Kunder()
+            var order = new DBModels.Order()
             {
-                Fornavn = innKunde.fornavn,
-                Etternavn = innKunde.etternavn,
-                Adresse = innKunde.adresse,
-                Postnr = innKunde.postnr
+                OrderDate = DateTime.Now,
+                User = userService.GetDbUser(user)
             };
+            dbService.Add(order);
+            var first = dbService.SaveChanges();
+            var id = order.Id;
 
-            var db = new KundeContext();
-            try
-            {  
-                var eksistererPostnr = db.Poststeder.Find(innKunde.postnr);
-               
-                if (eksistererPostnr == null)
-                {
-                    var  nyttPoststed = new Poststeder()
-                    {
-                        Postnr = innKunde.postnr,
-                        Poststed = innKunde.poststed
-                    };
-                    nyKunde.Poststeder = nyttPoststed;
-                }
-                db.Kunder.Add(nyKunde);
-                db.SaveChanges();
-                return true;
-            }
-            catch (Exception feil)
+            foreach(int movieId in moviesInCart)
             {
-                return false;
+                orderItems.Add(new OrderItem
+                {
+                    Order = order,
+                    Movie = dbService.Movie.Find(movieId)
+                });
             }
+            order.OrderItem = orderItems;
+            return dbService.SaveChanges() == 0 ? false : true;
         }
-        */
-=======
+
         private Models.Order ToOrder(DBModels.Order dbOrder)
         {
             return new Models.Order
@@ -116,7 +98,6 @@ namespace Oblig1theAteam.Business.Orders
                 Date = dbOrder.OrderDate
             };
         }
->>>>>>> 47c60fa2bc3dfdc70e854300c365f0328e7db8bd
 
         //public List<Models.Order> ListByDate(DateTime date)
         //{

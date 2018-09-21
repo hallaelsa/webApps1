@@ -32,20 +32,12 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-<<<<<<< HEAD
-                    <li><a asp-area="" asp-controller="Order" asp-action="Orders">Order</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-=======
->>>>>>> 47c60fa2bc3dfdc70e854300c365f0328e7db8bd
                     @if (!string.IsNullOrEmpty(Context.Session.GetString("_LoggedIn")))
                     {
                         <li><a asp-area="" asp-controller="Order" asp-action="MyOrders">My Orders</a></li>
                         <li><a asp-area="" asp-controller="User" asp-action="Index">My Profile</a></li>
                         <li><a asp-area="" asp-controller="Order" asp-action="ShoppingCart">Shopping Cart</a></li>
-<<<<<<< HEAD
-=======
                         <li><a asp-area="" asp-controller="User" asp-action="Logout">Log out</a></li>
->>>>>>> 47c60fa2bc3dfdc70e854300c365f0328e7db8bd
                     }
                     else
                     {

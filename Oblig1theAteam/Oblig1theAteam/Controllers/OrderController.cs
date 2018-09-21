@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-=======
-﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
->>>>>>> 47c60fa2bc3dfdc70e854300c365f0328e7db8bd
+using Microsoft.AspNetCore.Http;
 using Oblig1theAteam.Business.Orders;
 using Oblig1theAteam.Business.Users.Models;
 using Oblig1theAteam.ViewModels.Order;
@@ -13,22 +8,23 @@ using System.Collections.Generic;
 using Oblig1theAteam.Extensions;
 using Oblig1theAteam.Business.Movies.Models;
 using Oblig1theAteam.Business.Movies;
+using Oblig1theAteam.Business.Users;
 
 namespace Oblig1theAteam.Controllers
 {
     public class OrderController : Controller
     {
         private readonly OrderService orderService;
-<<<<<<< HEAD
         private readonly MovieService movieService;
-=======
-        const string SessionLoggedIn = "_LoggedIn";
->>>>>>> 47c60fa2bc3dfdc70e854300c365f0328e7db8bd
+        private readonly UserService userService;
 
-        public OrderController(OrderService orderService, MovieService movieService)
+        const string SessionLoggedIn = "_LoggedIn";
+
+        public OrderController(OrderService orderService, MovieService movieService, UserService userService)
         {
             this.orderService = orderService;
             this.movieService = movieService;
+            this.userService = userService;
         }
         
         public IActionResult MyOrders()
@@ -91,12 +87,9 @@ namespace Oblig1theAteam.Controllers
 
         public IActionResult CompletePurchase()
         {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult CreateOrder(CreateOrderViewModel orderViewModel)
-        {
+            var userId = HttpContext.Session.GetString(SessionLoggedIn);
+            var moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
+            orderService.CreateOrder(userId, moviesInCart);
             return View();
         }
     }
