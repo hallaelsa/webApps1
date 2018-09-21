@@ -42,6 +42,21 @@
 <div class="panel-footer clearfix">
     <div class="pull-left">
         <h3>Total Sum: @Model.TotalSum</h3>
-        @Html.ActionLink("Complete Purchase","CompletePurchase",new { tom = ""}, new { @class = "btn btn-primary" })
+        <button onclick="showVisaForm()">Complete Purchase</button>
+    </div>
+</div>
+<div id ="visa-form" class="panel-footer clearfix" class = "btn btn-primary" style="visibility:hidden">
+    <div class="pull-left">
+        <h6>Card Information:</h6>
+        @using (Html.BeginForm("CompletePurchase", "Order", FormMethod.Post, new { @class = "navbar-form" }))
+        {
+        <div class="form-group">
+            @Html.TextBox("CardNumber", "", new { @class = "form-control layout-input", placeholder = "card number" })
+            @Html.TextBox("CVV", "", new { @class = "form-control layout-input", placeholder = "cvv" })
+            @Html.TextBox("ExpirationDate", "", new { @class = "form-control layout-input", placeholder = "01/12/18" })
+            <button class="btn btn-primary">Comfirm Purchase</button>
+        </div>
+        }
+        <li><a asp-area="" asp-controller="Order" asp-action="Complete Purchase">Comfirm Purchase</a></li>
     </div>
 </div>

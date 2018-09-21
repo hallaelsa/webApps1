@@ -10,5 +10,8 @@ namespace Oblig1theAteam.ViewModels.Order
     {
         public int TotalSum { get; set; }
         public List<Movie> Movies { get; set; }
+        public int CardNumber { get; set; }
+        public int CVV { get; set; }
+        public string ExpirationDate { get; set; } // bør muligens endres, feks til 3 felt?
     }
 }

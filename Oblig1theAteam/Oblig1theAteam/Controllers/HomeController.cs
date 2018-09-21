@@ -43,11 +43,10 @@ namespace Oblig1theAteam.Controllers
 
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(SessionUserEmail)))
             {
-                HttpContext.Session.SetString(SessionUserEmail, "frode@outlook.com");
                 //HttpContext.Session.SetString(SessionLoggedIn, "eple@eple.no");
             }
-            HttpContext.Session.SetString(SessionLoggedIn, "frode@outlook.com");
-            var email = HttpContext.Session.GetString(SessionUserEmail);
+            //HttpContext.Session.SetString(SessionLoggedIn, "frode@outlook.com");
+            //var email = HttpContext.Session.GetString(SessionUserEmail);
             // Her bruker vi businesslogikken (altså servicemodellene) til å fikse ViewModel
             var model = new IndexViewModel();
             model.Movies = movieService.GetMovies();
@@ -97,7 +96,7 @@ namespace Oblig1theAteam.Controllers
             }
             moviesInCart.Add(id);
             HttpContext.Session.SaveAsJson("moviesInCart", moviesInCart);
-            return View("Index");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

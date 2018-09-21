@@ -85,12 +85,13 @@ namespace Oblig1theAteam.Controllers
             return RedirectToAction("ShoppingCart");
         }
 
-        public IActionResult CompletePurchase()
+        [HttpPost]
+        public IActionResult CompletePurchase(ShoppingCartViewModel shoppingCartViewModel)
         {
             var userId = HttpContext.Session.GetString(SessionLoggedIn);
             var moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
             orderService.CreateOrder(userId, moviesInCart);
-            return View();
+            return RedirectToAction("ShoppingCart");
         }
     }
 }
