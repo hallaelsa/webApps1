@@ -33,6 +33,13 @@ namespace Oblig1theAteam.Business.Movies
             return AddGenreToMovieModel(movies);
         }
 
+        public Movie GetMovieById(int movieId)
+        {
+            var movie = dbService.Movie
+            .FirstOrDefault(m => m.Id == movieId);
+            return ToMovie(movie);
+        }
+
         public List<Movie> AddGenreToMovieModel(List<Movie> movies)
         {
             foreach (var movie in movies)

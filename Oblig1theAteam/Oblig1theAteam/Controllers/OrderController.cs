@@ -7,16 +7,19 @@ using System;
 using System.Collections.Generic;
 using Oblig1theAteam.Extensions;
 using Oblig1theAteam.Business.Movies.Models;
+using Oblig1theAteam.Business.Movies;
 
 namespace Oblig1theAteam.Controllers
 {
     public class OrderController : Controller
     {
         private readonly OrderService orderService;
+        private readonly MovieService movieService;
 
-        public OrderController(OrderService orderService)
+        public OrderController(OrderService orderService, MovieService movieService)
         {
             this.orderService = orderService;
+            this.movieService = movieService;
         }
         
         public IActionResult Orders()//string email)
@@ -35,14 +38,50 @@ namespace Oblig1theAteam.Controllers
 
         public IActionResult ShoppingCart()
         {
+            ShoppingCartViewModel viewModel = new ShoppingCartViewModel();
             List<Int32> moviesInCart;
             moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
             if (moviesInCart == null)
             {
                 moviesInCart = new List<Int32>();
             }
-            IList<Movie> moviesToPurchase = new List<Movie>();
-            return View(moviesToPurchase);
+            viewModel.Movies = GetMoviesFromIds(moviesInCart);
+            viewModel.TotalSum = GetTotalSum(viewModel.Movies);
+            return View(viewModel);
+        }
+
+        private List<Movie> GetMoviesFromIds(List<Int32> movieIds)
+        {
+            List<Movie> movies = new List<Movie>();
+            foreach(int movieId in movieIds){
+                var movie = movieService.GetMovieById(movieId);
+                if (movie != null) movies.Add(movie);
+            }
+            return movies;
+        }
+
+        private int GetTotalSum(List<Movie> movies)
+        {
+            int total = 0;
+            foreach(var movie in movies)
+            {
+                total += movie.Price;
+            }
+            return total;
+        }
+
+        public IActionResult RemoveFromCart(int movieId)
+        {
+            List<Int32> moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
+            moviesInCart.Remove(movieId);
+            HttpContext.Session.SaveAsJson("moviesInCart", moviesInCart);
+
+            return RedirectToAction("ShoppingCart");
+        }
+
+        public IActionResult CompletePurchase()
+        {
+            return View();
         }
 
         [HttpPost]

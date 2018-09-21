@@ -65,6 +65,47 @@ namespace Oblig1theAteam.Business.Orders
             };
         }
 
+        public void CreateOrder()
+        {
+
+        }
+
+        /*
+         * public bool settInn(Kunde innKunde)
+        {
+            var nyKunde = new Kunder()
+            {
+                Fornavn = innKunde.fornavn,
+                Etternavn = innKunde.etternavn,
+                Adresse = innKunde.adresse,
+                Postnr = innKunde.postnr
+            };
+
+            var db = new KundeContext();
+            try
+            {  
+                var eksistererPostnr = db.Poststeder.Find(innKunde.postnr);
+               
+                if (eksistererPostnr == null)
+                {
+                    var  nyttPoststed = new Poststeder()
+                    {
+                        Postnr = innKunde.postnr,
+                        Poststed = innKunde.poststed
+                    };
+                    nyKunde.Poststeder = nyttPoststed;
+                }
+                db.Kunder.Add(nyKunde);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception feil)
+            {
+                return false;
+            }
+        }
+        */
+
         //public List<Models.Order> ListByDate(DateTime date)
         //{
         //    return dbService.Orders

@@ -1,14 +1,11 @@
-﻿@model IList<Oblig1theAteam.Business.Movies.Models.Movie>
+﻿@model Oblig1theAteam.ViewModels.Order.ShoppingCartViewModel
 
 @{
-    ViewData["Title"] = "ShoppingCart";
+    ViewData["Title"] = "Shopping Cart";
 }
 
 <h2>ShoppingCart</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -24,7 +21,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Movies) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
@@ -36,11 +33,15 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Remove from cart", "RemoveFromCart", new {  movieId=item.Id  })
             </td>
         </tr>
 }
     </tbody>
 </table>
+<div class="panel-footer clearfix">
+    <div class="pull-left">
+        <h3>Total Sum: @Model.TotalSum</h3>
+        @Html.ActionLink("Complete Purchase","CompletePurchase",new { tom = ""}, new { @class = "btn btn-primary" })
+    </div>
+</div>
