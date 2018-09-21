@@ -118,8 +118,8 @@ namespace Oblig1theAteam.DBModels
         {
             using (var reader = new StreamReader(@".\DBModels\SeedData\movies.csv"))
             {
-                var count = 20;
-                while(count > 0)
+                var count = 2000;
+                while(!reader.EndOfStream || count < 0)
                 {
                     count--;
                     var line = reader.ReadLine();

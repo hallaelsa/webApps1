@@ -1,0 +1,71 @@
+﻿@model Oblig1theAteam.ViewModels.User.IndexViewModel
+
+@{
+    ViewData["Title"] = "MyProfile";
+}
+
+<h2>My Profile</h2>
+
+<table class="table myprofile-table">
+    <tbody>
+        <tr>
+            <th scope="row">
+                @Html.DisplayNameFor(model => model.User.Email)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.User.Email)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                @Html.DisplayNameFor(model => model.User.FirstName)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.User.FirstName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                @Html.DisplayNameFor(model => model.User.LastName)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.User.LastName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                @Html.DisplayNameFor(model => model.User.Birthday)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.User.Birthday.Day)/
+                @Html.DisplayFor(model => model.User.Birthday.Month)/
+                @Html.DisplayFor(model => model.User.Birthday.Year)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                @Html.DisplayNameFor(model => model.User.PhoneNumber)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.User.PhoneNumber)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+

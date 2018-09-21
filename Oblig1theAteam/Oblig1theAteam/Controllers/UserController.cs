@@ -55,6 +55,14 @@ namespace Oblig1theAteam.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult MyProfile()
+        {
+            var user = HttpContext.Session.GetString(SessionLoggedIn);
+            var model = new IndexViewModel();
+            model.User = userService.GetUser(user);
+            return View(model);
+        }
+
 
     }
 
