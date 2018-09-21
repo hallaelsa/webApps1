@@ -117,7 +117,7 @@ body {
 }
 
 #modal-movie-poster {
-    width: 300px;
+    width: 350px;
 }
 
 #modal-movie-text {
@@ -126,6 +126,11 @@ body {
 
 .modal-movie-heading {
     font-weight: 600;
+}
+
+.trailer {
+    max-width: 100%;
+    width: 300px;
 }
 
 .modal-movie-body {

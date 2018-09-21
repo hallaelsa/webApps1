@@ -29,6 +29,17 @@
                 const movie_price = '<span class="modal-movie-heading">Price: </span>' + $(this).data('movie-price');
                 $('#modal-movie-price').html(movie_price + ",-");
 
+                let trailer_link = $(this).data('movie-trailer');
+                if (trailer_link != "") {
+                    $('#modal-movie-trailer').css('display', 'block');
+                    $("#trailer").attr('src', trailer_link);
+                } else {
+                    $('#modal-movie-trailer').css('display', 'none');
+                }
+            })
+
+            $('#movieModal').on('hide.bs.modal', function () {
+                $('#trailer').attr('src', '');
             })
         })
     </script>
@@ -63,6 +74,7 @@
            data-movie-runtime="@movie.Time"
            data-movie-price="@movie.Price"
            data-movie-poster="@movie.PosterName"
+           data-movie-trailer="@movie.TrailerLink"
            >
 
             <div class="movie">
