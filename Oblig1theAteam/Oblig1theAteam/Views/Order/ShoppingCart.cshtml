@@ -1,43 +1,27 @@
-﻿@model IEnumerable<Oblig1theAteam.Business.Movies.Models.Movie>
+﻿@model Oblig1theAteam.ViewModels.Order.ShoppingCartViewModel
 
 @{
-    ViewData["Title"] = "ShoppingCart";
+    ViewData["Title"] = "Shopping Cart";
 }
 
 <h2>ShoppingCart</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                Id
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                Title
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Year)
+                Price
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AgeRestriction)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Time)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrailerLink)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Movies) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
@@ -46,26 +30,33 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Year)
+                @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AgeRestriction)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Time)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TrailerLink)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Remove from cart", "RemoveFromCart", new {  movieId=item.Id  })
             </td>
         </tr>
 }
     </tbody>
 </table>
+<div class="panel-footer clearfix">
+    <div class="pull-left">
+        <h3>Total Sum: @Model.TotalSum</h3>
+        <button onclick="showVisaForm()">Complete Purchase</button>
+    </div>
+</div>
+<div id ="visa-form" class="panel-footer clearfix" class = "btn btn-primary" style="visibility:hidden">
+    <div class="pull-left">
+        <h6>Card Information:</h6>
+        @using (Html.BeginForm("CompletePurchase", "Order", FormMethod.Post, new { @class = "navbar-form" }))
+        {
+        <div class="form-group">
+            @Html.TextBox("CardNumber", "", new { @class = "form-control layout-input", placeholder = "card number" })
+            @Html.TextBox("CVV", "", new { @class = "form-control layout-input", placeholder = "cvv" })
+            @Html.TextBox("ExpirationDate", "", new { @class = "form-control layout-input", placeholder = "01/12/18" })
+            <button class="btn btn-primary">Comfirm Purchase</button>
+        </div>
+        }
+        <li><a asp-area="" asp-controller="Order" asp-action="Complete Purchase">Comfirm Purchase</a></li>
+    </div>
+</div>

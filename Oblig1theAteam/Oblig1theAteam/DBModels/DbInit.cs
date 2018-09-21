@@ -126,6 +126,7 @@ namespace Oblig1theAteam.DBModels
             {
                 var count = 20;
                 while(count > 0 && !reader.EndOfStream)
+
                 {
                     count--;
                     var line = reader.ReadLine();

@@ -35,7 +35,24 @@ namespace Oblig1theAteam.Business.Movies
 
             return AddGenreToMovieModel(movies);
         }
+        
+        public Movie GetMovieById(int movieId)
+        {
+            var movie = dbService.Movie
+            .FirstOrDefault(m => m.Id == movieId);
+            return ToMovie(movie);
+        }
 
+        public List<Movie> AddGenreToMovieModel(List<Movie> movies)
+        {
+            foreach (var movie in movies)
+            {
+                movie.Genre = GetGenres(movie.Id);
+            }
+
+            return movies;
+        }
+        
         public List<Movie> GetMovies()
         {
             var allMovies = dbService.Movie
@@ -44,16 +61,6 @@ namespace Oblig1theAteam.Business.Movies
                 .ToList();
 
             return AddGenreToMovieModel(allMovies); ;
-        }
-
-        private List<Movie> AddGenreToMovieModel(List<Movie> movies)
-        {
-            foreach (var movie in movies)
-            {
-                movie.Genre = GetGenres(movie.Id);
-            }
-
-            return movies;
         }
 
         public List<Genre> GetGenres(int movieId) {

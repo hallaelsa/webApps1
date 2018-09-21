@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Oblig1theAteam.Controllers;
+using Oblig1theAteam.DBModels;
 
 namespace Oblig1theAteam.Business.Users
 {
@@ -16,8 +17,13 @@ namespace Oblig1theAteam.Business.Users
 
         public Models.User GetUser(string email)
         {
-            var dbUser = dbService.Users.First(u => u.Email == email);
+            var dbUser = GetDbUser(email);
             return ToUser(dbUser);
+        }
+
+        public User GetDbUser(string email)
+        {
+            return dbService.Users.First(u => u.Email == email);
         }
 
         public bool Login(string email, string password)
