@@ -124,7 +124,7 @@ namespace Oblig1theAteam.DBModels
         {
             using (var reader = new StreamReader(@".\DBModels\SeedData\movies.csv"))
             {
-                var count = 2000;
+                var count = 40;
                 while(count > 0 && !reader.EndOfStream)
 
                 {
@@ -134,6 +134,11 @@ namespace Oblig1theAteam.DBModels
                     {
                         // 0: title, 1: year, 2: age, 3: time, 4: genre, 5: description, 6: poster
                         var columns = line.Split('|');
+                        var trailerLink = "";
+
+                        if (columns.Length > 7)
+                            trailerLink = columns[7];
+
 
                         try
                         {
@@ -146,7 +151,7 @@ namespace Oblig1theAteam.DBModels
                                 Description = columns[5],
                                 PosterName = columns[6],
                                 Price = generateRandomPrice(),
-                                TrailerLink = ""
+                                TrailerLink = trailerLink
                             };
 
                             dbContext.Add(newMovie);
