@@ -7,6 +7,9 @@ project.lock.json
 # Visual Studio Code
 .vscode
 
+# Test Filer
+Controllers/TestController.cs
+
 # User-specific files
 *.suo
 *.user
