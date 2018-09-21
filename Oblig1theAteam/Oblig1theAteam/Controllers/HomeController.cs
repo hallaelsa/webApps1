@@ -38,8 +38,6 @@ namespace Oblig1theAteam.Controllers
 
         public IActionResult Index()
         {
-            AddToShoppingCart(1);
-            AddToShoppingCart(3);
 
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(SessionUserEmail)))
             {
