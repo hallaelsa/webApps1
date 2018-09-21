@@ -46,6 +46,17 @@ body {
     display: flex;
     flex: 1;
     flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.movie-link {
+    text-decoration: none;
+    color: black;
+}
+
+.movie-link:hover {
+    text-decoration: none;
+    color: black;
 }
 
 .movie {
@@ -93,6 +104,28 @@ body {
     padding: 4px;
 }
 
+/*
+    MOVIE MODAL CSS
+*/
+.modal-title {
+    text-align: center;
+}
+
+#movieModal .modal-dialog {
+    width: 900px;
+}
+
+#modal-movie-poster {
+    width: 400px;
+}
+
+.modal-movie-body {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
 .home-forms {
     margin-top: 1.5rem;
 }
@@ -116,4 +149,5 @@ body {
 #genre {
     padding: 4px;
 }
+
 

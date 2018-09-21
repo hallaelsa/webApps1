@@ -4,27 +4,53 @@
     // Viewet skal kun vise frem ViewModellen. Den skal ikke inneholde logikk.
     ViewData["Title"] = "Home Page";
 }
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('a[data-movieModal=true]').click(function () {
+                const movie_title = $(this).data('movie-title');
+                $('#modal-movie-title').html(movie_title);
 
-    <div class="form-inline home-forms">
-        @using (Html.BeginForm("MoviesByTitle", "Home", FormMethod.Post, new { @class = "form-group home-input" }))
-        {
-            <b>Search title: </b>
-            @Html.TextBox("title", "")
-            <button>Search</button>
-        }
+                const movie_poster = $(this).data('movie-poster');
+                $('#modal-movie-poster-container').html('<img id="modal-movie-poster" src="../images/posters/main/' + movie_poster + '" />');
 
-        @using (Html.BeginForm("MoviesByGenre", "Home", FormMethod.Post, new { @class = "form-group home-dropdown" }))
-        {
-            <b>Select Genre: </b>
+                const movie_description = $(this).data('movie-description');
+                $('#modal-movie-description').html(movie_description);
+            })
+        })
+    </script>
+}
 
-            @Html.DropDownList("genre", new SelectList(Model.Genre, "GenreName", "GenreName"))
-            <input type="submit" value="OK" />
-        }
-    </div>
+<div class="form-inline home-forms">
+    @using (Html.BeginForm("MoviesByTitle", "Home", FormMethod.Post, new { @class = "form-group home-input" }))
+    {
+        <b>Search title: </b>
+        @Html.TextBox("title", "")
+        <button>Search</button>
+    }
 
-    <div class="movies-container">
-        @foreach (var movie in Model.Movies)
-        {
+    @using (Html.BeginForm("MoviesByGenre", "Home", FormMethod.Post, new { @class = "form-group home-dropdown" }))
+    {
+        <b>Select Genre: </b>
+
+        @Html.DropDownList("genre", new SelectList(Model.Genre, "GenreName", "GenreName"))
+        <input type="submit" value="OK" />
+    }
+</div>
+
+<div class="movies-container">
+    @foreach (var movie in Model.Movies)
+    {
+        <a href="#movieModal" class="movie-link" id="movieModalButton" data-movieModal="true" data-toggle="modal"
+           data-movie-id="@movie.Id"
+           data-movie-title="@movie.Title"
+           data-movie-description="@movie.Description"
+           data-movie-year="@movie.Year"
+           data-movie-time="@movie.Time"
+           data-movie-price="@movie.Price"
+           data-movie-poster="@movie.PosterName"
+           >
+
             <div class="movie">
                 <img class="movie-poster" src="~/images/posters/thumbnail/@movie.PosterName" alt="movie poster for @movie.PosterName" />
                 <div class="movie-info">
@@ -36,5 +62,8 @@
                     </div>
                 </div>
             </div>
-        }
-    </div>
+        </a>
+    }
+</div>
+
+@Html.Partial("movieModal")
