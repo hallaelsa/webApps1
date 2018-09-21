@@ -7,9 +7,6 @@ project.lock.json
 # Visual Studio Code
 .vscode
 
-# Test Filer
-Controllers/TestController.cs
-
 # User-specific files
 *.suo
 *.user
@@ -33,3 +30,4 @@ msbuild.wrn
 
 # Visual Studio 2015
 .vs/
+Oblig1theAteam/Oblig1theAteam/Controllers/TestController.cs
