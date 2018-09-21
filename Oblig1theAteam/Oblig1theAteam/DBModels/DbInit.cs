@@ -124,7 +124,7 @@ namespace Oblig1theAteam.DBModels
         {
             using (var reader = new StreamReader(@".\DBModels\SeedData\movies.csv"))
             {
-                var count = 20;
+                var count = 2000;
                 while(count > 0 && !reader.EndOfStream)
 
                 {
@@ -152,14 +152,15 @@ namespace Oblig1theAteam.DBModels
                             dbContext.Add(newMovie);
 
                             var genreArray = columns[4].Split(',').ToList();
-                            genreArray.ForEach(g => g.Trim());
 
                             foreach (var genre in genreArray)
                             {
+                                var trimmedGenre = genre.Trim();
+
                                 dbContext.Add(new MovieGenre
                                 {
                                     Movie = newMovie,
-                                    Genre = new Genre { GenreName = genre },
+                                    Genre = new Genre { GenreName = trimmedGenre },
                                 });
                             }
 
