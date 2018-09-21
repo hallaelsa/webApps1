@@ -46,7 +46,6 @@ body {
     display: flex;
     flex: 1;
     flex-wrap: wrap;
-    justify-content: space-between;
 }
 
 .movie-link {
@@ -113,7 +112,9 @@ body {
 
 #movieModal .modal-dialog {
     width: 900px;
-    max-width: 100%;
+    max-width: 90%;
+    margin: auto;
+    margin-top: 4%;
 }
 
 #modal-movie-poster {
@@ -129,7 +130,6 @@ body {
 }
 
 .trailer {
-    max-width: 100%;
     width: 300px;
 }
 
@@ -140,7 +140,7 @@ body {
     justify-content: flex-start;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
     .modal-movie-body {
         flex-direction: column;
         justify-content: center;
@@ -148,6 +148,10 @@ body {
     #modal-movie-poster-container {
         margin: auto;
         margin-bottom: 25px;
+    }
+
+    #modal-movie-poster {
+        width: 100%;
     }
 }
 
