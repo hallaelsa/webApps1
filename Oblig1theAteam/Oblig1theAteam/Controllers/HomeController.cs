@@ -22,6 +22,7 @@ namespace Oblig1theAteam.Controllers
 
         const string SessionLoggedIn = "_LoggedIn";
         const string SessionUserEmail = "_UserEmail";
+        const string SessionCountShoppingCart = "_CountShoppingCart";
 
         public HomeController(
             UserService userService,
@@ -39,9 +40,9 @@ namespace Oblig1theAteam.Controllers
         public IActionResult Index()
         {
 
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(SessionUserEmail)))
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(SessionCountShoppingCart)))
             {
-                //HttpContext.Session.SetString(SessionLoggedIn, "eple@eple.no");
+                HttpContext.Session.SetInt32(SessionCountShoppingCart, 0);
             }
             //HttpContext.Session.SetString(SessionLoggedIn, "frode@outlook.com");
             //var email = HttpContext.Session.GetString(SessionUserEmail);
@@ -94,6 +95,7 @@ namespace Oblig1theAteam.Controllers
             }
             moviesInCart.Add(id);
             HttpContext.Session.SaveAsJson("moviesInCart", moviesInCart);
+            HttpContext.Session.SetInt32(SessionCountShoppingCart, moviesInCart.Count);
             return RedirectToAction("Index", "Home");
         }
     }
