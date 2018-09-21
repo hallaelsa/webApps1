@@ -1,22 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Oblig1theAteam.Business.Users;
 using Oblig1theAteam.ViewModels.User;
+using System;
 
 namespace Oblig1theAteam.Controllers
 {
     public class UserController : Controller
     {
         private readonly UserService userService;
+        const string SessionLoggedIn = "_LoggedIn";
 
-        public UserController(UserController userService)
+        public UserController(UserService userService)
         {
             this.userService = userService;
         }
-
-        public ActionResult Registrer()
-        {
-            return View();
-        }   
 
         [HttpPost]
         public IActionResult Index()//string email)
@@ -33,14 +31,28 @@ namespace Oblig1theAteam.Controllers
         [HttpPost]
         public IActionResult Register()
         {
-            // View ikke laga!!!
+            // View ikke laga!!! Gå til et eget registreringsView.
             return View();
         }
 
         [HttpPost]
         public IActionResult Login(string username, string password)
         {
-            return View();
+            // må ha sjekk for om feltene er fyllt ut. 
+            // så sjekke med databasen om brukeren finnes.
+            var user = userService.Login(username, password);
+            if(user)
+            {
+                HttpContext.Session.SetString(SessionLoggedIn, username);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove(SessionLoggedIn);
+            return RedirectToAction("Index", "Home");
         }
 
 

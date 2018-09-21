@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+=======
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+>>>>>>> 47c60fa2bc3dfdc70e854300c365f0328e7db8bd
 using Oblig1theAteam.Business.Orders;
 using Oblig1theAteam.Business.Users.Models;
 using Oblig1theAteam.ViewModels.Order;
@@ -14,7 +19,11 @@ namespace Oblig1theAteam.Controllers
     public class OrderController : Controller
     {
         private readonly OrderService orderService;
+<<<<<<< HEAD
         private readonly MovieService movieService;
+=======
+        const string SessionLoggedIn = "_LoggedIn";
+>>>>>>> 47c60fa2bc3dfdc70e854300c365f0328e7db8bd
 
         public OrderController(OrderService orderService, MovieService movieService)
         {
@@ -22,13 +31,14 @@ namespace Oblig1theAteam.Controllers
             this.movieService = movieService;
         }
         
-        public IActionResult Orders()//string email)
+        public IActionResult MyOrders()
         {
             // View modellen skal ha samme navn som metoden + "ViewModel".
-            var model = new OrdersViewModel();
+            var model = new MyOrdersViewModel();
             //model.User = userService.Get(1);
             //model.Orders = orderService.ListByUser(model.User.Id);
-            model.Orders = orderService.GetOrders("eple@eple.no");
+            var user = HttpContext.Session.GetString(SessionLoggedIn);
+            model.Orders = orderService.GetOrders(user);
             //User user = new User();
             //user.Email = "eple@eple.no";
             //model.User = user;

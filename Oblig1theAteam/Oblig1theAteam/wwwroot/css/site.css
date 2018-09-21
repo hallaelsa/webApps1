@@ -42,37 +42,74 @@ body {
 /*
     MOVIE POSTER CSS
 */
-.movies {
+.movies-container {
     display: flex;
     flex: 1;
     flex-wrap: wrap;
 }
 
-.movie-info {
+.movie {
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
     max-width: 100%;
     width: 180px;
-    height: 375px;
     margin: 20px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
-    display: inline-block;
 }
 
-    .movie-info:hover {
+    .movie:hover {
         box-shadow: 0 8px 32px 0 rgba(0,0,0,0.2);
     }
 
 .movie-poster {
-    max-width: 100%;
+    width: 100%;
+}
+
+.movie-info {
+    display: flex;
+    padding: 8px;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .movie-title {
     margin: 0;
-    padding: 5px;
-    text-align: center;
     font-size: 1em;
-    font-weight: bold;
     font-family: "Segoe UI",Arial,sans-serif;
+}
+
+.movie-purchase {
+    align-items: baseline;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.btn-buy-movie {
+    padding: 4px;
+}
+
+.home-forms {
+    margin-top: 1.5rem;
+}
+
+.home-dropdown {
+    margin-left: 2rem;
+}
+
+.layout-input {
+    height: 30px !important;
+}
+
+.layout-login-btn {
+    height: 30px;
+}
+
+#genre {
+    padding: 4px;
 }
 

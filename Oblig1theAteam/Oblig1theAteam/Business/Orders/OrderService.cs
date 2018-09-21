@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Oblig1theAteam.Business.Orders.Models;
 
 // Logikklasser gjør ting. De skal ikke holde på data, kun bruke dem.
 namespace Oblig1theAteam.Business.Orders
@@ -33,7 +34,7 @@ namespace Oblig1theAteam.Business.Orders
         {
             var orders = dbService.Orders
                 .Where(o => o.User.Email == email)
-                .Select(o => o.ToOrder())
+                .Select(o => ToOrder(o))
                 .ToList();
 
             foreach(var order in orders)
@@ -65,6 +66,7 @@ namespace Oblig1theAteam.Business.Orders
             };
         }
 
+<<<<<<< HEAD
         public void CreateOrder()
         {
 
@@ -105,6 +107,16 @@ namespace Oblig1theAteam.Business.Orders
             }
         }
         */
+=======
+        private Models.Order ToOrder(DBModels.Order dbOrder)
+        {
+            return new Models.Order
+            {
+                Id = dbOrder.Id,
+                Date = dbOrder.OrderDate
+            };
+        }
+>>>>>>> 47c60fa2bc3dfdc70e854300c365f0328e7db8bd
 
         //public List<Models.Order> ListByDate(DateTime date)
         //{

@@ -5,46 +5,53 @@
     ViewData["Title"] = "Home Page";
 }
 
+    <div class="form-inline home-forms">
+        @using (Html.BeginForm("MoviesByTitle", "Home", FormMethod.Post, new { @class = "form-group home-input" }))
+        {
+            <b>Search title: </b>
+            @Html.TextBox("title", "")
+            <button>Search</button>
+        }
 
-@using (Html.BeginForm("MoviesByTitle", "Home", FormMethod.Post))
-{
-    <b>Search title: </b>
-    @Html.TextBox("title", "")
-    <button>Search</button>
-}
+        @using (Html.BeginForm("MoviesByGenre", "Home", FormMethod.Post, new { @class = "form-group home-dropdown" }))
+        {
+            <b>Select Genre: </b>
 
-@using (Html.BeginForm("MoviesByGenre", "Home", FormMethod.Post))
-{
-    <b>Select Genre: </b>
+            @Html.DropDownList("genre", new SelectList(Model.Genre, "GenreName", "GenreName"))
+            <input type="submit" value="OK" />
+        }
+    </div>
 
-    @Html.DropDownList("genre", new SelectList(Model.Genre, "GenreName", "GenreName"))
-    <input type="submit" value="OK" />
-}
-
-    <div class="movies">
+    <div class="movies-container">
         @foreach (var movie in Model.Movies)
         {
-            <div class="movie-info">
+            <div class="movie">
                 <img class="movie-poster" src="~/images/posters/thumbnail/@movie.PosterName" alt="movie poster for @movie.PosterName" />
-                <h1 class="movie-title">@movie.Title</h1>
-                <p>@movie.Price</p>
+                <div class="movie-info">
+                    <h1 class="movie-title">@movie.Title</h1>
+
+                    <div class="movie-purchase">
+                        <p>Price: @movie.Price,-</p>
+                        @Html.ActionLink("Buy Now", "AddToShoppingCart", new { id = movie.Id }, new { @class = "btn btn-primary btn-buy-movie" })
+                    </div>
+                </div>
             </div>
         }
     </div>
-@*
-    <ul>
-        @foreach (var movie in Model.Movies)
-        {
-            <li>@movie.Title</li>
+    @*
+        <ul>
+            @foreach (var movie in Model.Movies)
+            {
+                <li>@movie.Title</li>
 
-                <ul>
-                    @foreach (var genre in movie.Genre)
-                    {
-                        <li>@genre.GenreName</li>
-                    }
-                </ul>
-            @Html.ActionLink("Legg i handlekurv", "AddToShoppingCart", new { id = movie.Id}, new { @class = "btn btn-primary"})
+                    <ul>
+                        @foreach (var genre in movie.Genre)
+                        {
+                            <li>@genre.GenreName</li>
+                        }
+                    </ul>
+                @Html.ActionLink("Legg i handlekurv", "AddToShoppingCart", new { id = movie.Id}, new { @class = "btn btn-primary"})
 
-        }
-    </ul>
-*@
+            }
+        </ul>
+    *@
