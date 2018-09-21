@@ -113,10 +113,19 @@ body {
 
 #movieModal .modal-dialog {
     width: 900px;
+    max-width: 100%;
 }
 
 #modal-movie-poster {
-    width: 400px;
+    width: 300px;
+}
+
+#modal-movie-text {
+    padding: 0 25px 25px 25px;
+}
+
+.modal-movie-heading {
+    font-weight: 600;
 }
 
 .modal-movie-body {
@@ -124,6 +133,17 @@ body {
     flex: 1;
     flex-direction: row;
     justify-content: flex-start;
+}
+
+@media only screen and (max-width: 600px) {
+    .modal-movie-body {
+        flex-direction: column;
+        justify-content: center;
+    }
+    #modal-movie-poster-container {
+        margin: auto;
+        margin-bottom: 25px;
+    }
 }
 
 .home-forms {
