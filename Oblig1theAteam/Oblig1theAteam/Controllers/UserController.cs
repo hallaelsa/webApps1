@@ -28,10 +28,9 @@ namespace Oblig1theAteam.Controllers
             return View(model);
         }
 
-        [HttpPost]
+        
         public IActionResult Register()
         {
-            // View ikke laga!!! Gå til et eget registreringsView.
             return View();
         }
 
