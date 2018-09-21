@@ -91,6 +91,8 @@ namespace Oblig1theAteam.Controllers
             var userId = HttpContext.Session.GetString(SessionLoggedIn);
             var moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
             orderService.CreateOrder(userId, moviesInCart);
+            // slette moviesInCart 
+            HttpContext.Session.Remove("moviesInCart");
             return RedirectToAction("ShoppingCart");
         }
     }
