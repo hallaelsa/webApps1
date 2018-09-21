@@ -32,32 +32,34 @@ namespace Oblig1theAteam.DBModels
                 while (!reader.EndOfStream)
                 {
                     var line = reader.ReadLine();
-                    // 0: Email, 1: Date+Time (format dd/mm/yyyy hh:mm:ss)
-                    var columns = line.Split('|');
-
-                    List<string> movies = columns[2].Split(',').ToList();
-                    User user = dbContext.Users.Find(columns[1]);
-
-                    Order order = new Order
+                    if(line != null)
                     {
-                        User = user,
-                        OrderDate = DateTime.Parse(columns[0], NorwegianCultureInfo, DateTimeStyles.NoCurrentDateDefault),
-                    };
+                        // 0: Email, 1: Date+Time (format dd/mm/yyyy hh:mm:ss)
+                        var columns = line.Split('|');
 
-                    dbContext.Orders.Add(order);
-                    
+                        List<string> movies = columns[2].Split(',').ToList();
+                        User user = dbContext.Users.Find(columns[1]);
 
-                    foreach(var movieId in movies)
-                    {
-                        Movie movie = dbContext.Movie.Find(System.Convert.ToInt32(movieId));
-                        OrderItem item = new OrderItem
+                        Order order = new Order
                         {
-                            Order = order,
-                            Movie = movie,
+                            User = user,
+                            OrderDate = DateTime.Parse(columns[0], NorwegianCultureInfo, DateTimeStyles.NoCurrentDateDefault),
                         };
-                        dbContext.OrderItem.Add(item);
-                    }
 
+                        dbContext.Orders.Add(order);
+
+
+                        foreach (var movieId in movies)
+                        {
+                            Movie movie = dbContext.Movie.Find(System.Convert.ToInt32(movieId));
+                            OrderItem item = new OrderItem
+                            {
+                                Order = order,
+                                Movie = movie,
+                            };
+                            dbContext.OrderItem.Add(item);
+                        }
+                    }
                     dbContext.SaveChanges();
                 }
             }
@@ -71,19 +73,23 @@ namespace Oblig1theAteam.DBModels
                 while (!reader.EndOfStream)
                 {
                     var line = reader.ReadLine();
-                    // 0: Email, 1: FirstName, 2: LastName, 3: Birthday, 4: Password, 5: PhoneNumber
-                    var columns = line.Split('|');
-
-                    var newUser = new User
+                    if(line != null)
                     {
-                        Email = columns[0],
-                        FirstName = columns[1],
-                        LastName = columns[2],
-                        Birthday = DateTime.Parse(columns[3], NorwegianCultureInfo, DateTimeStyles.NoCurrentDateDefault),
-                        Password = columns[4],
-                        PhoneNumber = columns[5],
-                    };
-                    dbContext.Add(newUser);
+                        // 0: Email, 1: FirstName, 2: LastName, 3: Birthday, 4: Password, 5: PhoneNumber
+                        var columns = line.Split('|');
+
+                        var newUser = new User
+                        {
+                            Email = columns[0],
+                            FirstName = columns[1],
+                            LastName = columns[2],
+                            Birthday = DateTime.Parse(columns[3], NorwegianCultureInfo, DateTimeStyles.NoCurrentDateDefault),
+                            Password = columns[4],
+                            PhoneNumber = columns[5],
+                        };
+                        dbContext.Add(newUser);
+                    }
+
                 }
             }
             dbContext.SaveChanges();
@@ -119,47 +125,51 @@ namespace Oblig1theAteam.DBModels
             using (var reader = new StreamReader(@".\DBModels\SeedData\movies.csv"))
             {
                 var count = 20;
-                while(count > 0 || !reader.EndOfStream)
+                while(count > 0 && !reader.EndOfStream)
                 {
                     count--;
                     var line = reader.ReadLine();
-                    // 0: title, 1: year, 2: age, 3: time, 4: genre, 5: description, 6: poster
-                    var columns = line.Split('|'); 
-
-                    try
+                    if(line != null)
                     {
-                        var newMovie = new Movie
+                        // 0: title, 1: year, 2: age, 3: time, 4: genre, 5: description, 6: poster
+                        var columns = line.Split('|');
+
+                        try
                         {
-                            Title = columns[0],
-                            Year = Int32.Parse(columns[1]),
-                            AgeRestriction = Int32.Parse(columns[2]),
-                            Time = Int32.Parse(columns[3]),
-                            Description = columns[5],
-                            PosterName = columns[6],
-                            Price = generateRandomPrice(),
-                            TrailerLink = ""
-                        };
-
-                        dbContext.Add(newMovie);
-
-                        var genreArray = columns[4].Split(',').ToList();
-                        genreArray.ForEach(g => g.Trim());
-
-                        foreach (var genre in genreArray)
-                        {
-                            dbContext.Add(new MovieGenre
+                            var newMovie = new Movie
                             {
-                                Movie = newMovie,
-                                Genre = new Genre { GenreName = genre },
-                            });
+                                Title = columns[0],
+                                Year = Int32.Parse(columns[1]),
+                                AgeRestriction = Int32.Parse(columns[2]),
+                                Time = Int32.Parse(columns[3]),
+                                Description = columns[5],
+                                PosterName = columns[6],
+                                Price = generateRandomPrice(),
+                                TrailerLink = ""
+                            };
+
+                            dbContext.Add(newMovie);
+
+                            var genreArray = columns[4].Split(',').ToList();
+                            genreArray.ForEach(g => g.Trim());
+
+                            foreach (var genre in genreArray)
+                            {
+                                dbContext.Add(new MovieGenre
+                                {
+                                    Movie = newMovie,
+                                    Genre = new Genre { GenreName = genre },
+                                });
+                            }
+
+                            dbContext.SaveChanges();
                         }
+                        catch (Exception feil)
+                        {
 
-                        dbContext.SaveChanges();
+                        }
                     }
-                    catch(Exception feil)
-                    {
 
-                    }
                 }
             }
         }
