@@ -78,6 +78,10 @@
 </div>
 
 <div class="movies-container">
+    @if(!Model.Movies.Any())
+    {
+        <h2>No movies found</h2>
+    }
     @foreach (var movie in Model.Movies)
     {
         <a href="#movieModal" class="movie-link" id="movieModalButton" data-movieModal="true" data-toggle="modal"
@@ -107,4 +111,4 @@
     }
 </div>
 
-@Html.Partial("movieModal");
+@Html.Partial("movieModal")
