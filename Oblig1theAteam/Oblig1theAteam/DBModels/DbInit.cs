@@ -124,7 +124,7 @@ namespace Oblig1theAteam.DBModels
         {
             using (var reader = new StreamReader(@".\DBModels\SeedData\movies.csv"))
             {
-                var count = 40;
+                var count = 2000;
                 while(count > 0 && !reader.EndOfStream)
 
                 {
@@ -168,8 +168,6 @@ namespace Oblig1theAteam.DBModels
                                     Genre = new Genre { GenreName = trimmedGenre },
                                 });
                             }
-
-                            dbContext.SaveChanges();
                         }
                         catch (Exception feil)
                         {
@@ -178,6 +176,7 @@ namespace Oblig1theAteam.DBModels
                     }
 
                 }
+                dbContext.SaveChanges();
             }
         }
 
