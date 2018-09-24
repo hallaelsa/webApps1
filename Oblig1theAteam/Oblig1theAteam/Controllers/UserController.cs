@@ -35,6 +35,12 @@ namespace Oblig1theAteam.Controllers
         }
 
         [HttpPost]
+        public IActionResult Register(string email)
+        {
+           return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
         public IActionResult Login(string username, string password)
         {
             // må ha sjekk for om feltene er fyllt ut. 
