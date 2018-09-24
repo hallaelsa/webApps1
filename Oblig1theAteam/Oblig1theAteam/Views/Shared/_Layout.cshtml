@@ -47,6 +47,7 @@
                 {
                     <ul class="nav navbar-nav">
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-area="" asp-controller="Order" asp-action="ShoppingCart">Shopping Cart(@Context.Session.GetInt32("_CountShoppingCart"))</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>

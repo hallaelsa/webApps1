@@ -48,6 +48,17 @@ namespace Oblig1theAteam.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult LoginForPurchase(string username, string password)
+        {
+            var user = userService.Login(username, password);
+            if (user)
+            {
+                HttpContext.Session.SetString(SessionLoggedIn, username);
+            }
+
+            return RedirectToAction("ShoppingCart", "Order");
+        }
+
         public IActionResult Logout()
         {
             HttpContext.Session.Remove(SessionLoggedIn);
