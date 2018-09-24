@@ -125,6 +125,14 @@ body {
     padding: 0 25px 25px 25px;
 }
 
+#modal-movie-text button {
+    padding: 10px 25px;
+}
+
+#modal-movie-buy-button {
+    text-align: right;
+}
+
 .modal-movie-heading {
     font-weight: 600;
 }
