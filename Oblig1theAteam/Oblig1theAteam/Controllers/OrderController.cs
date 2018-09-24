@@ -81,6 +81,7 @@ namespace Oblig1theAteam.Controllers
             List<Int32> moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
             moviesInCart.Remove(movieId);
             HttpContext.Session.SaveAsJson("moviesInCart", moviesInCart);
+            HttpContext.Session.SetInt32("_CountShoppingCart", moviesInCart.Count);
 
             return RedirectToAction("ShoppingCart");
         }

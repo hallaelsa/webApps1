@@ -10,8 +10,13 @@
             $.ajax({
                 url: '@Url.Action("AddToShoppingCart")',
                 data: { id: movie_id },
-                success: function () {
-                    console.log("YES");
+                success: function (res) {
+                    console.log(res);
+                    if (res) {
+                        let cartCount = $('#cartCount').html();
+                        cartCount++;
+                        $('#cartCount').html(cartCount);
+                    }
                 }
             });
         }
