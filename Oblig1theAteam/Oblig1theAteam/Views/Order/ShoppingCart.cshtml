@@ -54,8 +54,8 @@
             @using (Html.BeginForm("LoginForPurchase", "User", FormMethod.Post, new { @class = "navbar-form" }))
             {
                 <div class="form-group">
-                    @Html.TextBox("username", "", new { @class = "form-control layout-input", placeholder = "email" })
-                    @Html.Password("password", "", new { @class = "form-control layout-input", placeholder = "password" })
+                    @Html.TextBox("username", "", new { @class = "form-control layout-input", placeholder = "email", id="username2" })
+                    @Html.Password("password", "", new { @class = "form-control layout-input", placeholder = "password", id = "password2" })
                     <button class="btn btn-default layout-login-btn">Login</button>
                 </div>
             }

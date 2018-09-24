@@ -148,6 +148,12 @@ body {
     justify-content: flex-start;
 }
 
+#sup-size {
+    font-size: 6px;
+    vertical-align: super;
+
+}
+
 @media only screen and (max-width: 800px) {
     .modal-movie-body {
         flex-direction: column;
