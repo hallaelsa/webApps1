@@ -158,25 +158,6 @@ body {
 
 }
 
-.my-orders-movies-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-}
-
-.my-orders-movie-details {
-    display: flex;
-    flex-direction: row;
-    margin: 20px;
-    align-items: flex-end;
-}
-
-.my-orders-order-details {
-}
-
-.my-orders-movie-btn {
-    height: 48px;
-}
 
 @media only screen and (max-width: 800px) {
     .modal-movie-body {
@@ -191,6 +172,22 @@ body {
     #modal-movie-poster {
         width: 100%;
     }
+}
+
+/*
+    ORDER PAGE
+*/
+.order-table-image {
+    width: 80px;
+}
+
+#order-row {
+    vertical-align: middle;
+}
+
+
+#order-table, #order-table * {
+    font-size: 18px;
 }
 
 .home-forms {

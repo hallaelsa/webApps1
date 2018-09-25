@@ -3,22 +3,32 @@
     ViewData["Title"] = "Orders";
 }
 <h1>My Orders</h1>
-<div class="my-orders-movies-wrapper">
-    @foreach (var order in Model.Orders)
-    {
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Title</th>
+            <th scope="col">Order Date</th>
+        </tr>
+    </thead>
+    <tbody id="order-table">
+        @foreach (var order in Model.Orders) { 
+            @foreach (var movie in order.Movies)
+            {
+                <tr >
+                    <td id="order-row"><img class="order-table-image" src="~/images/posters/thumbnail/@movie.PosterName" /></td>
+                    <td id="order-row">@movie.Title</td>
+                    <td id="order-row">@order.Date.ToString("dd MMM yyyy")</td>
+                    <td id="order-row">
+                        <a class="btn btn-success" href="~/video/movie.mp4" download>
+                            Download
+                            <span class="glyphicon glyphicon-download"></span>
+                        </a>
+                    </td>
+                </tr>
+            }
 
-        @foreach (var movie in order.Movies)
-        {
-            <div class="my-orders-movie-details">
-                <img class="movie-poster-mini" src="~/images/posters/thumbnail/@movie.PosterName" alt="movie poster for @movie.PosterName" />
-                <div class="my-orders-order-details">
-                    <div>Title: @movie.Title</div>
-                    <div>Ordered: @order.Date.ToString("dd MMM yyyy")</div>
-                    <div>Order id: @order.Id</div>
-                </div>
-                <button class="btn my-orders-movie-btn"><span class="glyphicon glyphicon-download-alt"></span></button>
-            </div>
         }
+    </tbody>
+</table>
 
-    }
-</div>
