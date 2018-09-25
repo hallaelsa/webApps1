@@ -39,7 +39,7 @@
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                         <li><a asp-area="" asp-controller="Order" asp-action="MyOrders">My Orders</a></li>
                         <li><a asp-area="" asp-controller="User" asp-action="MyProfile">My Profile</a></li>
-                        <li><a asp-area="" asp-controller="Order" asp-action="ShoppingCart">Shopping Cart(<span id="cartCount">@Context.Session.GetInt32("_CountShoppingCart")</span>)</a></li>
+                        <li><a asp-area="" asp-controller="Order" asp-action="ShoppingCart"><span id="shopping-cart" class="glyphicon glyphicon-shopping-cart"></span>(<span id="cartCount">@Context.Session.GetInt32("_CountShoppingCart")</span>)</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a asp-area="" asp-controller="User" asp-action="Logout">Log out</a></li>
@@ -49,7 +49,7 @@
                 {
                     <ul class="nav navbar-nav">
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-area="" asp-controller="Order" asp-action="ShoppingCart">Shopping Cart(<span id="cartCount">@Context.Session.GetInt32("_CountShoppingCart")</span>)</a></li>
+                        <li><a asp-area="" asp-controller="Order" asp-action="ShoppingCart"><span id="shopping-cart" class="glyphicon glyphicon-shopping-cart"></span>(<span id="cartCount">@Context.Session.GetInt32("_CountShoppingCart")</span>)</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
