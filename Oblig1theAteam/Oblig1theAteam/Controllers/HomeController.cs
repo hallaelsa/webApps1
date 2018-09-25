@@ -87,7 +87,6 @@ namespace Oblig1theAteam.Controllers
 
         public bool AddToShoppingCart(int id)
         {
-            // hvis user ikke er innlogget, skal ikke dette skje
             List<Int32> moviesInCart;
             moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
             if (moviesInCart == null)
@@ -101,7 +100,6 @@ namespace Oblig1theAteam.Controllers
                 HttpContext.Session.SaveAsJson("moviesInCart", moviesInCart);
                 HttpContext.Session.SetInt32(SessionCountShoppingCart, moviesInCart.Count);
                 return true;
-            
             }
             return false;
         }
