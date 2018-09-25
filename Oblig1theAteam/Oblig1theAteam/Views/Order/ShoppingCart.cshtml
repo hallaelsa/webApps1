@@ -4,6 +4,9 @@
 @{
     ViewData["Title"] = "Shopping Cart";
 }
+@section scripts {
+    <script src="~/js/order.js" type="text/javascript"></script>
+}
 
 <h2>ShoppingCart</h2>
 
@@ -54,13 +57,12 @@
             @using (Html.BeginForm("LoginForPurchase", "User", FormMethod.Post, new { @class = "navbar-form" }))
             {
                 <div class="form-group">
-                    @Html.TextBox("username", "", new { @class = "form-control layout-input", placeholder = "email", id="username2" })
+                    @Html.TextBox("username", "", new { @class = "form-control layout-input", placeholder = "email", id = "username2" })
                     @Html.Password("password", "", new { @class = "form-control layout-input", placeholder = "password", id = "password2" })
                     <button class="btn btn-default layout-login-btn">Login</button>
                 </div>
             }
         }
-
     </div>
 </div>
 <div id="visa-form" class="panel-footer clearfix" class="btn btn-primary" style="visibility:hidden">
@@ -72,8 +74,9 @@
                 @Html.TextBox("CardNumber", "", new { @class = "form-control layout-input", placeholder = "card number" })
                 @Html.TextBox("CVV", "", new { @class = "form-control layout-input", placeholder = "cvv" })
                 @Html.TextBox("ExpirationDate", "", new { @class = "form-control layout-input", placeholder = "01/12/18" })
-                <button class="btn btn-primary">Comfirm Purchase</button>
+                <button class="btn btn-primary">Confirm Purchase</button>
             </div>
         }
     </div>
 </div>
+@Html.Partial("orderModal")
