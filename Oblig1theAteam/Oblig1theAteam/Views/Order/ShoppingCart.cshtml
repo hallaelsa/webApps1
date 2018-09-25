@@ -50,7 +50,7 @@
         }
         else
         {
-            <div>Log in to complete purchase</div>
+            <div>Log in or <a asp-area="" asp-controller="User" asp-action="Register">Register</a> to complete purchase</div>
             @using (Html.BeginForm("LoginForPurchase", "User", FormMethod.Post, new { @class = "navbar-form" }))
             {
                 <div class="form-group">
