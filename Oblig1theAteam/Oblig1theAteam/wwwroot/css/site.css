@@ -77,6 +77,10 @@ body {
     width: 100%;
 }
 
+.movie-poster-mini {
+    height: 80px;
+}
+
 .movie-info {
     display: flex;
     padding: 8px;
@@ -152,6 +156,26 @@ body {
     font-size: 8px;
     vertical-align: super;
 
+}
+
+.my-orders-movies-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.my-orders-movie-details {
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+    align-items: flex-end;
+}
+
+.my-orders-order-details {
+}
+
+.my-orders-movie-btn {
+    height: 48px;
 }
 
 @media only screen and (max-width: 800px) {

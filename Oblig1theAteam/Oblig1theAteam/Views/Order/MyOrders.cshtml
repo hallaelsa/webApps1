@@ -3,25 +3,22 @@
     ViewData["Title"] = "Orders";
 }
 <h1>My Orders</h1>
-<table class="table">
-    <tr>
-        <th scope="col">Date</th>
-        <th scope="col">Order ID</th>
-        <th scope="col">Movies</th>
-    </tr>
+<div class="my-orders-movies-wrapper">
     @foreach (var order in Model.Orders)
     {
-    <tr>
-        <th scope="row">@order.Date</th>
-        <td>@order.Id</td>
-        <td>
-            <ul>
-                @foreach (var movie in order.Movies)
-                {
-                <li>@movie.Title</li>
-                }
-            </ul>
-        </td>
-</tr>
+
+        @foreach (var movie in order.Movies)
+        {
+            <div class="my-orders-movie-details">
+                <img class="movie-poster-mini" src="~/images/posters/thumbnail/@movie.PosterName" alt="movie poster for @movie.PosterName" />
+                <div class="my-orders-order-details">
+                    <div>Title: @movie.Title</div>
+                    <div>Ordered: @order.Date.ToString("dd MMM yyyy")</div>
+                    <div>Order id: @order.Id</div>
+                </div>
+                <button class="btn my-orders-movie-btn"><span class="glyphicon glyphicon-download-alt"></span></button>
+            </div>
+        }
+
     }
-</table>
+</div>
