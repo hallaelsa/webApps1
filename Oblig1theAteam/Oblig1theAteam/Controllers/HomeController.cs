@@ -85,7 +85,7 @@ namespace Oblig1theAteam.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult AddToShoppingCart(int id)
+        public bool AddToShoppingCart(int id)
         {
             // hvis user ikke er innlogget, skal ikke dette skje
             List<Int32> moviesInCart;
@@ -94,10 +94,16 @@ namespace Oblig1theAteam.Controllers
             {
                 moviesInCart = new List<Int32>();
             }
-            moviesInCart.Add(id);
-            HttpContext.Session.SaveAsJson("moviesInCart", moviesInCart);
-            HttpContext.Session.SetInt32(SessionCountShoppingCart, moviesInCart.Count);
-            return RedirectToAction("Index", "Home");
+
+            if(!moviesInCart.Contains(id))
+            {
+                moviesInCart.Add(id);
+                HttpContext.Session.SaveAsJson("moviesInCart", moviesInCart);
+                HttpContext.Session.SetInt32(SessionCountShoppingCart, moviesInCart.Count);
+                return true;
+            
+            }
+            return false;
         }
     }
 }

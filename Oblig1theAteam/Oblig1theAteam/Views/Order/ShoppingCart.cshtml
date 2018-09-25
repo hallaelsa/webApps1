@@ -1,4 +1,5 @@
 ﻿@model Oblig1theAteam.ViewModels.Order.ShoppingCartViewModel
+@using Microsoft.AspNetCore.Http
 
 @{
     ViewData["Title"] = "Shopping Cart";
@@ -21,41 +22,58 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Movies) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.ActionLink("Remove from cart", "RemoveFromCart", new {  movieId=item.Id  })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Movies)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.ActionLink("Remove from cart", "RemoveFromCart", new { movieId = item.Id })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 <div class="panel-footer clearfix">
     <div class="pull-left">
         <h3>Total Sum: @Model.TotalSum</h3>
-        <button onclick="showVisaForm()">Complete Purchase</button>
+        @if (!string.IsNullOrEmpty(Context.Session.GetString("_LoggedIn")))
+        {
+            <button onclick="showVisaForm()">Complete Purchase</button>
+        }
+        else
+        {
+            <div>Log in to complete purchase</div>
+            @using (Html.BeginForm("LoginForPurchase", "User", FormMethod.Post, new { @class = "navbar-form" }))
+            {
+                <div class="form-group">
+                    @Html.TextBox("username", "", new { @class = "form-control layout-input", placeholder = "email", id="username2" })
+                    @Html.Password("password", "", new { @class = "form-control layout-input", placeholder = "password", id = "password2" })
+                    <button class="btn btn-default layout-login-btn">Login</button>
+                </div>
+            }
+        }
+
     </div>
 </div>
-<div id ="visa-form" class="panel-footer clearfix" class = "btn btn-primary" style="visibility:hidden">
+<div id="visa-form" class="panel-footer clearfix" class="btn btn-primary" style="visibility:hidden">
     <div class="pull-left">
         <h6>Card Information:</h6>
         @using (Html.BeginForm("CompletePurchase", "Order", FormMethod.Post, new { @class = "navbar-form" }))
         {
-        <div class="form-group">
-            @Html.TextBox("CardNumber", "", new { @class = "form-control layout-input", placeholder = "card number" })
-            @Html.TextBox("CVV", "", new { @class = "form-control layout-input", placeholder = "cvv" })
-            @Html.TextBox("ExpirationDate", "", new { @class = "form-control layout-input", placeholder = "01/12/18" })
-            <button class="btn btn-primary">Comfirm Purchase</button>
-        </div>
+            <div class="form-group">
+                @Html.TextBox("CardNumber", "", new { @class = "form-control layout-input", placeholder = "card number" })
+                @Html.TextBox("CVV", "", new { @class = "form-control layout-input", placeholder = "cvv" })
+                @Html.TextBox("ExpirationDate", "", new { @class = "form-control layout-input", placeholder = "01/12/18" })
+                <button class="btn btn-primary">Comfirm Purchase</button>
+            </div>
         }
     </div>
 </div>

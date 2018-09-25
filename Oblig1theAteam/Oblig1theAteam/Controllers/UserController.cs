@@ -35,6 +35,12 @@ namespace Oblig1theAteam.Controllers
         }
 
         [HttpPost]
+        public IActionResult Register(string email)
+        {
+           return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
         public IActionResult Login(string username, string password)
         {
             // må ha sjekk for om feltene er fyllt ut. 
@@ -46,6 +52,17 @@ namespace Oblig1theAteam.Controllers
             }
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult LoginForPurchase(string username, string password)
+        {
+            var user = userService.Login(username, password);
+            if (user)
+            {
+                HttpContext.Session.SetString(SessionLoggedIn, username);
+            }
+
+            return RedirectToAction("ShoppingCart", "Order");
         }
 
         public IActionResult Logout()
