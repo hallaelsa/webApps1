@@ -185,6 +185,9 @@ body {
     vertical-align: middle;
 }
 
+table {
+    margin-top: 35px;
+}
 
 #order-table, #order-table * {
     font-size: 18px;

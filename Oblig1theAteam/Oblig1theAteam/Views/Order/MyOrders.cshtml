@@ -4,13 +4,6 @@
 }
 <h1>My Orders</h1>
 <table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col"></th>
-            <th scope="col">Title</th>
-            <th scope="col">Order Date</th>
-        </tr>
-    </thead>
     <tbody id="order-table">
         @foreach (var order in Model.Orders) { 
             @foreach (var movie in order.Movies)
