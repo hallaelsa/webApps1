@@ -87,6 +87,7 @@ namespace Oblig1theAteam.Controllers
 
         public IActionResult AddToShoppingCart(int id)
         {
+            // hvis user ikke er innlogget, skal ikke dette skje
             List<Int32> moviesInCart;
             moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
             if (moviesInCart == null)
