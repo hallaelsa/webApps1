@@ -193,4 +193,11 @@ body {
     padding: 4px;
 }
 
+/* 
+    SHOPPING CART CSS 
+*/
 
+#expirationDate * {
+    display: inline-block;
+    width: 50px;
+}

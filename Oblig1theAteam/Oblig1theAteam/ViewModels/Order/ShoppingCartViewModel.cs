@@ -12,6 +12,7 @@ namespace Oblig1theAteam.ViewModels.Order
         public List<Movie> Movies { get; set; }
         public int CardNumber { get; set; }
         public int CVV { get; set; }
-        public string ExpirationDate { get; set; } // bør muligens endres, feks til 3 felt?
+        public string ExpirationMonth { get; set; } 
+        public string ExpirationYear { get; set; }
     }
 }

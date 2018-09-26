@@ -87,14 +87,22 @@ namespace Oblig1theAteam.Controllers
         }
 
         [HttpPost]
-        public IActionResult CompletePurchase(ShoppingCartViewModel shoppingCartViewModel)
+        public bool CompletePurchase(ShoppingCartViewModel shoppingCartViewModel)
         {
             var userId = HttpContext.Session.GetString(SessionLoggedIn);
             var moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
-            orderService.CreateOrder(userId, moviesInCart);
-            HttpContext.Session.Remove("moviesInCart");
-            HttpContext.Session.SetInt32("_CountShoppingCart",0);
-            return RedirectToAction("ShoppingCart");
+        
+            if (moviesInCart == null || moviesInCart.Count < 1)
+            {
+                return false;
+            }
+            else
+            {
+                orderService.CreateOrder(userId, moviesInCart);
+                HttpContext.Session.Remove("moviesInCart");
+                HttpContext.Session.SetInt32("_CountShoppingCart", 0);
+                return true;
+            }
         }
     }
 }
