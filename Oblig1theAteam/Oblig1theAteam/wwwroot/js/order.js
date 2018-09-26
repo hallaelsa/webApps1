@@ -27,6 +27,8 @@ $(function () {
         }).done(function (success) {
             if (success) {
                 $("#orderModal").modal('show');
+            } else {
+                $("#invalid").css("visibility", "visible");
             }
         });
     });

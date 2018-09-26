@@ -12,38 +12,38 @@
 
 @if (Model.Movies.Any())
 {
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Id
-            </th>
-            <th>
-                Title
-            </th>
-            <th>
-                Price
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Movies)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price) kr
-            </td>
-            <td>
-                @Html.ActionLink("Remove from cart", "RemoveFromCart", new { movieId = item.Id })
-            </td>
-        </tr>
-    }
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Price
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Movies)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price) kr
+                    </td>
+                    <td>
+                        @Html.ActionLink("Remove from cart", "RemoveFromCart", new { movieId = item.Id })
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 
@@ -71,9 +71,9 @@
 }
 else
 {
-   <p>You don't have any movies in your shopping cart!</p>
+    <p>You don't have any movies in your shopping cart!</p>
 }
-<div id="visa-form" class="panel-footer clearfix" style="visibility:hidden">
+<!-- <div id="visa-form" class="panel-footer clearfix" style="visibility:hidden">
     <div class="pull-left">
         <h6>Card Information:</h6>
         <div class="form-horizontal">
@@ -91,5 +91,40 @@ else
             </div>
         </div>
     </div>
+</div> -->
+<div id="visa-form" class="panel-footer clearfix" style="visibility:hidden">
+    @using (Html.BeginForm("CompletePurchase", "Order", FormMethod.Post, new { @id = "completingPurchaseForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="pull-left">
+            <div class="form-horizontal">
+
+                <h6>Card Information:</h6>
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    <!-- <input id="CardNumber" type="text" class="form-control layout-input" placeholder="card number" /> -->
+                    @Html.EditorFor(Model => Model.CardNumber, new { htmlAttributes = new { @id = "CardNumber", placeholder = "card number", type = "text", @class = "form-control" } })
+                    @Html.ValidationMessageFor(Model => Model.CardNumber, "", new { @class = "text-danger" })
+                    <!-- <input id="CVV" type="text" class="form-control layout-input" placeholder="cvv" /> -->
+                    @Html.EditorFor(Model => Model.CVV, new { htmlAttributes = new { @id = "CVV", placeholder = "cvv", type = "text", @class = "form-control" } })
+                    @Html.ValidationMessageFor(Model => Model.CVV, "", new { @class = "text-danger" })
+                    <div id="expirationDate">
+                        <!-- <input id="ExpirationMonth" type="text" class="form-control layout-input" placeholder="MM" /> -->
+                        @Html.EditorFor(Model => Model.ExpirationMonth, new { htmlAttributes = new { @id = "ExpirationMonth", placeholder = "MM", type = "text", @class = "form-control" } })
+                        @Html.ValidationMessageFor(Model => Model.ExpirationMonth, "", new { @class = "text-danger" })
+                        /
+                        <!-- <input id="ExpirationYear" type="text" class="form-control layout-input" placeholder="YY" /> -->
+                        @Html.EditorFor(Model => Model.ExpirationYear, new { htmlAttributes = new { @id = "ExpirationYear", placeholder = "YY", type = "text", @class = "form-control" } })
+                        @Html.ValidationMessageFor(Model => Model.ExpirationYear, "", new { @class = "text-danger" })
+                    </div>
+                    <button class="btn btn-primary" name="confirmButton" type="submit">Confirm Purchase</button>
+                </div>
+            </div>
+        </div>
+    }
 </div>
+<div id="invalid" style="visibility:hidden">All fields must be filled out, and in correct format!</div>
 @Html.Partial("orderModal")
