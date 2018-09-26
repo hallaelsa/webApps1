@@ -62,6 +62,7 @@ namespace Oblig1theAteam.Business.Orders
                 Time = dbMovie.Time,
                 Description = dbMovie.Description,
                 TrailerLink = dbMovie.TrailerLink,
+                PosterName = dbMovie.PosterName
             };
         }
         

@@ -77,6 +77,10 @@ body {
     width: 100%;
 }
 
+.movie-poster-mini {
+    height: 80px;
+}
+
 .movie-info {
     display: flex;
     padding: 8px;
@@ -154,6 +158,7 @@ body {
 
 }
 
+
 @media only screen and (max-width: 800px) {
     .modal-movie-body {
         flex-direction: column;
@@ -167,6 +172,25 @@ body {
     #modal-movie-poster {
         width: 100%;
     }
+}
+
+/*
+    ORDER PAGE
+*/
+.order-table-image {
+    width: 80px;
+}
+
+#order-row {
+    vertical-align: middle;
+}
+
+table {
+    margin-top: 35px;
+}
+
+#order-table, #order-table * {
+    font-size: 18px;
 }
 
 .home-forms {

@@ -8,6 +8,9 @@
                 let cartCount = $('#cartCount').html();
                 cartCount++;
                 $('#cartCount').html(cartCount);
+                $('#movieModal').modal('hide');
+            } else {
+                $('#movieModal').modal('hide');
             }
         }
     });

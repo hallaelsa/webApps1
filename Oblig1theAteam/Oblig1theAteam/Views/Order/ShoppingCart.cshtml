@@ -15,6 +15,7 @@
     <table class="table">
         <thead>
             <tr>
+<<<<<<< HEAD
                 <th>
                     Id
                 </th>
@@ -28,6 +29,35 @@
         </thead>
         <tbody>
             @foreach (var item in Model.Movies)
+=======
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price) kr
+                </td>
+                <td>
+                    @Html.ActionLink("Remove from cart", "RemoveFromCart", new { movieId = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="panel-footer clearfix">
+    <div class="pull-left">
+        <h3>Total Sum: @Model.TotalSum kr</h3>
+        @if (!string.IsNullOrEmpty(Context.Session.GetString("_LoggedIn")))
+        {
+            <button onclick="showVisaForm()">Complete Purchase</button>
+        }
+        else
+        {
+            <div>Log in or <a asp-area="" asp-controller="User" asp-action="Register">Register</a> to complete purchase</div>
+            @using (Html.BeginForm("LoginForPurchase", "User", FormMethod.Post, new { @class = "navbar-form" }))
+>>>>>>> c11217dbb12a2af0df7a6a0b0f55ff15fa37d72c
             {
                 <tr>
                     <td>
