@@ -50,9 +50,12 @@ namespace Oblig1theAteam.Controllers
             if(user)
             {
                 HttpContext.Session.SetString(SessionLoggedIn, username);
+                return RedirectToAction("Index", "Home");
             }
-
-            return RedirectToAction("Index", "Home");
+            else
+            {
+                return View("LoginFailed");
+            }
         }
 
         public IActionResult LoginForPurchase(string username, string password)
