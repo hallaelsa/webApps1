@@ -55,6 +55,9 @@ namespace Oblig1theAteam.Controllers
             model.Genre = movieService.GetAllGenres();
             model.Skip = skip;
 
+            // check if there is a next page
+            model.HasNext = (movieService.GetMovies(skip + 1).Count > 0) ? true : false;
+
             return View("Index", model);
         }
 

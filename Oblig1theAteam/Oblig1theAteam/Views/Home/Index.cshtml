@@ -26,35 +26,21 @@
 </div>
 
 <div class="navigation-buttons">
-    @if (Model.Skip != 0)
-    {
-        <a href="@Url.Action("AllMovies", new { skip = Model.Skip - 20 })" class="btn btn-default">
-            <span class="glyphicon glyphicon-arrow-left"></span> Previous
-        </a>
-    }
-    else
-    {
-        <a href="" class="btn btn-default disabled">
-            <span class="glyphicon glyphicon-arrow-left"></span> Previous
-        </a>
-    }
+    @{var style = (Model.Skip != 0) ? "btn btn-default" : "btn btn-default disabled"; }
 
-    @if (!Model.Movies.Any() || Model.Movies.Count < 20)
-    {
-        <a href="@Url.Action("AllMovies", new { skip = Model.Skip + 20 })" class="btn btn-default disabled">
-            Next  <span class="glyphicon glyphicon-arrow-right"></span>
-        </a>
-    }
-    else
-    {
-        <a href="@Url.Action("AllMovies", new { skip = Model.Skip + 20 })" class="btn btn-default">
-            Next  <span class="glyphicon glyphicon-arrow-right"></span>
-        </a>
-    }
+    <a href="@Url.Action("AllMovies", new { skip = Model.Skip - 20 })" class="@style">
+        <span class="glyphicon glyphicon-arrow-left"></span> Previous
+    </a>
+
+    @{ style = (Model.HasNext) ? "btn btn-default" : "btn btn-default disabled";}
+
+    <a href="@Url.Action("AllMovies", new { skip = Model.Skip + 20 })" class="@style">
+        Next  <span class="glyphicon glyphicon-arrow-right"></span>
+    </a>
 </div>
 
 <div class="movies-container">
-    @if(!Model.Movies.Any())
+    @if (!Model.Movies.Any())
     {
         <h2>No movies found</h2>
     }
@@ -88,31 +74,17 @@
 </div>
 
 <div class="navigation-buttons">
-    @if (Model.Skip != 0)
-    {
-        <a href="@Url.Action("AllMovies", new { skip = Model.Skip - 20 })" class="btn btn-default">
-            <span class="glyphicon glyphicon-arrow-left"></span> Previous
-        </a>
-    }
-    else
-    {
-        <a href="" class="btn btn-default disabled">
-            <span class="glyphicon glyphicon-arrow-left"></span> Previous
-        </a>
-    }
+    @{style = (Model.Skip != 0) ? "btn btn-default" : "btn btn-default disabled"; }
 
-    @if (!Model.Movies.Any() || Model.Movies.Count < 20)
-    {
-        <a href="@Url.Action("AllMovies", new { skip = Model.Skip + 20 })" class="btn btn-default disabled">
-            Next  <span class="glyphicon glyphicon-arrow-right"></span>
-        </a>
-    }
-    else
-    {
-        <a href="@Url.Action("AllMovies", new { skip = Model.Skip + 20 })" class="btn btn-default">
-            Next  <span class="glyphicon glyphicon-arrow-right"></span>
-        </a>
-    }
+    <a href="@Url.Action("AllMovies", new { skip = Model.Skip - 20 })" class="@style">
+        <span class="glyphicon glyphicon-arrow-left"></span> Previous
+    </a>
+
+    @{ style = (Model.HasNext) ? "btn btn-default" : "btn btn-default disabled";}
+
+    <a href="@Url.Action("AllMovies", new { skip = Model.Skip + 20 })" class="@style">
+        Next  <span class="glyphicon glyphicon-arrow-right"></span>
+    </a>
 </div>
 
 @Html.Partial("movieModal")
