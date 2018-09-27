@@ -39,7 +39,7 @@ namespace Oblig1theAteam.Controllers
         [HttpPost]
         public IActionResult Register(User newUser)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View();
             }
