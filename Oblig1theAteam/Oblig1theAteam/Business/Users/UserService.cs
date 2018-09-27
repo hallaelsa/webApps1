@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using Oblig1theAteam.Controllers;
 using Oblig1theAteam.DBModels;
 
@@ -33,6 +34,21 @@ namespace Oblig1theAteam.Business.Users
                 .Any(u => u.Email == email && u.Password == password);
 
             return userExists;
+        }
+
+        private string HashPassword(string password, byte[] salt)
+        {
+            const int keyLength = 24;
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 2000);
+            return Convert.ToBase64String(pbkdf2.GetBytes(keyLength));
+        }
+
+        private byte[] CreateSalt()
+        {
+            var csprng = new RNGCryptoServiceProvider();
+            var salt = new byte[24];
+            csprng.GetBytes(salt);
+            return salt;
         }
 
         public List<Models.User> ListUsers()
