@@ -96,6 +96,11 @@ namespace Oblig1theAteam.Controllers
         [HttpPost]
         public IActionResult MoviesByTitle(string title)
         {
+            if(string.IsNullOrEmpty(title))
+            {
+                return AllMovies(0);
+            }
+
             HttpContext.Session.SetString(SessionDisplayType, "TITLE");
             HttpContext.Session.SetString(SessionTitle, title);
             return MoviesByTitle(0);
