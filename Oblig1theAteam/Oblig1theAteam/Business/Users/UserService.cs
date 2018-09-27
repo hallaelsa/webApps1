@@ -30,17 +30,31 @@ namespace Oblig1theAteam.Business.Users
         public bool Login(string email, string password)
         {
             // her må vi hashe passord!!!!!!!!!!!!!!!!
-            var userExists = dbService.Users
-                .Any(u => u.Email == email && u.Password == password);
-
-            return userExists;
+            var user = dbService.Users
+                .FirstOrDefault(u => u.Email == email);
+            
+            if(user != null)
+            {
+                return VerifyPassword(user, password);
+            } else
+            {
+                return false;
+            }
+            
         }
 
-        private string HashPassword(string password, byte[] salt)
+        private bool VerifyPassword(DBModels.User user, string enteredPassword)
+        {
+            byte[] userPassword =  HashPassword(enteredPassword, user.Salt);
+            bool match = user.Password.SequenceEqual(userPassword);
+            return match;
+        }
+
+        private byte[] HashPassword(string password, byte[] salt)
         {
             const int keyLength = 24;
             var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 2000);
-            return Convert.ToBase64String(pbkdf2.GetBytes(keyLength));
+            return pbkdf2.GetBytes(keyLength);
         }
 
         private byte[] CreateSalt()
@@ -67,30 +81,31 @@ namespace Oblig1theAteam.Business.Users
                 FirstName = dbUser.FirstName,
                 LastName = dbUser.LastName,
                 Birthday = dbUser.Birthday,
-                Password = dbUser.Password,
                 PhoneNumber = dbUser.PhoneNumber
             };
         }
 
         public bool CreateUser(Business.Users.Models.User newUser)
         {
-            var user = new DBModels.User()
-            {
-                Email = newUser.Email,
-                FirstName = newUser.FirstName,
-                LastName = newUser.LastName,
-                Birthday = newUser.Birthday,
-                Password = newUser.Password,
-                PhoneNumber = newUser.PhoneNumber
-            };
 
             try
             {
                 bool userExists = dbService.Users
-               .Any(u => u.Email == user.Email);
+                    .Any(u => u.Email == newUser.Email);
 
                 if (!userExists)
                 {
+                    byte[] salt = CreateSalt();
+                    var user = new DBModels.User()
+                    {
+                        Email = newUser.Email,
+                        FirstName = newUser.FirstName,
+                        LastName = newUser.LastName,
+                        Birthday = newUser.Birthday,
+                        Password = HashPassword(newUser.Password, salt),
+                        PhoneNumber = newUser.PhoneNumber,
+                        Salt = salt
+                    };
                     dbService.Add(user);
                     dbService.SaveChanges();
                     return true;
@@ -99,7 +114,7 @@ namespace Oblig1theAteam.Business.Users
                 return false;
 
             }
-            catch (Exception feil)
+            catch (Exception e)
             {
                 return false;
             }

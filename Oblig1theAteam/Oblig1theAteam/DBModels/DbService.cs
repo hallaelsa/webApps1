@@ -16,7 +16,6 @@ namespace Oblig1theAteam.DBModels
         public DbSet<Movie> Movie { get; set; }
         public DbSet<MovieGenre> MovieGenre { get; set; }
         public DbSet<Genre> Genre { get; set; }
-        public DbSet<Oblig1theAteam.Business.Users.Models.User> User { get; set; }
 
 
         // db-modeller og business-modeller ser ofte like ut i starten. Men ikke gjenbruk de bare fordi de ser like ut!

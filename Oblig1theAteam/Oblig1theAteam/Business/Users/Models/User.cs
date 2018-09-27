@@ -33,7 +33,7 @@ namespace Oblig1theAteam.Business.Users.Models
         public DateTime Birthday { get; set; }
 
         [Required(ErrorMessage = "Missing password.")]
-        [RegularExpression(@"(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]", ErrorMessage = "Must contain letters and numbers.")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$", ErrorMessage = "Must contain at least 8 charachters combining letters and numbers.")]
         //[RegularExpression("^((?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])|(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^a-zA-Z0-9])|(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])|(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])).$", ErrorMessage = "Must contain letters and numbers.")]
         [StringLength(15, MinimumLength = 8)]
         public string Password { get; set; }
