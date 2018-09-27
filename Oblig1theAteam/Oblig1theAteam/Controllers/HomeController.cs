@@ -98,6 +98,7 @@ namespace Oblig1theAteam.Controllers
         {
             if(string.IsNullOrEmpty(title))
             {
+                HttpContext.Session.SetString(SessionDisplayType, "ALL");
                 return AllMovies(0);
             }
 
