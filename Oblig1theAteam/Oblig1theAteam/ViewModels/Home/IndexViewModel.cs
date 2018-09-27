@@ -8,5 +8,7 @@ namespace Oblig1theAteam.ViewModels.Home
     {
         public List<Business.Movies.Models.Movie> Movies { get; set; }
         public List<Business.Movies.Models.Genre> Genre { get; set; }
+        public int Skip { get; set; }
+        public bool HasNext { get; set; }
     }
 }
