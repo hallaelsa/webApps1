@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Oblig1theAteam.Business.Users;
+using Oblig1theAteam.Business.Users.Models;
 using Oblig1theAteam.ViewModels.User;
 using System;
 
@@ -34,10 +35,23 @@ namespace Oblig1theAteam.Controllers
             return View();
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Register(string email)
+        public IActionResult Register(User newUser)
         {
-           return RedirectToAction("Index", "Home");
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            bool registerOK = userService.CreateUser(newUser);
+
+            if (registerOK)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
         }
 
         [HttpPost]

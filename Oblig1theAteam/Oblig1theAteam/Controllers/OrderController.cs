@@ -29,15 +29,9 @@ namespace Oblig1theAteam.Controllers
         
         public IActionResult MyOrders()
         {
-            // View modellen skal ha samme navn som metoden + "ViewModel".
             var model = new MyOrdersViewModel();
-            //model.User = userService.Get(1);
-            //model.Orders = orderService.ListByUser(model.User.Id);
             var user = HttpContext.Session.GetString(SessionLoggedIn);
             model.Orders = orderService.GetOrders(user);
-            //User user = new User();
-            //user.Email = "eple@eple.no";
-            //model.User = user;
 
             return View(model);
         }
@@ -87,14 +81,26 @@ namespace Oblig1theAteam.Controllers
         }
 
         [HttpPost]
-        public IActionResult CompletePurchase(ShoppingCartViewModel shoppingCartViewModel)
+        public bool CompletePurchase(ShoppingCartViewModel shoppingCartViewModel)
         {
-            var userId = HttpContext.Session.GetString(SessionLoggedIn);
-            var moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
-            orderService.CreateOrder(userId, moviesInCart);
-            HttpContext.Session.Remove("moviesInCart");
-            HttpContext.Session.SetInt32("_CountShoppingCart",0);
-            return RedirectToAction("ShoppingCart");
+            if (ModelState.IsValid)
+            {
+                var userId = HttpContext.Session.GetString(SessionLoggedIn);
+                var moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
+
+                if (moviesInCart == null || moviesInCart.Count < 1)
+                {
+                    return false;
+                }
+                else
+                {
+                    orderService.CreateOrder(userId, moviesInCart);
+                    HttpContext.Session.Remove("moviesInCart");
+                    HttpContext.Session.SetInt32("_CountShoppingCart", 0);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

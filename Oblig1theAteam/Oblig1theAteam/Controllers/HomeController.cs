@@ -104,7 +104,6 @@ namespace Oblig1theAteam.Controllers
                 HttpContext.Session.SaveAsJson("moviesInCart", moviesInCart);
                 HttpContext.Session.SetInt32(SessionCountShoppingCart, moviesInCart.Count);
                 return true;
-            
             }
             return false;
         }
