@@ -68,7 +68,16 @@ namespace Oblig1theAteam.Business.Users
         private static string FirstLetterToUpper(string s)
         {
             if (!string.IsNullOrEmpty(s)) { 
-                return char.ToUpper(s[0]) + s.Substring(1);
+                return char.ToUpper(s[0]) + s.Substring(1).ToLower();
+            }
+            return string.Empty;
+        }
+
+        private static string AllLettersTOLower(string s)
+        {
+            if (!string.IsNullOrEmpty(s))
+            {
+                return s.ToLower();
             }
             return string.Empty;
         }
@@ -107,7 +116,7 @@ namespace Oblig1theAteam.Business.Users
                     byte[] salt = CreateSalt();
                     var user = new DBModels.User()
                     {
-                        Email = newUser.Email,
+                        Email = AllLettersTOLower(newUser.Email),
                         FirstName = FirstLetterToUpper(newUser.FirstName),
                         LastName = FirstLetterToUpper(newUser.LastName),
                         Birthday = DateTime.Parse(newUser.Birthday),
