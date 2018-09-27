@@ -28,13 +28,13 @@
 <div class="navigation-buttons">
     @{var style = (Model.Skip != 0) ? "btn btn-default" : "btn btn-default disabled"; }
 
-    <a href="@Url.Action("AllMovies", new { skip = Model.Skip - 20 })" class="@style">
+    <a href="@Url.Action("ChangePage", new { skip = Model.Skip - 20 })" class="@style">
         <span class="glyphicon glyphicon-arrow-left"></span> Previous
     </a>
 
     @{ style = (Model.HasNext) ? "btn btn-default" : "btn btn-default disabled";}
 
-    <a href="@Url.Action("AllMovies", new { skip = Model.Skip + 20 })" class="@style">
+    <a href="@Url.Action("ChangePage", new { skip = Model.Skip + 20 })" class="@style">
         Next  <span class="glyphicon glyphicon-arrow-right"></span>
     </a>
 </div>
@@ -76,13 +76,13 @@
 <div class="navigation-buttons">
     @{style = (Model.Skip != 0) ? "btn btn-default" : "btn btn-default disabled"; }
 
-    <a href="@Url.Action("AllMovies", new { skip = Model.Skip - 20 })" class="@style">
+    <a href="@Url.Action("ChangePage", new { skip = Model.Skip - 20 })" class="@style">
         <span class="glyphicon glyphicon-arrow-left"></span> Previous
     </a>
 
     @{ style = (Model.HasNext) ? "btn btn-default" : "btn btn-default disabled";}
 
-    <a href="@Url.Action("AllMovies", new { skip = Model.Skip + 20 })" class="@style">
+    <a href="@Url.Action("ChangePage", new { skip = Model.Skip + 20 })" class="@style">
         Next  <span class="glyphicon glyphicon-arrow-right"></span>
     </a>
 </div>

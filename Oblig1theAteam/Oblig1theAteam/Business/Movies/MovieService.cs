@@ -24,11 +24,6 @@ namespace Oblig1theAteam.Business.Movies
 
             return AddGenreToMovieModel(movies);
         }
-        
-        public List<Movie> GetMoviesByGenre(string genre)
-        {
-            return GetMoviesByGenre(genre, 0);
-        }
 
         public List<Movie> GetMoviesByTitle(string title, int skip)
         {
