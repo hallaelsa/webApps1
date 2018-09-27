@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -27,14 +28,12 @@ namespace Oblig1theAteam.Business.Users.Models
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Missing Birthday.")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{dd-MM-yyyy}")]
-        [Range(type: typeof(DateTime), minimum: "1/1/1900", maximum: "1/1/2013")]
-        public DateTime Birthday { get; set; }
+        [RegularExpression(@"^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]|(?:Jan|Mar|May|Jul|Aug|Oct|Dec)))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2]|(?:Jan|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec))\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)(?:0?2|(?:Feb))\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9]|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep))|(?:1[0-2]|(?:Oct|Nov|Dec)))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$", ErrorMessage = "Must contain format: dd.mm.yyyy and valid date")]
+        [StringLength(10, MinimumLength = 10, ErrorMessage = "Format must be dd.mm.yyyy (Example: 01.01.2010)")]
+        public string Birthday { get; set; }
 
         [Required(ErrorMessage = "Missing password.")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$", ErrorMessage = "Must contain at least 8 charachters combining letters and numbers.")]
-        //[RegularExpression("^((?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])|(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^a-zA-Z0-9])|(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])|(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])).$", ErrorMessage = "Must contain letters and numbers.")]
+        [RegularExpression(@"(?=^.{8,15}$)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?!.*\s).*$", ErrorMessage = "Between 8 and 15, contains atleast one digit, atleast one upper case and atleast one lower case and no whitespace.")]
         [StringLength(15, MinimumLength = 8)]
         public string Password { get; set; }
 
@@ -43,6 +42,7 @@ namespace Oblig1theAteam.Business.Users.Models
         [RegularExpression(@"[1-9]{1}[0-9]{7}", ErrorMessage = "Phone number must contain 8 numbers.")]
         public string PhoneNumber { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The passwords do not match.")]

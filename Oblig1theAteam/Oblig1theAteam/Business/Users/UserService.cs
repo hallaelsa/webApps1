@@ -80,7 +80,7 @@ namespace Oblig1theAteam.Business.Users
                 Email = dbUser.Email,
                 FirstName = dbUser.FirstName,
                 LastName = dbUser.LastName,
-                Birthday = dbUser.Birthday,
+                Birthday = dbUser.Birthday.ToShortDateString(),
                 PhoneNumber = dbUser.PhoneNumber
             };
         }
@@ -101,7 +101,7 @@ namespace Oblig1theAteam.Business.Users
                         Email = newUser.Email,
                         FirstName = newUser.FirstName,
                         LastName = newUser.LastName,
-                        Birthday = newUser.Birthday,
+                        Birthday = DateTime.Parse(newUser.Birthday),
                         Password = HashPassword(newUser.Password, salt),
                         PhoneNumber = newUser.PhoneNumber,
                         Salt = salt

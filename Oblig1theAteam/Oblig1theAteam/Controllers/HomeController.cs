@@ -74,7 +74,7 @@ namespace Oblig1theAteam.Controllers
             model.Skip = skip;
 
             // check if there is a next page
-            model.HasNext = (movieService.GetMovies(skip + 1).Count > 0) ? true : false;
+            model.HasNext = (movieService.GetMovies(skip + 20).Count > 0) ? true : false;
 
             return View("Index", model);
         }
@@ -88,7 +88,7 @@ namespace Oblig1theAteam.Controllers
             model.Skip = skip;
 
             // check if there is a next page
-            model.HasNext = (movieService.GetMoviesByTitle(title, skip + 1).Count > 0) ? true : false;
+            model.HasNext = (movieService.GetMoviesByTitle(title, skip + 20).Count > 0) ? true : false;
 
             return View("Index", model);
         }
@@ -118,7 +118,7 @@ namespace Oblig1theAteam.Controllers
             model.Skip = skip;
 
             // check if there is a next page
-            model.HasNext = (movieService.GetMoviesByGenre(genre, skip + 1).Count > 0) ? true : false;
+            model.HasNext = (movieService.GetMoviesByGenre(genre, skip + 20).Count > 0) ? true : false;
 
             return View("Index", model);
         }

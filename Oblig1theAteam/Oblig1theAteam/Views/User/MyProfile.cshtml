@@ -46,9 +46,7 @@
                 @Html.DisplayNameFor(model => model.User.Birthday)
             </th>
             <td>
-                @Model.User.Birthday.Day /
-                @Model.User.Birthday.ToString("MMMM") /
-                @Model.User.Birthday.Year
+                @Model.User.Birthday
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
