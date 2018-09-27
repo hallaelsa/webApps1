@@ -165,7 +165,7 @@ body {
 }
 
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 768px) {
     .modal-movie-body {
         flex-direction: column;
         justify-content: center;
@@ -208,6 +208,14 @@ table {
 .home-dropdown {
     margin-left: 20px;
 }
+
+@media only screen and (max-width: 768px) {
+    .home-dropdown {
+        margin: 0px;
+    }
+}
+
+
 
 .layout-input {
     height: 30px !important;
