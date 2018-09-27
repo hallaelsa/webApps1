@@ -12,12 +12,12 @@ namespace Oblig1theAteam.Business.Movies
         {
             this.dbService = dbService;
         }
-        
-        public List<Movie> GetMoviesByGenre(string genre)
+
+        public List<Movie> GetMoviesByGenre(string genre, int skip)
         {
             var movies = dbService.MovieGenre
                 .Where(mg => mg.Genre.GenreName == genre)
-                /// Take() må være FØR select!! 
+                .Skip(skip)
                 .Take(20)
                 .Select(mg => ToMovie(mg.Movie))
                 .ToList();
@@ -25,15 +25,26 @@ namespace Oblig1theAteam.Business.Movies
             return AddGenreToMovieModel(movies);
         }
         
-        public List<Movie> GetMoviesByTitle(string title)
+        public List<Movie> GetMoviesByGenre(string genre)
+        {
+            return GetMoviesByGenre(genre, 0);
+        }
+
+        public List<Movie> GetMoviesByTitle(string title, int skip)
         {
             var movies = dbService.Movie
                 .Where(m => m.Title.Contains(title))
+                .Skip(skip)
                 .Take(20)
                 .Select(dbMovie => ToMovie(dbMovie))
-                .ToList();            
+                .ToList();
 
             return AddGenreToMovieModel(movies);
+        }
+        
+        public List<Movie> GetMoviesByTitle(string title)
+        {
+            return GetMoviesByTitle(title, 0);
         }
         
         public Movie GetMovieById(int movieId)
@@ -55,12 +66,18 @@ namespace Oblig1theAteam.Business.Movies
         
         public List<Movie> GetMovies()
         {
-            var allMovies = dbService.Movie
-                .Take(20)
-                .Select(dbMovie => ToMovie(dbMovie))
-                .ToList();
+            return GetMovies(0);
+        }
 
-            return AddGenreToMovieModel(allMovies); ;
+        public List<Movie> GetMovies(int skip)
+        {
+            var allMovies = dbService.Movie
+            .Skip(skip)
+            .Take(20)
+            .Select(dbMovie => ToMovie(dbMovie))
+            .ToList();
+
+            return AddGenreToMovieModel(allMovies);
         }
 
         public List<Genre> GetGenres(int movieId) {

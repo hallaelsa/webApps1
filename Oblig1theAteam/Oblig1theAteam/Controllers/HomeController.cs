@@ -44,14 +44,18 @@ namespace Oblig1theAteam.Controllers
             {
                 HttpContext.Session.SetInt32(SessionCountShoppingCart, 0);
             }
-            //HttpContext.Session.SetString(SessionLoggedIn, "frode@outlook.com");
-            //var email = HttpContext.Session.GetString(SessionUserEmail);
-            // Her bruker vi businesslogikken (altså servicemodellene) til å fikse ViewModel
-            var model = new IndexViewModel();
-            model.Movies = movieService.GetMovies();
-            model.Genre = movieService.GetAllGenres();
 
-            return View(model);
+            return AllMovies(0);
+        }
+
+        public IActionResult AllMovies(int skip)
+        {
+            var model = new IndexViewModel();
+            model.Movies = movieService.GetMovies(skip);
+            model.Genre = movieService.GetAllGenres();
+            model.Skip = skip;
+
+            return View("Index", model);
         }
 
         [HttpPost]

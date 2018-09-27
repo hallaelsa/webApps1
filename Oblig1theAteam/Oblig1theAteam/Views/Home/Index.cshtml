@@ -25,6 +25,34 @@
     }
 </div>
 
+<div class="navigation-buttons">
+    @if (Model.Skip != 0)
+    {
+        <a href="@Url.Action("AllMovies", new { skip = Model.Skip - 20 })" class="btn btn-default">
+            <span class="glyphicon glyphicon-arrow-left"></span> Previous
+        </a>
+    }
+    else
+    {
+        <a href="" class="btn btn-default disabled">
+            <span class="glyphicon glyphicon-arrow-left"></span> Previous
+        </a>
+    }
+
+    @if (!Model.Movies.Any() || Model.Movies.Count < 20)
+    {
+        <a href="@Url.Action("AllMovies", new { skip = Model.Skip + 20 })" class="btn btn-default disabled">
+            Next  <span class="glyphicon glyphicon-arrow-right"></span>
+        </a>
+    }
+    else
+    {
+        <a href="@Url.Action("AllMovies", new { skip = Model.Skip + 20 })" class="btn btn-default">
+            Next  <span class="glyphicon glyphicon-arrow-right"></span>
+        </a>
+    }
+</div>
+
 <div class="movies-container">
     @if(!Model.Movies.Any())
     {
@@ -55,6 +83,34 @@
                     </div>
                 </div>
             </div>
+        </a>
+    }
+</div>
+
+<div class="navigation-buttons">
+    @if (Model.Skip != 0)
+    {
+        <a href="@Url.Action("AllMovies", new { skip = Model.Skip - 20 })" class="btn btn-default">
+            <span class="glyphicon glyphicon-arrow-left"></span> Previous
+        </a>
+    }
+    else
+    {
+        <a href="" class="btn btn-default disabled">
+            <span class="glyphicon glyphicon-arrow-left"></span> Previous
+        </a>
+    }
+
+    @if (!Model.Movies.Any() || Model.Movies.Count < 20)
+    {
+        <a href="@Url.Action("AllMovies", new { skip = Model.Skip + 20 })" class="btn btn-default disabled">
+            Next  <span class="glyphicon glyphicon-arrow-right"></span>
+        </a>
+    }
+    else
+    {
+        <a href="@Url.Action("AllMovies", new { skip = Model.Skip + 20 })" class="btn btn-default">
+            Next  <span class="glyphicon glyphicon-arrow-right"></span>
         </a>
     }
 </div>
