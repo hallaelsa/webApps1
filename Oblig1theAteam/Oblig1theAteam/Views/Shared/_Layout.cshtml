@@ -20,6 +20,37 @@
     </environment>
 </head>
 <body>
+    <!-- LOGIN MODAL -->
+    <div id="loginModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Login</h4>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("Login", "User", FormMethod.Post))
+                    {
+                        <div class="form-group">
+                            @Html.TextBox("username", "", new { @class = "form-control", placeholder = "email" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Password("password", "", new { @class = "form-control", placeholder = "password" })
+                        </div>
+
+                        <div class="modal-login-buttons">
+                            <a class="btn btn-danger" data-dismiss="modal">Close</a>
+                            <button id="loginButton" type="submit" class="btn btn-success">Login</button>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -33,38 +64,28 @@
             </div>
             <div class="navbar-collapse collapse">
 
-                @if (!string.IsNullOrEmpty(Context.Session.GetString("_LoggedIn")))
-                {
-                    <ul class="nav navbar-nav">
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <ul class="nav navbar-nav">
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    @if (!string.IsNullOrEmpty(Context.Session.GetString("_LoggedIn")))
+                    {
                         <li><a asp-area="" asp-controller="Order" asp-action="MyOrders">My Orders</a></li>
                         <li><a asp-area="" asp-controller="User" asp-action="MyProfile">My Profile</a></li>
-                        <li><a asp-area="" asp-controller="Order" asp-action="ShoppingCart"><span id="shopping-cart" class="glyphicon glyphicon-shopping-cart"></span>(<span id="cartCount">@Context.Session.GetInt32("_CountShoppingCart")</span>)</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
+                    }
+                    <li><a asp-area="" asp-controller="Order" asp-action="ShoppingCart">Cart <span id="shopping-cart" class="glyphicon glyphicon-shopping-cart"></span>(<span id="cartCount">@Context.Session.GetInt32("_CountShoppingCart")</span>)</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    @if (!string.IsNullOrEmpty(Context.Session.GetString("_LoggedIn")))
+                    {
                         <li><a asp-area="" asp-controller="User" asp-action="Logout">Log out</a></li>
-                    </ul>
-                }
-                else
-                {
-                    <ul class="nav navbar-nav">
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-area="" asp-controller="Order" asp-action="ShoppingCart"><span id="shopping-cart" class="glyphicon glyphicon-shopping-cart"></span>(<span id="cartCount">@Context.Session.GetInt32("_CountShoppingCart")</span>)</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "navbar-form" }))
-                            {
-                                <div class="form-group">
-                                    @Html.TextBox("username", "", new { @class = "form-control layout-input", placeholder = "email" })
-                                    @Html.Password("password", "", new { @class = "form-control layout-input", placeholder = "password" })
-                                    <button class="btn btn-default layout-login-btn">Login</button>
-                                </div>
-                            }
-                        </li>
+                    }
+                    else
+                    {
+                        <li><a data-toggle="modal" data-target="#loginModal" href="">Log inn</a></li>
                         <li><a asp-area="" asp-controller="User" asp-action="Register">Register</a></li>
-                    </ul>
-                }
+                    }
+                </ul>
+
             </div>
         </div>
     </nav>

@@ -37,6 +37,14 @@ body {
 }
 
 /*
+    LOGIN MODAL
+*/
+.modal-login-buttons {
+    margin: 15px 0px;
+    text-align: right;
+}
+
+/*
     MOVIE PAGE
 */
 .navigation-buttons {
