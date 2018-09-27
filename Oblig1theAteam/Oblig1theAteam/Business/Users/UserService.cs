@@ -56,6 +56,39 @@ namespace Oblig1theAteam.Business.Users
             };
         }
 
+        public bool CreateUser(Business.Users.Models.User newUser)
+        {
+            var user = new DBModels.User()
+            {
+                Email = newUser.Email,
+                FirstName = newUser.FirstName,
+                LastName = newUser.LastName,
+                Birthday = newUser.Birthday,
+                Password = newUser.Password,
+                PhoneNumber = newUser.PhoneNumber
+            };
+
+            try
+            {
+                bool userExists = dbService.Users
+               .Any(u => u.Email == user.Email);
+
+                if (!userExists)
+                {
+                    dbService.Add(user);
+                    dbService.SaveChanges();
+                    return true;
+                }
+
+                return false;
+
+            }
+            catch (Exception feil)
+            {
+                return false;
+            }
+        }
+
         public static implicit operator UserService(UserController v)
         {
             throw new NotImplementedException();
