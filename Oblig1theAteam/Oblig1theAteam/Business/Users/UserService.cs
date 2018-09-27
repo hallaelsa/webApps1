@@ -65,6 +65,14 @@ namespace Oblig1theAteam.Business.Users
             return salt;
         }
 
+        private static string FirstLetterToUpper(string s)
+        {
+            if (!string.IsNullOrEmpty(s)) { 
+                return char.ToUpper(s[0]) + s.Substring(1);
+            }
+            return string.Empty;
+        }
+
         public List<Models.User> ListUsers()
         {
             return dbService.Users
@@ -95,12 +103,13 @@ namespace Oblig1theAteam.Business.Users
 
                 if (!userExists)
                 {
+
                     byte[] salt = CreateSalt();
                     var user = new DBModels.User()
                     {
                         Email = newUser.Email,
-                        FirstName = newUser.FirstName,
-                        LastName = newUser.LastName,
+                        FirstName = FirstLetterToUpper(newUser.FirstName),
+                        LastName = FirstLetterToUpper(newUser.LastName),
                         Birthday = DateTime.Parse(newUser.Birthday),
                         Password = HashPassword(newUser.Password, salt),
                         PhoneNumber = newUser.PhoneNumber,
