@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Oblig1theAteam.Business.Users;
+using Oblig1theAteam.Business.Users.Models;
 using Oblig1theAteam.ViewModels.User;
 using System;
 
@@ -15,29 +16,29 @@ namespace Oblig1theAteam.Controllers
         {
             this.userService = userService;
         }
-
-        [HttpPost]
-        public IActionResult Index()//string email)
-        {
-            // View modellen skal ha samme navn som metoden + "ViewModel".
-            var model = new IndexViewModel();
-            //model.User = userService.Get(1);
-            //model.Orders = orderService.ListByUser(model.User.Id);
-            model.User = userService.GetUser("fiskebolle@gmail.com");
-
-            return View(model);
-        }
-
         
         public IActionResult Register()
         {
             return View();
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Register(string email)
+        public IActionResult Register(User newUser)
         {
-           return RedirectToAction("Index", "Home");
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            bool registerOK = userService.CreateUser(newUser);
+
+            if (registerOK)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
         }
 
         [HttpPost]
@@ -49,9 +50,12 @@ namespace Oblig1theAteam.Controllers
             if(user)
             {
                 HttpContext.Session.SetString(SessionLoggedIn, username);
+                return RedirectToAction("Index", "Home");
             }
-
-            return RedirectToAction("Index", "Home");
+            else
+            {
+                return View("LoginFailed");
+            }
         }
 
         public IActionResult LoginForPurchase(string username, string password)

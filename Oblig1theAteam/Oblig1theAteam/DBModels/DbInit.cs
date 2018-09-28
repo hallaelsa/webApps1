@@ -20,80 +20,80 @@ namespace Oblig1theAteam.DBModels
             if (!dbContext.Movie.Any())
             {
                 seedMovies(dbContext);
-                seedUsers(dbContext);
-                seedOrders(dbContext);
+                //seedUsers(dbContext);
+                //seedOrders(dbContext);
             }
         }
 
-        private static void seedOrders(DbService dbContext)
-        {
-            using (var reader = new StreamReader(@".\DBModels\SeedData\orders.csv"))
-            {
-                while (!reader.EndOfStream)
-                {
-                    var line = reader.ReadLine();
-                    if(line != null)
-                    {
-                        // 0: Email, 1: Date+Time (format dd/mm/yyyy hh:mm:ss)
-                        var columns = line.Split('|');
+        //private static void seedOrders(DbService dbContext)
+        //{
+        //    using (var reader = new StreamReader(@".\DBModels\SeedData\orders.csv"))
+        //    {
+        //        while (!reader.EndOfStream)
+        //        {
+        //            var line = reader.ReadLine();
+        //            if(line != null)
+        //            {
+        //                // 0: Email, 1: Date+Time (format dd/mm/yyyy hh:mm:ss)
+        //                var columns = line.Split('|');
 
-                        List<string> movies = columns[2].Split(',').ToList();
-                        User user = dbContext.Users.Find(columns[1]);
+        //                List<string> movies = columns[2].Split(',').ToList();
+        //                User user = dbContext.Users.Find(columns[1]);
 
-                        Order order = new Order
-                        {
-                            User = user,
-                            OrderDate = DateTime.Parse(columns[0], NorwegianCultureInfo, DateTimeStyles.NoCurrentDateDefault),
-                        };
+        //                Order order = new Order
+        //                {
+        //                    User = user,
+        //                    OrderDate = DateTime.Parse(columns[0], NorwegianCultureInfo, DateTimeStyles.NoCurrentDateDefault),
+        //                };
 
-                        dbContext.Orders.Add(order);
+        //                dbContext.Orders.Add(order);
 
 
-                        foreach (var movieId in movies)
-                        {
-                            Movie movie = dbContext.Movie.Find(System.Convert.ToInt32(movieId));
-                            OrderItem item = new OrderItem
-                            {
-                                Order = order,
-                                Movie = movie,
-                            };
-                            dbContext.OrderItem.Add(item);
-                        }
-                    }
-                    dbContext.SaveChanges();
-                }
-            }
-        }
+        //                foreach (var movieId in movies)
+        //                {
+        //                    Movie movie = dbContext.Movie.Find(System.Convert.ToInt32(movieId));
+        //                    OrderItem item = new OrderItem
+        //                    {
+        //                        Order = order,
+        //                        Movie = movie,
+        //                    };
+        //                    dbContext.OrderItem.Add(item);
+        //                }
+        //            }
+        //            dbContext.SaveChanges();
+        //        }
+        //    }
+        //}
 
-        private static void seedUsers(DbService dbContext)
-        {
-            using (var reader = new StreamReader(@".\DBModels\SeedData\users.csv"))
-            {
+        //private static void seedUsers(DbService dbContext)
+        //{
+        //    using (var reader = new StreamReader(@".\DBModels\SeedData\users.csv"))
+        //    {
                 
-                while (!reader.EndOfStream)
-                {
-                    var line = reader.ReadLine();
-                    if(line != null)
-                    {
-                        // 0: Email, 1: FirstName, 2: LastName, 3: Birthday, 4: Password, 5: PhoneNumber
-                        var columns = line.Split('|');
+        //        while (!reader.EndOfStream)
+        //        {
+        //            var line = reader.ReadLine();
+        //            if(line != null)
+        //            {
+        //                // 0: Email, 1: FirstName, 2: LastName, 3: Birthday, 4: Password, 5: PhoneNumber
+        //                var columns = line.Split('|');
 
-                        var newUser = new User
-                        {
-                            Email = columns[0],
-                            FirstName = columns[1],
-                            LastName = columns[2],
-                            Birthday = DateTime.Parse(columns[3], NorwegianCultureInfo, DateTimeStyles.NoCurrentDateDefault),
-                            Password = columns[4],
-                            PhoneNumber = columns[5],
-                        };
-                        dbContext.Add(newUser);
-                    }
+        //                var newUser = new User
+        //                {
+        //                    Email = columns[0],
+        //                    FirstName = columns[1],
+        //                    LastName = columns[2],
+        //                    Birthday = DateTime.Parse(columns[3], NorwegianCultureInfo, DateTimeStyles.NoCurrentDateDefault),
+        //                    Password = columns[4],
+        //                    PhoneNumber = columns[5],
+        //                };
+        //                dbContext.Add(newUser);
+        //            }
 
-                }
-            }
-            dbContext.SaveChanges();
-        }
+        //        }
+        //    }
+        //    dbContext.SaveChanges();
+        //}
 
         public static int generateRandomPrice()
         {

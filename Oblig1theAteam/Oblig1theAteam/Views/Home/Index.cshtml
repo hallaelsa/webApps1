@@ -8,25 +8,38 @@
     <script src="~/js/home.js" type="text/javascript"></script>
 }
 
-<div class="form-inline home-forms">
-    @using (Html.BeginForm("MoviesByTitle", "Home", FormMethod.Post, new { @class = "form-group home-input" }))
-    {
-        <b>Search title: </b>
-        @Html.TextBox("title", "")
-        <button>Search</button>
-    }
+    <div class="form-inline home-forms">
+        @using (Html.BeginForm("MoviesByTitle", "Home", FormMethod.Post, new { @class = "form-group home-input" }))
+        {
+            <label for="title">Search title:</label>
+            @Html.TextBox("title", "", new { @class = "form-control" })
+            <button class="btn btn-default">Search</button>
+        }
 
-    @using (Html.BeginForm("MoviesByGenre", "Home", FormMethod.Post, new { @class = "form-group home-dropdown" }))
-    {
-        <b>Select Genre: </b>
+        @using (Html.BeginForm("MoviesByGenre", "Home", FormMethod.Post, new { @class = "form-group home-dropdown" }))
+        {
+            <label for="title">Browse by Genre:</label>
+            @Html.DropDownList("genre", new SelectList(Model.Genre, "GenreName", "GenreName"), new { @class = "form-control" })
+            <button class="btn btn-default">ok</button>
+        }
+    </div>
 
-        @Html.DropDownList("genre", new SelectList(Model.Genre, "GenreName", "GenreName"))
-        <input type="submit" value="OK" />
-    }
+<div class="navigation-buttons">
+    @{var style = (Model.Skip != 0) ? "btn btn-default" : "btn btn-default disabled"; }
+
+    <a href="@Url.Action("ChangePage", new { skip = Model.Skip - 20 })" class="@style">
+        <span class="glyphicon glyphicon-arrow-left"></span> Previous
+    </a>
+
+    @{ style = (Model.HasNext) ? "btn btn-default" : "btn btn-default disabled";}
+
+    <a href="@Url.Action("ChangePage", new { skip = Model.Skip + 20 })" class="@style">
+        Next  <span class="glyphicon glyphicon-arrow-right"></span>
+    </a>
 </div>
 
 <div class="movies-container">
-    @if(!Model.Movies.Any())
+    @if (!Model.Movies.Any())
     {
         <h2>No movies found</h2>
     }
@@ -50,13 +63,29 @@
 
                     <div class="movie-purchase">
                         <p>Price: @movie.Price,-</p>
-                        <a id="buy-button" class="btn btn-primary btn-buy-movie" onclick="addToShoppingCart(@movie.Id)">Buy</a>
+                        <a id="buy-button" class="btn btn-primary btn-buy-movie" onclick="addToShoppingCart(@movie.Id)">
+                            Add to cart
+                        </a>
 
                     </div>
                 </div>
             </div>
         </a>
     }
+</div>
+
+<div class="navigation-buttons">
+    @{style = (Model.Skip != 0) ? "btn btn-default" : "btn btn-default disabled"; }
+
+    <a href="@Url.Action("ChangePage", new { skip = Model.Skip - 20 })" class="@style">
+        <span class="glyphicon glyphicon-arrow-left"></span> Previous
+    </a>
+
+    @{ style = (Model.HasNext) ? "btn btn-default" : "btn btn-default disabled";}
+
+    <a href="@Url.Action("ChangePage", new { skip = Model.Skip + 20 })" class="@style">
+        Next  <span class="glyphicon glyphicon-arrow-right"></span>
+    </a>
 </div>
 
 @Html.Partial("movieModal")

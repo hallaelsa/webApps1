@@ -36,7 +36,21 @@ body {
     }
 }
 
+/*
+    LOGIN MODAL
+*/
+.modal-login-buttons {
+    margin: 15px 0px;
+    text-align: right;
+}
 
+/*
+    MOVIE PAGE
+*/
+.navigation-buttons {
+    display: flex;
+    justify-content:space-between;
+}
 
 
 /*
@@ -159,7 +173,7 @@ body {
 }
 
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 768px) {
     .modal-movie-body {
         flex-direction: column;
         justify-content: center;
@@ -194,12 +208,22 @@ table {
 }
 
 .home-forms {
-    margin-top: 1.5rem;
+    margin: 0px 0px 25px 0px;
+    padding: 20px 0px;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
 }
 
 .home-dropdown {
-    margin-left: 2rem;
+    margin-left: 20px;
 }
+
+@media only screen and (max-width: 768px) {
+    .home-dropdown {
+        margin: 0px;
+    }
+}
+
+
 
 .layout-input {
     height: 30px !important;

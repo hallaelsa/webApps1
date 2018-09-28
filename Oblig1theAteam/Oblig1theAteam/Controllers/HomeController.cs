@@ -20,6 +20,9 @@ namespace Oblig1theAteam.Controllers
         private readonly OrderService orderService;
         private readonly MovieService movieService;
 
+        const string SessionDisplayType = "_DisplayType";
+        const string SessionTitle = "_Title";
+        const string SessionGenre = "_Genre";
         const string SessionLoggedIn = "_LoggedIn";
         const string SessionUserEmail = "_UserEmail";
         const string SessionCountShoppingCart = "_CountShoppingCart";
@@ -44,40 +47,87 @@ namespace Oblig1theAteam.Controllers
             {
                 HttpContext.Session.SetInt32(SessionCountShoppingCart, 0);
             }
-            //HttpContext.Session.SetString(SessionLoggedIn, "frode@outlook.com");
-            //var email = HttpContext.Session.GetString(SessionUserEmail);
-            // Her bruker vi businesslogikken (altså servicemodellene) til å fikse ViewModel
-            var model = new IndexViewModel();
-            model.Movies = movieService.GetMovies();
-            model.Genre = movieService.GetAllGenres();
 
-            return View(model);
+            HttpContext.Session.SetString(SessionDisplayType, "ALL");
+            return AllMovies(0);
+        }
+
+        public IActionResult ChangePage(int skip)
+        {
+            var displayType = HttpContext.Session.GetString(SessionDisplayType);
+            switch(displayType)
+            {
+                case "GENRE":
+                    return MoviesByGenre(skip);
+                case "TITLE":
+                    return MoviesByTitle(skip);
+                default:
+                    return AllMovies(skip);
+            }
+        }
+
+        public IActionResult AllMovies(int skip)
+        {
+            var model = new IndexViewModel();
+            model.Movies = movieService.GetMovies(skip);
+            model.Genre = movieService.GetAllGenres();
+            model.Skip = skip;
+
+            // check if there is a next page
+            model.HasNext = (movieService.GetMovies(skip + 20).Count > 0) ? true : false;
+
+            return View("Index", model);
+        }
+
+        public IActionResult MoviesByTitle(int skip)
+        {
+            var title = HttpContext.Session.GetString(SessionTitle);
+            var model = new IndexViewModel();
+            model.Movies = movieService.GetMoviesByTitle(title, skip);
+            model.Genre = movieService.GetAllGenres();
+            model.Skip = skip;
+
+            // check if there is a next page
+            model.HasNext = (movieService.GetMoviesByTitle(title, skip + 20).Count > 0) ? true : false;
+
+            return View("Index", model);
         }
 
         [HttpPost]
         public IActionResult MoviesByTitle(string title)
         {
-            var model = new IndexViewModel();
-            model.Movies = movieService.GetMoviesByTitle(title);
-            model.Genre = movieService.GetAllGenres();
+            if(string.IsNullOrEmpty(title))
+            {
+                HttpContext.Session.SetString(SessionDisplayType, "ALL");
+                return AllMovies(0);
+            }
 
-            return View("Index",model);
+            HttpContext.Session.SetString(SessionDisplayType, "TITLE");
+            HttpContext.Session.SetString(SessionTitle, title);
+            return MoviesByTitle(0);
         }
 
         [HttpPost]
         public IActionResult MoviesByGenre(string genre)
         {
+            HttpContext.Session.SetString(SessionDisplayType, "GENRE");
+            HttpContext.Session.SetString(SessionGenre, genre);
+            return MoviesByGenre(0);
+        }
+
+        public IActionResult MoviesByGenre(int skip)
+        {
+            var genre = HttpContext.Session.GetString(SessionGenre);
             var model = new IndexViewModel();
-            model.Movies = movieService.GetMoviesByGenre(genre);
+            model.Movies = movieService.GetMoviesByGenre(genre, skip);
             model.Genre = movieService.GetAllGenres();
+            model.Skip = skip;
+
+            // check if there is a next page
+            model.HasNext = (movieService.GetMoviesByGenre(genre, skip + 20).Count > 0) ? true : false;
 
             return View("Index", model);
         }
-
-        //public IActionResult Demo()
-        //{
-        //    return new JsonResult(demoService.Add());
-        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
