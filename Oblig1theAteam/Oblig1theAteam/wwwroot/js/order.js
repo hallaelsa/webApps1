@@ -2,7 +2,7 @@
     jQuery("#visa-form").css("visibility", "visible");
 }
 
-$(function () {
+/*$(function () {
     $("#completingPurchaseForm").submit(function (e) {
         e.preventDefault();
 
@@ -40,4 +40,4 @@ $('#modal-home-button').click(function () {
 
 $('#modal-order-page-button').click(function () {
     window.location.replace("/Order/MyOrders");
-});
+});*/

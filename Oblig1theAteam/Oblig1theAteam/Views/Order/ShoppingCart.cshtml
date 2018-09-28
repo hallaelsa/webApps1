@@ -93,7 +93,7 @@ else
     </div>
 </div> -->
 <div id="visa-form" class="panel-footer clearfix" style="visibility:hidden">
-    @using (Html.BeginForm("CompletePurchase", "Order", FormMethod.Post, new { @id = "completingPurchaseForm" }))
+    @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 

@@ -79,8 +79,41 @@ namespace Oblig1theAteam.Controllers
 
             return RedirectToAction("ShoppingCart");
         }
-       
+
+        [ValidateAntiForgeryToken]
         [HttpPost]
+        public IActionResult ShoppingCart(ShoppingCartViewModel shoppingCartViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = HttpContext.Session.GetString(SessionLoggedIn);
+                var moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
+
+                if (moviesInCart == null || moviesInCart.Count < 1)
+                {
+                    return View();
+                }
+                else
+                {
+                    orderService.CreateOrder(userId, moviesInCart);
+                    HttpContext.Session.Remove("moviesInCart");
+                    HttpContext.Session.SetInt32("_CountShoppingCart", 0);
+                    return RedirectToAction("MyOrders");
+                }
+            }
+            ShoppingCartViewModel viewModel = new ShoppingCartViewModel();
+            List<Int32> moviesInCart2;
+            moviesInCart2 = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
+            if (moviesInCart2 == null)
+            {
+                moviesInCart2 = new List<Int32>();
+            }
+            viewModel.Movies = GetMoviesFromIds(moviesInCart2);
+            viewModel.TotalSum = GetTotalSum(viewModel.Movies);
+            return View(viewModel);
+        }
+
+        /*[HttpPost]
         public bool CompletePurchase(ShoppingCartViewModel shoppingCartViewModel)
         {
             if (ModelState.IsValid)
@@ -101,6 +134,6 @@ namespace Oblig1theAteam.Controllers
                 }
             }
             return false;
-        }
+        }*/
     }
 }
