@@ -79,7 +79,7 @@ namespace Oblig1theAteam.Controllers
 
             return RedirectToAction("ShoppingCart");
         }
-
+       
         [HttpPost]
         public bool CompletePurchase(ShoppingCartViewModel shoppingCartViewModel)
         {
