@@ -83,6 +83,10 @@ namespace Oblig1theAteam.Controllers
             return View(model);
         }
 
+        public bool CheckUserExists(string email)
+        {
+            return userService.UserExists(email);
+        }
 
     }
 

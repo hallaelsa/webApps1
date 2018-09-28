@@ -107,8 +107,7 @@ namespace Oblig1theAteam.Business.Users
 
             try
             {
-                bool userExists = dbService.Users
-                    .Any(u => u.Email == newUser.Email);
+                bool userExists = UserExists(newUser.Email);
 
                 if (!userExists)
                 {
@@ -136,6 +135,13 @@ namespace Oblig1theAteam.Business.Users
             {
                 return false;
             }
+        }
+
+        public bool UserExists(string email)
+        {
+            var emailAllLower = AllLettersTOLower(email);
+            return dbService.Users
+                    .Any(u => u.Email == emailAllLower);
         }
 
         public static implicit operator UserService(UserController v)

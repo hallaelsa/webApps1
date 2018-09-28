@@ -20,8 +20,23 @@ function validatePhoneNumber(source) {
 }
 
 function validateEmail(source) {
-    var regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return isValid(regEx, source);
+    var inputEmail = $(source).val();
+
+    $.ajax({
+        url: '/User/CheckUserExists',
+        data: { email: inputEmail },
+        success: function (res) {
+            console.log("res " + res);
+            if (!res) {
+                var regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return isValid(regEx, source)
+            } else {
+                $(source).val("");
+                $(source).attr("placeholder", inputEmail + " already exists");
+                return false;
+            }
+        }
+    });
 }
 
 function validatePassword(source) {
@@ -30,7 +45,7 @@ function validatePassword(source) {
 }
 
 function validateConfirmPassword(source, source2) {
-    var match = compareStrings(source, source2);
+    var match = compare(source, source2);
     if (match) {
         clearError(source2);
     } else {
@@ -71,28 +86,20 @@ function isValidDate(regEx, source) {
     }
 }
 
-function compareStrings(firstString, secondString) {
-    if ($(firstString).val() === $(secondString).val()) {
+function compare(password, comparePassword) {
+    if ($(password).val() === $(comparePassword).val()) {
         return true;
     } else {
         return false;
     }
 }
 
-/**
- * Changes the styling of an HTML element to indicate an error.
- * @param target the HTML element to style
- */
 function displayError(target) {
     console.log(target + ": no match");
     $(target).css("color", "red");
     $(target + "Error").show();
 }
 
-/**
- * Changes the styling of an HTML element to indicate normal state. Used to clear previous errors.
- * @param target the HTML element to style
- */
 function clearError(target) {
     console.log(target + ": match");
     $(target).css("color", "black");

@@ -45,7 +45,7 @@ namespace Oblig1theAteam.Business.Users.Models
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The passwords do not match.")]
+        [Compare("Password", ErrorMessage = "The passwords didn't match.")]
         public string ConfirmPassword { get; set; }
     }
 }
