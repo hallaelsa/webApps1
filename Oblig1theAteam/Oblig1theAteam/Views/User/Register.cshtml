@@ -9,19 +9,23 @@
     <script>
         // Registration validation. If it's not true the register button wont be triggered. 
         function validateSubmitForm() {
-
-            if ((validateFirstName('#FirstName')
-                && validateLastName('#LastName')
-                && validateBirthday('#Birthday')
-                && validatePhoneNumber('#PhoneNumber')
-                && validateEmail('#Email')
-                && validatePassword('#Password')
-                && validateConfirmPassword('#Password', '#ConfirmPassword')) == 1) {
-                console.log("True TRUE");
-                return true;
-            }
-            console.log("False FALSE");
-            return false;
+            var submit = true;
+            var validation = validateFirstName('#FristName');
+            submit = submit && validation;
+            validation = validateLastName('#LastName');
+            submit = submit && validation;
+            validation = validateBirthday('#Birthday');
+            submit = submit && validation;
+            validation = validatePhoneNumber('#PhoneNumber');
+            submit = submit && validation;
+            validation = validateEmail('#Email');
+            submit = submit && validation;
+            validation = validatePassword('#Password');
+            submit = submit && validation;
+            validation = validateConfirmPassword('#Password', '#ConfirmPassword');
+            submit = submit && validation;
+           // console.log("Submit: "+submit);
+            return submit;
         }
     </script>
 }
