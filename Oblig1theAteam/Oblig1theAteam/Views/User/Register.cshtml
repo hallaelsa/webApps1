@@ -9,22 +9,37 @@
     <script>
         // Registration validation. If it's not true the register button wont be triggered. 
         function validateSubmitForm() {
-            var submit = true;
-            var validation = validateFirstName('#FristName');
+            let submit = true;
+            let validation;
+            validation = validateFirstName('#FirstName');
             submit = submit && validation;
+            console.log("FirstName: " + submit + ", validation: " + validation);
+
             validation = validateLastName('#LastName');
             submit = submit && validation;
+            console.log("LastName: " + submit + ", validation: " + validation);
+
             validation = validateBirthday('#Birthday');
             submit = submit && validation;
+            console.log("Birthday: " + submit + ", validation: " + validation);
+
             validation = validatePhoneNumber('#PhoneNumber');
             submit = submit && validation;
-            validation = validateEmail('#Email');
+            console.log("PhoneNumber: " + submit + ", validation: " + validation);
+
+            validation = validateEmailForSubmit('#Email');
             submit = submit && validation;
+            console.log("Email: " + submit + ", validation: " + validation);
+
             validation = validatePassword('#Password');
             submit = submit && validation;
+            console.log("Password: " + submit + ", validation: " + validation);
+
             validation = validateConfirmPassword('#Password', '#ConfirmPassword');
             submit = submit && validation;
-           // console.log("Submit: "+submit);
+            console.log("ConfirmPassword: " + submit + ", validation: " + validation);
+
+
             return submit;
         }
     </script>
@@ -38,12 +53,12 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
+<div class="form-horizontal ">
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="form-group">
-        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-sm-2" })
         <div class="col-lg-6 col-md-6 col-sm-6">
             @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "FirstName", @placeholder = "First name", @maxlength = "30", @onchange = "validateFirstName('#FirstName')" } })
             @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
@@ -55,7 +70,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-sm-2" })
         <div class="col-lg-6 col-md-6 col-sm-6">
             @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id = "LastName", @placeholder = "Last name", @maxlength = "30", @onchange = "validateFirstName('#LastName')" } })
             @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
@@ -67,7 +82,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-sm-2" })
         <div class="col-lg-6 col-md-6 col-sm-6">
             @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control", @id = "Birthday", @placeholder = "dd.mm.yyyy", @maxlength = "10", @onchange = "validateBirthday('#Birthday')" } })
             @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
@@ -80,7 +95,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-sm-2" })
         <div class="col-lg-6 col-md-6 col-sm-6">
             @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @id = "PhoneNumber", @placeholder = "Phone number", @maxlength = "8", @onchange = "validatePhoneNumber('#PhoneNumber');" } })
             @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
@@ -92,7 +107,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-sm-2" })
         <div class="col-lg-6 col-md-6 col-sm-6">
             @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "Email", @placeholder = "Email", @maxlength = "50", @onchange = "validateEmail('#Email');" } })
             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
@@ -104,7 +119,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-sm-2" })
         <div class="col-lg-6 col-md-6 col-sm-6">
             @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @id = "Password", type = "password", @placeholder = "Password", @maxlength = "15", @onchange = "validatePassword('#Password');" } })
             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
@@ -116,7 +131,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-sm-2" })
         <div class="col-lg-6 col-md-6 col-sm-6">
             @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @id = "ConfirmPassword", type = "password", @placeholder = "Confirm password", @maxlength = "15", @onchange = "validateConfirmPassword('#Password','#ConfirmPassword');" } })
             @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
@@ -129,7 +144,8 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            @Html.ActionLink("Go back", "../Home/Index", new { tom = "" }, new { @class = "btn btn-primary" })
+            <a href="@Url.Action("../Index/Home")" class="btn btn-primary">Go back</a>
+           @* @Html.ActionLink("Go back", "../Home/Index", new { tom = "" }, new { @class = "btn btn-primary" })*@
             <input type="submit" value="Register" class="btn btn-success" />
         </div>
     </div>

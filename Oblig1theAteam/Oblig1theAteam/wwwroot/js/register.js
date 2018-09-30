@@ -1,26 +1,63 @@
 ﻿
 function validateFirstName(source) {
-    var regEx = /^[A-ZÆØÅa-zæøå]+(([\'\,\.\-][a-z])?[a-zæøå]*)*$/;
+    let regEx = /^[A-ZÆØÅa-zæøå]+(([\'\,\.\-][a-z])?[a-zæøå]*)*$/;
     return isValid(regEx, source);
 }
 
 function validateLastName(source) {
-    var regEx = /^[A-ZÆØÅa-zæøå]+(([\'\,\.\-][a-z])?[a-zæøå]*)*$/;
+    let regEx = /^[A-ZÆØÅa-zæøå]+(([\'\,\.\-][a-z])?[a-zæøå]*)*$/;
     return isValid(regEx, source);
 }
 
 function validateBirthday(source) {
-    var regEx = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]|(?:Jan|Mar|May|Jul|Aug|Oct|Dec)))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2]|(?:Jan|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec))\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)(?:0?2|(?:Feb))\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9]|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep))|(?:1[0-2]|(?:Oct|Nov|Dec)))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
+    let regEx = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]|(?:Jan|Mar|May|Jul|Aug|Oct|Dec)))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2]|(?:Jan|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec))\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)(?:0?2|(?:Feb))\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9]|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep))|(?:1[0-2]|(?:Oct|Nov|Dec)))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
     return isValidDate(regEx, source);
 }
 
 function validatePhoneNumber(source) {
-    var regEx = /^[1-9]{1}[0-9]{7}$/;
+    let regEx = /^[1-9]{1}[0-9]{7}$/;
     return isValid(regEx, source);
 }
 
+function validateEmailForSubmit(source) {
+    let regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return isValid(regEx, source);
+}
+//function validateEmailForSubmit(source) {
+//    function validateEmaile(source) {
+//        return $.ajax({
+//            url: '/User/CheckUserExists',
+//            data: { email: $(source).val() },
+//        });
+//    }
+
+//    $.when(validateEmaile(source)).done(function (res) {
+//        if (!res) {
+//            let regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+//            return isValid(regEx, source);
+//        } else {
+//            $(source).val("");
+//            $(source).attr("placeholder", inputEmail + " already exists");
+//            return false;
+//        }
+//    });
+//}
+
+//function validateEmaile(source) {
+//    return $.ajax({
+//        url: '/User/CheckUserExists',
+//        data: { email: $(source).val() },
+//    });
+//}
+
 function validateEmail(source) {
     var inputEmail = $(source).val();
+    console.log("input = " + inputEmail);
+
+    if (inputEmail === "") {
+        displayError(source);
+        return false;
+    }
 
     $.ajax({
         url: '/User/CheckUserExists',
@@ -28,8 +65,8 @@ function validateEmail(source) {
         success: function (res) {
             console.log("res " + res);
             if (!res) {
-                var regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                return isValid(regEx, source)
+                let regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return isValid(regEx, source);
             } else {
                 $(source).val("");
                 $(source).attr("placeholder", inputEmail + " already exists");
@@ -39,13 +76,14 @@ function validateEmail(source) {
     });
 }
 
+
 function validatePassword(source) {
-    var regEx = /^(?=^.{8,15}$)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?!.*\s).*$/;
+    let regEx = /^(?=^.{8,15}$)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?!.*\s).*$/;
     return isValid(regEx, source);
 }
 
 function validateConfirmPassword(source, source2) {
-    var match = compare(source, source2);
+    let match = compare(source, source2);
     if (match) {
         clearError(source2);
     } else {
@@ -55,8 +93,7 @@ function validateConfirmPassword(source, source2) {
 }
 
 function isValid(regEx, source) {
-    var OK = regEx.test($(source).val());
-
+    let OK = regEx.test($(source).val());
     if (!OK) {
         displayError(source);
         return false;
@@ -67,14 +104,14 @@ function isValid(regEx, source) {
 }
 
 function isValidDate(regEx, source) {
-    var OK = regEx.test($(source).val());
+    let OK = regEx.test($(source).val());
 
     if (!OK) {
         displayError(source);
         return false;
     } else {
-        var sourceBirthYear = $(source).val().substring(6);
-        var yearNow = new Date().getFullYear();
+        let sourceBirthYear = $(source).val().substring(6);
+        let yearNow = new Date().getFullYear();
 
         if (sourceBirthYear.length !== 4 || (yearNow - 13) < sourceBirthYear || (yearNow - 100) > sourceBirthYear) {
             displayError(source);
