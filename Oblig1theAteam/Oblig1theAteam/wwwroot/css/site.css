@@ -255,7 +255,7 @@ table {
     flex-direction: row;
     justify-content: space-between;
     align-items: baseline;
-    width: 150px;
+    width: 120px;
 }
 
 #visa-YYMM-error {
