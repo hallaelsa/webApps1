@@ -15,9 +15,6 @@
             <td>
                 @Html.DisplayFor(model => model.User.Email)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
-            </td>
         </tr>
         <tr>
             <th scope="row">
@@ -25,9 +22,6 @@
             </th>
             <td>
                 @Html.DisplayFor(model => model.User.FirstName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
         <tr>
@@ -37,9 +31,6 @@
             <td>
                 @Html.DisplayFor(model => model.User.LastName)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
-            </td>
         </tr>
         <tr>
             <th scope="row">
@@ -47,9 +38,6 @@
             </th>
             <td>
                 @Model.User.Birthday
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
         <tr>
@@ -59,9 +47,9 @@
             <td>
                 @Html.DisplayFor(model => model.User.PhoneNumber)
             </td>
-            <td>
+            @*<td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
-            </td>
+            </td>*@
         </tr>
     </tbody>
 </table>
