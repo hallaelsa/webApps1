@@ -24,6 +24,9 @@
                 <th>
                     Price
                 </th>
+                <th>
+
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -52,7 +55,42 @@
             <h3>Total Sum: @Model.TotalSum</h3>
             @if (!string.IsNullOrEmpty(Context.Session.GetString("_LoggedIn")))
             {
-                <button onclick="showVisaForm()">Complete Purchase</button>
+                <div id="visa-form" class="panel-footer clearfix">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="pull-left">
+                            <div class="form-horizontal">
+
+                                <h6>Card Information:</h6>
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <div class="form-group visa-group">
+                                    @Html.EditorFor(Model => Model.CardNumber, new { htmlAttributes = new { @id = "CardNumber", placeholder = "card number", type = "text", @class = "form-control" } })
+                                    @Html.ValidationMessageFor(Model => Model.CardNumber, "", new { @class = "text-danger visa-error" })
+                                    @Html.EditorFor(Model => Model.CVV, new { htmlAttributes = new { @id = "CVV", placeholder = "cvv", type = "text", @class = "form-control" } })
+                                    @Html.ValidationMessageFor(Model => Model.CVV, "", new { @class = "text-danger visa-error" })
+                                    <div id="expirationDate">
+                                        <div id="visa-YYMM">
+                                            @Html.EditorFor(Model => Model.ExpirationMonth, new { htmlAttributes = new { @id = "ExpirationMonth", placeholder = "MM", type = "text", @class = "form-control" } })
+                                            <div> / </div>
+                                            @Html.EditorFor(Model => Model.ExpirationYear, new { htmlAttributes = new { @id = "ExpirationYear", placeholder = "YY", type = "text", @class = "form-control" } })
+                                        </div>
+                                        <div id="visa-YYMM-error">
+                                            @Html.ValidationMessageFor(Model => Model.ExpirationMonth, "", new { @class = "text-danger visa-error" })
+                                            @Html.ValidationMessageFor(Model => Model.ExpirationYear, "", new { @class = "text-danger visa-error" })
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary visa-btn" name="confirmButton" type="submit">Confirm Purchase</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div id="invalid" style="visibility:hidden">All fields must be filled out, and in correct format!</div>
+                
             }
             else
             {
@@ -92,39 +130,5 @@ else
         </div>
     </div>
 </div> -->
-<div id="visa-form" class="panel-footer clearfix" style="visibility:hidden">
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
 
-        <div class="pull-left">
-            <div class="form-horizontal">
 
-                <h6>Card Information:</h6>
-
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                <div class="form-group">
-                    <!-- <input id="CardNumber" type="text" class="form-control layout-input" placeholder="card number" /> -->
-                    @Html.EditorFor(Model => Model.CardNumber, new { htmlAttributes = new { @id = "CardNumber", placeholder = "card number", type = "text", @class = "form-control" } })
-                    @Html.ValidationMessageFor(Model => Model.CardNumber, "", new { @class = "text-danger" })
-                    <!-- <input id="CVV" type="text" class="form-control layout-input" placeholder="cvv" /> -->
-                    @Html.EditorFor(Model => Model.CVV, new { htmlAttributes = new { @id = "CVV", placeholder = "cvv", type = "text", @class = "form-control" } })
-                    @Html.ValidationMessageFor(Model => Model.CVV, "", new { @class = "text-danger" })
-                    <div id="expirationDate">
-                        <!-- <input id="ExpirationMonth" type="text" class="form-control layout-input" placeholder="MM" /> -->
-                        @Html.EditorFor(Model => Model.ExpirationMonth, new { htmlAttributes = new { @id = "ExpirationMonth", placeholder = "MM", type = "text", @class = "form-control" } })
-                        @Html.ValidationMessageFor(Model => Model.ExpirationMonth, "", new { @class = "text-danger" })
-                        /
-                        <!-- <input id="ExpirationYear" type="text" class="form-control layout-input" placeholder="YY" /> -->
-                        @Html.EditorFor(Model => Model.ExpirationYear, new { htmlAttributes = new { @id = "ExpirationYear", placeholder = "YY", type = "text", @class = "form-control" } })
-                        @Html.ValidationMessageFor(Model => Model.ExpirationYear, "", new { @class = "text-danger" })
-                    </div>
-                    <button class="btn btn-primary" name="confirmButton" type="submit">Confirm Purchase</button>
-                </div>
-            </div>
-        </div>
-    }
-</div>
-<div id="invalid" style="visibility:hidden">All fields must be filled out, and in correct format!</div>
-@Html.Partial("orderModal")

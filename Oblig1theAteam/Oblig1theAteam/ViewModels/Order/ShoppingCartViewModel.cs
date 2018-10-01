@@ -21,11 +21,11 @@ namespace Oblig1theAteam.ViewModels.Order
         public string CVV { get; set; }
 
         [Required(ErrorMessage = "Missing expiration month!")]
-        [RegularExpression(@"1[012]|0?[1-9]", ErrorMessage = "Expiration month is invalid! Must be MM.")]
+        [RegularExpression(@"1[012]|0?[1-9]", ErrorMessage = "Month must be MM e.g. 03")]
         public string ExpirationMonth { get; set; }
 
-        [Required(ErrorMessage = "Missing expiration year!")] // endre til YY regex
-        [RegularExpression(@"20[1-9][8-9]|20[2-9][0-9]", ErrorMessage = "Expiration year is invalid! Must be YYYY.")]
+        [Required(ErrorMessage = "Missing expiration year!")] 
+        [RegularExpression(@"[1][8-9]|[2-9][0-9]", ErrorMessage = "Year must be YY e.g..")]
         public string ExpirationYear { get; set; }
     }
 }

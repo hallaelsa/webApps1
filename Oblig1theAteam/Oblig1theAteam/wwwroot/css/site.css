@@ -245,7 +245,36 @@ table {
     SHOPPING CART CSS 
 */
 
-#expirationDate * {
-    display: inline-block;
+#expirationDate {
+    display: flex;
+    flex-direction: column;
+}
+
+#visa-YYMM {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 150px;
+}
+
+#visa-YYMM-error {
+}
+
+#visa-YYMM input{
     width: 50px;
 }
+
+.visa-error {
+    font-size: 12px;
+    line-height: 1 !important;
+}
+
+.visa-group input{
+    margin-top: 4px;
+}
+
+.visa-btn {
+    margin-top: 4px;
+}
+
