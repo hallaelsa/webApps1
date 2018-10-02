@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Oblig1theAteam.Business.Orders.Models;
 using Oblig1theAteam.Business.Users;
 using Oblig1theAteam.Business.Movies;
+using Microsoft.AspNetCore.Http;
 
 // Logikklasser gjør ting. De skal ikke holde på data, kun bruke dem.
 namespace Oblig1theAteam.Business.Orders
@@ -49,6 +50,20 @@ namespace Oblig1theAteam.Business.Orders
             .Where(oi => oi.Order.Id == orderId)
             .Select(oi => ToMovie(oi.Movie))
             .ToList();
+        }
+
+        internal void CheckCartForOwnedItems(string email, HttpContext httpContext)
+        {
+            var moviesInCart = httpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
+
+            if (moviesInCart == null || moviesInCart.Count == 0)
+                return;
+
+            var ownedMovies = GetOwnedMovies(email);
+            var updatedList = moviesInCart.Where(m => ownedMovies.All(om => om.Id != m)).ToList();
+
+            httpContext.Session.SaveAsJson("moviesInCart", updatedList);
+            httpContext.Session.SetInt32("_CountShoppingCart", updatedList.Count);
         }
 
         public List<Movies.Models.Movie> GetOwnedMovies(string email)

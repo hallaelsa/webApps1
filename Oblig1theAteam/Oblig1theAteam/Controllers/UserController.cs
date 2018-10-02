@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Oblig1theAteam.Business.Orders;
 using Oblig1theAteam.Business.Users;
 using Oblig1theAteam.Business.Users.Models;
 using Oblig1theAteam.ViewModels.User;
@@ -10,11 +11,13 @@ namespace Oblig1theAteam.Controllers
     public class UserController : Controller
     {
         private readonly UserService userService;
+        private readonly OrderService orderService;
         const string SessionLoggedIn = "_LoggedIn";
 
-        public UserController(UserService userService)
+        public UserController(UserService userService, OrderService orderService)
         {
             this.userService = userService;
+            this.orderService = orderService;
         }
         
         public IActionResult Register()
@@ -49,6 +52,7 @@ namespace Oblig1theAteam.Controllers
             var user = userService.Login(username, password);
             if(user)
             {
+                orderService.CheckCartForOwnedItems(username, HttpContext);
                 HttpContext.Session.SetString(SessionLoggedIn, username);
                 return RedirectToAction("Index", "Home");
             }
@@ -63,7 +67,12 @@ namespace Oblig1theAteam.Controllers
             var user = userService.Login(username, password);
             if (user)
             {
+                orderService.CheckCartForOwnedItems(username, HttpContext);
                 HttpContext.Session.SetString(SessionLoggedIn, username);
+            }
+            else
+            {
+                return View("LoginFailed");
             }
 
             return RedirectToAction("ShoppingCart", "Order");
