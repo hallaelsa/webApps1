@@ -19,7 +19,14 @@
         @using (Html.BeginForm("MoviesByGenre", "Home", FormMethod.Post, new { @class = "form-group home-dropdown" }))
         {
             <label for="title">Browse by Genre:</label>
-            @Html.DropDownList("genre", new SelectList(Model.Genre, "GenreName", "GenreName"), new { @class = "form-control" })
+
+            var genres = Model.Genre
+                .Select(g => new SelectListItem { Text = g.GenreName, Value = g.GenreName })
+                .ToList();
+
+            genres.Insert(0, new SelectListItem("", "", true));
+
+            @Html.DropDownList("genre", genres, new { @class = "form-control" })
             <button class="btn btn-default">ok</button>
         }
     </div>

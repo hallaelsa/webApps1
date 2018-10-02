@@ -139,6 +139,9 @@ namespace Oblig1theAteam.Controllers
         [HttpPost]
         public IActionResult MoviesByGenre(string genre)
         {
+            if (string.IsNullOrWhiteSpace(genre))
+                return RedirectToAction("Index");
+
             HttpContext.Session.SetString(SessionDisplayType, "GENRE");
             HttpContext.Session.SetString(SessionGenre, genre);
             return MoviesByGenre(0);
