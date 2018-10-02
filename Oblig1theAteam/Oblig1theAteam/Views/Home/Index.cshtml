@@ -63,10 +63,18 @@
 
                     <div class="movie-purchase">
                         <p>Price: @movie.Price,-</p>
-                        <a id="buy-button" class="btn btn-primary btn-buy-movie" onclick="addToShoppingCart(@movie.Id)">
-                            Add to cart
-                        </a>
-
+                        @if (!movie.Owned)
+                        {
+                            <a id="buy-button" class="btn btn-primary btn-buy-movie" onclick="addToShoppingCart(@movie.Id)">
+                                Add to cart
+                            </a>
+                        }
+                        else
+                        {
+                            <a id="buy-button" class="btn btn-default btn-buy-movie disabled">
+                                Owned
+                            </a>
+                        }
                     </div>
                 </div>
             </div>

@@ -17,6 +17,7 @@ namespace Oblig1theAteam.Business.Movies.Models
         public string TrailerLink { get; set; }
         public string PosterName { get; set; }
         public int Price { get; set; }
+        public bool Owned { get; set; }
         public List<Genre> Genre { get; set; }
     }
 }

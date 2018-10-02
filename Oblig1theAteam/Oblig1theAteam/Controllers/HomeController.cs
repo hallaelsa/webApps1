@@ -24,7 +24,7 @@ namespace Oblig1theAteam.Controllers
         const string SessionTitle = "_Title";
         const string SessionGenre = "_Genre";
         const string SessionLoggedIn = "_LoggedIn";
-        const string SessionUserEmail = "_UserEmail";
+        const string SessionUserEmail = "_UserEmail"; // <-- Bruker vi denne variabelen?
         const string SessionCountShoppingCart = "_CountShoppingCart";
 
         public HomeController(
@@ -70,6 +70,7 @@ namespace Oblig1theAteam.Controllers
         {
             var model = new IndexViewModel();
             model.Movies = movieService.GetMovies(skip);
+            setOwnedProperty(model.Movies);
             model.Genre = movieService.GetAllGenres();
             model.Skip = skip;
 
@@ -79,11 +80,31 @@ namespace Oblig1theAteam.Controllers
             return View("Index", model);
         }
 
+        private void setOwnedProperty(List<Movie> movies)
+        {
+            var email = HttpContext.Session.GetString(SessionLoggedIn);
+            if (!string.IsNullOrEmpty(email))
+            {
+                var ownedMovies = orderService.GetOwnedMovies(email);
+                foreach(var movie in movies)
+                {
+                    foreach(var ownedMovie in ownedMovies)
+                    {
+                        if(movie.Id == ownedMovie.Id)
+                        {
+                            movie.Owned = true;
+                        }
+                    }
+                }
+            }
+        }
+
         public IActionResult MoviesByTitle(int skip)
         {
             var title = HttpContext.Session.GetString(SessionTitle);
             var model = new IndexViewModel();
             model.Movies = movieService.GetMoviesByTitle(title, skip);
+            setOwnedProperty(model.Movies);
             model.Genre = movieService.GetAllGenres();
             model.Skip = skip;
 
@@ -120,6 +141,7 @@ namespace Oblig1theAteam.Controllers
             var genre = HttpContext.Session.GetString(SessionGenre);
             var model = new IndexViewModel();
             model.Movies = movieService.GetMoviesByGenre(genre, skip);
+            setOwnedProperty(model.Movies);
             model.Genre = movieService.GetAllGenres();
             model.Skip = skip;
 

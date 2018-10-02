@@ -51,6 +51,19 @@ namespace Oblig1theAteam.Business.Orders
             .ToList();
         }
 
+        public List<Movies.Models.Movie> GetOwnedMovies(string email)
+        {
+            var orders = GetOrders(email);
+            var movies = new List<Movies.Models.Movie>();
+
+            foreach(var order in orders)
+            {
+                movies.AddRange(order.Movies);
+            }
+
+            return movies;
+        }
+
         private Movies.Models.Movie ToMovie(Movie dbMovie)
         {
             return new Movies.Models.Movie
