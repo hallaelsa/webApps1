@@ -43,7 +43,7 @@ namespace Oblig1theAteam.Business.Orders
             return orders;
         }
 
-        public List<Movie> GetMovies(int orderId)
+        public List<Movies.Models.Movie> GetMovies(int orderId)
         {
             return dbService.OrderItem
             .Where(oi => oi.Order.Id == orderId)
@@ -51,9 +51,9 @@ namespace Oblig1theAteam.Business.Orders
             .ToList();
         }
 
-        private Movie ToMovie(Movie dbMovie)
+        private Movies.Models.Movie ToMovie(Movie dbMovie)
         {
-            return new Movie
+            return new Movies.Models.Movie
             {
                 Id = dbMovie.Id,
                 Title = dbMovie.Title,

@@ -92,7 +92,7 @@ namespace Oblig1theAteam.Business.Movies
                 .ToList();
         }
 
-        private Movie ToMovie(DBModels.Movie dbMovie)
+        private Models.Movie ToMovie(DBModels.Movie dbMovie)
         {
             return new Movie
             {

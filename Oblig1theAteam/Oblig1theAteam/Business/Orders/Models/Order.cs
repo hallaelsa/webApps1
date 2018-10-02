@@ -1,4 +1,5 @@
-﻿using Oblig1theAteam.DBModels;
+﻿using Oblig1theAteam.Business.Movies.Models;
+using Oblig1theAteam.Business.Users.Models;
 using System;
 using System.Collections.Generic;
 
