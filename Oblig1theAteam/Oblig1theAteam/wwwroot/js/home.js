@@ -1,14 +1,19 @@
-﻿function addToShoppingCart(movie_id) {
+﻿function addToShoppingCart(movie_id, button=null) {
     $.ajax({
         url: '/Home/AddToShoppingCart',
         data: { id: movie_id },
         success: function (res) {
-            console.log(res);
             if (res) {
                 let cartCount = $('#cartCount').html();
                 cartCount++;
                 $('#cartCount').html(cartCount);
                 $('#movieModal').modal('hide');
+
+                if (button != null) {
+                    $(button).replaceWith('<a id = "buy-button" class= "btn btn-default btn-buy-movie disabled" >In Cart</a >');
+                } else {
+                    $('#' + movie_id + '-buy-button').replaceWith('<a id = "buy-button" class= "btn btn-default btn-buy-movie disabled" >In Cart</a >');
+                }
             } else {
                 $('#movieModal').modal('hide');
             }
@@ -48,9 +53,17 @@ $(document).ready(function () {
         }
 
         const movie_id = $(this).data('movie-id');
-        $('#modal-movie-buy-button').click(function () {
-            addToShoppingCart(movie_id);
-        })
+
+        const inner = $('#' + movie_id + '-buy-button').text().trim();
+        const button = $('#modal-movie-buy-button');
+
+        if (inner == "Owned") {
+            button.replaceWith('<a id="modal-movie-buy-button" class="btn btn-default btn-lg disabled">Owned</a>');
+        } else if (inner == "In Cart") {
+            button.replaceWith('<a id="modal-movie-buy-button" class="btn btn-default btn-lg disabled">In Cart</a>');
+        } else {
+            button.replaceWith('<a id="modal-movie-buy-button" class="btn btn-primary btn-lg" onclick="addToShoppingCart(' + movie_id + ')">Add to cart</a>');
+        }
     })
 
     $('#movieModal').on('hide.bs.modal', function () {

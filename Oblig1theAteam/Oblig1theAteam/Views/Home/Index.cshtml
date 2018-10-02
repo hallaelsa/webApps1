@@ -54,7 +54,9 @@
            data-movie-runtime="@movie.Time"
            data-movie-price="@movie.Price"
            data-movie-poster="@movie.PosterName"
-           data-movie-trailer="@movie.TrailerLink">
+           data-movie-trailer="@movie.TrailerLink"
+           data-movie-in-cart="@movie.inCart"
+           data-movie-owned="@movie.Owned">
 
             <div class="movie">
                 <img class="movie-poster" src="~/images/posters/thumbnail/@movie.PosterName" alt="movie poster for @movie.PosterName" />
@@ -63,15 +65,21 @@
 
                     <div class="movie-purchase">
                         <p>Price: @movie.Price,-</p>
-                        @if (!movie.Owned)
+                        @if (!movie.Owned && !movie.inCart)
                         {
-                            <a id="buy-button" class="btn btn-primary btn-buy-movie" onclick="addToShoppingCart(@movie.Id)">
+                            <a id="@movie.Id-buy-button" class="btn btn-primary btn-buy-movie" onclick="addToShoppingCart(@movie.Id, this)">
                                 Add to cart
+                            </a>
+                        }
+                        else if (movie.inCart)
+                        {
+                            <a id="@movie.Id-buy-button" class="btn btn-default btn-buy-movie disabled">
+                                In Cart
                             </a>
                         }
                         else
                         {
-                            <a id="buy-button" class="btn btn-default btn-buy-movie disabled">
+                            <a id="@movie.Id-buy-button" class="btn btn-default btn-buy-movie disabled">
                                 Owned
                             </a>
                         }

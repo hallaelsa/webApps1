@@ -83,20 +83,28 @@ namespace Oblig1theAteam.Controllers
         private void setOwnedProperty(List<Movie> movies)
         {
             var email = HttpContext.Session.GetString(SessionLoggedIn);
-            if (!string.IsNullOrEmpty(email))
+            var ownedMovies = orderService.GetOwnedMovies(email);
+            var cartIds = GetMoviesInCart();
+
+            foreach(var movie in movies)
             {
-                var ownedMovies = orderService.GetOwnedMovies(email);
-                foreach(var movie in movies)
+                if(cartIds.Contains(movie.Id))
                 {
-                    foreach(var ownedMovie in ownedMovies)
+                    movie.inCart = true;
+                }
+                else if (!string.IsNullOrEmpty(email))
+                {
+                    foreach (var ownedMovie in ownedMovies)
                     {
-                        if(movie.Id == ownedMovie.Id)
+                        if (movie.Id == ownedMovie.Id)
                         {
                             movie.Owned = true;
                         }
                     }
                 }
+
             }
+            
         }
 
         public IActionResult MoviesByTitle(int skip)
@@ -160,11 +168,7 @@ namespace Oblig1theAteam.Controllers
         public bool AddToShoppingCart(int id)
         {
             List<Int32> moviesInCart;
-            moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
-            if (moviesInCart == null)
-            {
-                moviesInCart = new List<Int32>();
-            }
+            moviesInCart = GetMoviesInCart();
 
             if(!moviesInCart.Contains(id))
             {
@@ -174,6 +178,16 @@ namespace Oblig1theAteam.Controllers
                 return true;
             }
             return false;
+        }
+
+        public List<Int32> GetMoviesInCart()
+        {
+            var cart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
+            if(cart == null)
+            {
+                cart = new List<Int32>();
+            }
+            return cart;
         }
     }
 }
