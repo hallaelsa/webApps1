@@ -12,7 +12,7 @@
         @using (Html.BeginForm("MoviesByTitle", "Home", FormMethod.Post, new { @class = "form-group home-input" }))
         {
             <label for="title">Search title:</label>
-            @Html.TextBox("title", "", new { @class = "form-control" })
+            <input class="form-control" id="title" name="title" type="text" method="post" autocomplete="off" />
             <button class="btn btn-default">Search</button>
         }
 

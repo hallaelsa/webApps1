@@ -10,6 +10,8 @@ using Oblig1theAteam.ViewModels.Home;
 using Oblig1theAteam.Extensions;
 using Oblig1theAteam.Business.Movies.Models;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+
 
 namespace Oblig1theAteam.Controllers
 {
@@ -177,6 +179,28 @@ namespace Oblig1theAteam.Controllers
                 return true;
             }
             return false;
+        }
+
+        public string GetMoviesByTitleJson(string title)
+        {
+            var movies = movieService.GetMoviesByTitle(title);
+
+            var list = new List<KeyValuePair<string, string>>();
+
+            var i = 0;
+            foreach (var movie in movies)
+            {
+                if(i > 10)
+                {
+                    break;
+                }
+
+                var pair = new KeyValuePair<string, string>("", movie.Title);
+
+                list.Add(pair);
+            }
+
+            return JsonConvert.SerializeObject(list);
         }
 
         public List<Int32> GetMoviesInCart()
