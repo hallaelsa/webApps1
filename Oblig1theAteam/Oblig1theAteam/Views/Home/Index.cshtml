@@ -27,8 +27,19 @@
 
             genres.Insert(0, new SelectListItem("", "", true));
 
+            if (Model.GenreIsSet != null && Model.GenreIsSet != "")
+            {
+                foreach (var genre in genres)
+                {
+                    if (genre.Value.ToString().Equals(Model.GenreIsSet))
+                    {
+                        genre.Selected = true;
+                    }
+                }
+            }
+
             @Html.DropDownList("genre", genres, new { @class = "form-control" })
-            <button class="btn btn-default">ok</button>
+            <button class="btn btn-default">Ok</button>
         }
     </div>
 

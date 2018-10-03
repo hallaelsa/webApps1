@@ -84,9 +84,9 @@
 
                                     <div id="expirationDate">
                                         <div id="visa-YYMM">
-                                            @Html.EditorFor(Model => Model.ExpirationMonth, new { htmlAttributes = new { @id = "ExpirationMonth", placeholder = "MM", type = "text", @class = "form-control", @onchange = "validateExpirationMonth('#ExpirationMonth')" } })
+                                            @Html.EditorFor(Model => Model.ExpirationMonth, new { htmlAttributes = new { @id = "ExpirationMonth", placeholder = "MM", type = "text", @class = "form-control", @onchange = "validateExpirationDate('#ExpirationMonth')" } })
                                             <div> / </div>
-                                            @Html.EditorFor(Model => Model.ExpirationYear, new { htmlAttributes = new { @id = "ExpirationYear", placeholder = "YY", type = "text", @class = "form-control", @onchange = "validateExpirationYear('#ExpirationYear')" } })
+                                            @Html.EditorFor(Model => Model.ExpirationYear, new { htmlAttributes = new { @id = "ExpirationYear", placeholder = "YY", type = "text", @class = "form-control", @onchange = "validateExpirationDate('#ExpirationYear')" } })
                                         </div>
                                         <div id="visa-YYMM-error">
                                             @Html.ValidationMessageFor(Model => Model.ExpirationMonth, "", new { @class = "text-danger visa-error" })

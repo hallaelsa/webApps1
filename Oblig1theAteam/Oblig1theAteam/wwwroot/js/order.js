@@ -8,21 +8,30 @@ function validateCVV(source) {
     return isValid(regEx, source);
 }
 
-function validateExpirationMonth(source) {
+function validateExpirationMonth() {
     var regEx = /^1[012]|0?[1-9]$/;
-    return isExpirationDateValid(regEx, source);
+    return regEx.test($("#ExpirationMonth").val());
 }
 
-function validateExpirationYear(source) {
+function validateExpirationYear() {
     var regEx = /^[1][8-9]|[2][0-9]$/;
-    return isExpirationDateValid(regEx, source);
+    return regEx.test($("#ExpirationYear").val());
 }
 
-function isExpirationDateValid(regEx, source) {
-    let OK = regEx.test($(source).val());
-    if (!OK) {
+function validateExpirationDate(source) {
+    let OKMonth = validateExpirationMonth();
+    let OKYear = validateExpirationYear();
+    
+    if (!OKMonth || !OKYear) {
         $(source).css("color", "red");
         $('#ExpirationDate').show();
+
+        if (OKMonth) {
+            $("#ExpirationMonth").css("color", "black");
+        }
+        if (OKYear) {
+            $("#ExpirationYear").css("color", "black");
+        }
         return false;
     } else {
         $(source).css("color", "black");
@@ -38,9 +47,9 @@ function validateAll() {
     submit = submit && validation;
     validation = validateCVV('#CVV');
     submit = submit && validation;
-    validation = validateExpirationMonth('#ExpirationMonth');
+    validation = validateExpirationDate("#ExpirationMonth");
     submit = submit && validation;
-    validation = validateExpirationYear('#ExpirationYear');
+    validation = validateExpirationDate("#ExpirationYear");
     submit = submit && validation;
     return submit;
 }
@@ -57,13 +66,11 @@ function isValid(regEx, source) {
 }
 
 function displayError(target) {
-    console.log(target + ": no match");
     $(target).css("color", "red");
     $(target + "Error").show();
 }
 
 function clearError(target) {
-    console.log(target + ": match");
     $(target).css("color", "black");
     $(target + "Error").hide();
 }
