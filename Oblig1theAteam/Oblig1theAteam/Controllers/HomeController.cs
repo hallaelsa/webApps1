@@ -43,7 +43,10 @@ namespace Oblig1theAteam.Controllers
             {
                 HttpContext.Session.SetInt32(SessionCountShoppingCart, 0);
             }
-
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString(SessionGenre)))
+            {
+                HttpContext.Session.SetString(SessionGenre,"");
+            }
             HttpContext.Session.SetString(SessionDisplayType, "ALL");
             return AllMovies(0);
         }
@@ -111,8 +114,7 @@ namespace Oblig1theAteam.Controllers
             setOwnedProperty(model.Movies);
             model.Genre = movieService.GetAllGenres();
             model.Skip = skip;
-
-            // check if there is a next page
+            
             model.HasNext = (movieService.GetMoviesByTitle(title, skip + 20).Count > 0) ? true : false;
 
             return View("Index", model);
@@ -151,8 +153,8 @@ namespace Oblig1theAteam.Controllers
             setOwnedProperty(model.Movies);
             model.Genre = movieService.GetAllGenres();
             model.Skip = skip;
+            model.GenreIsSet = genre;
 
-            // check if there is a next page
             model.HasNext = (movieService.GetMoviesByGenre(genre, skip + 20).Count > 0) ? true : false;
 
             return View("Index", model);
