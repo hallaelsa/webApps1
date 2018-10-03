@@ -9,7 +9,6 @@ namespace Oblig1theAteam.ViewModels.Order
 {
     public class MyOrdersViewModel
     {
-        //public User User { get; set; }
         public List<Business.Orders.Models.Order> Orders { get; set; }
     }
 }
