@@ -83,10 +83,13 @@ function isValidDate(regEx, source) {
         displayError(source);
         return false;
     } else {
-        let sourceBirthYear = $(source).val().substring(6);
-        let yearNow = new Date().getFullYear();
+        let sourceBirth = new Date($(source).val());
 
-        if (sourceBirthYear.length !== 4 || (yearNow - 13) < sourceBirthYear || (yearNow - 100) > sourceBirthYear) {
+        let now = new Date();
+
+        let dateNow = new Date(now.getDate(), now.getMonth(), now.getFullYear());
+
+        if ((dateNow - sourceBirth) >= 13 || (dateNow - sourceBirth) <= 100 ) 
             displayError(source);
             return false;
         }
