@@ -37,7 +37,7 @@ namespace Oblig1theAteam.Controllers
 
             if (registerOK)
             {
-                return RedirectToAction("Index", "Home");
+                return View("RegistrationOk");
             } else
             {
                 return View("RegistrationFailed");
@@ -96,7 +96,6 @@ namespace Oblig1theAteam.Controllers
         {
             return userService.UserExists(email);
         }
-
     }
 
 
