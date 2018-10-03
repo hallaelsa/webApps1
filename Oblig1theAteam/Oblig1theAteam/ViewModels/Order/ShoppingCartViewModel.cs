@@ -25,7 +25,7 @@ namespace Oblig1theAteam.ViewModels.Order
         public string ExpirationMonth { get; set; }
 
         [Required(ErrorMessage = "Missing expiration year!")] 
-        [RegularExpression(@"[1][8-9]|[2][0-5]", ErrorMessage = "Year must be YY e.g..")]
+        [RegularExpression(@"[1][8-9]|[2][0-9]", ErrorMessage = "Year must be YY e.g..")]
         public string ExpirationYear { get; set; }
     }
 }
