@@ -26,14 +26,14 @@ namespace Oblig1theAteam.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Register(User newUser)
+        public IActionResult Register(IndexViewModel newUser)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            bool registerOK = userService.CreateUser(newUser);
+            bool registerOK = userService.CreateUser(newUser.User);
 
             if (registerOK)
             {
