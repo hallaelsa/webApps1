@@ -63,7 +63,7 @@ namespace Oblig1theAteam.Controllers
 
                 if (moviesInCart == null || moviesInCart.Count < 1)
                 {
-                    return View();
+                    return View("ShoppingCart");
                 }
                 else
                 {
@@ -82,7 +82,7 @@ namespace Oblig1theAteam.Controllers
             }
             viewModel.Movies = GetMoviesFromIds(moviesInCart2);
             viewModel.TotalSum = GetTotalSum(viewModel.Movies);
-            return View(viewModel);
+            return View("ShoppingCart", viewModel);
         }
 
         private List<Movie> GetMoviesFromIds(List<Int32> movieIds)
