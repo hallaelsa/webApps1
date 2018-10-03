@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using Oblig1theAteam.Controllers;
@@ -10,6 +11,7 @@ namespace Oblig1theAteam.Business.Users
     public class UserService
     {
         private readonly DBModels.DbService dbService;
+        public static CultureInfo NorwegianCultureInfo = new CultureInfo("nb-NO");
 
         public UserService(DBModels.DbService dbService)
         {
@@ -81,6 +83,18 @@ namespace Oblig1theAteam.Business.Users
             return string.Empty;
         }
 
+        public int GetAge(string email)
+        {
+            if (String.IsNullOrWhiteSpace(email))
+                return 100; // hvis bruker ikke er logget inn får de se alle filmer
+
+            var user = GetUser(email);
+            var agespan = DateTime.Now - user.BirthdayDateTime;
+            var age = (DateTime.MinValue + agespan).Year - 1;
+
+            return age;
+        }
+
         public List<Models.User> ListUsers()
         {
             return dbService.Users
@@ -97,6 +111,7 @@ namespace Oblig1theAteam.Business.Users
                 FirstName = dbUser.FirstName,
                 LastName = dbUser.LastName,
                 Birthday = dbUser.Birthday.ToShortDateString(),
+                BirthdayDateTime = dbUser.Birthday,
                 PhoneNumber = dbUser.PhoneNumber
             };
         }
@@ -117,7 +132,7 @@ namespace Oblig1theAteam.Business.Users
                         Email = AllLettersTOLower(newUser.Email),
                         FirstName = FirstLetterToUpper(newUser.FirstName),
                         LastName = FirstLetterToUpper(newUser.LastName),
-                        Birthday = DateTime.Parse(newUser.Birthday),
+                        Birthday = DateTime.ParseExact(newUser.Birthday, "dd.MM.yyyy", NorwegianCultureInfo),
                         Password = HashPassword(newUser.Password, salt),
                         PhoneNumber = newUser.PhoneNumber,
                         Salt = salt
