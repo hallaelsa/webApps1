@@ -29,7 +29,6 @@ namespace Oblig1theAteam.Business.Users
 
         public bool Login(string email, string password)
         {
-            // her må vi hashe passord!!!!!!!!!!!!!!!!
             var user = dbService.Users
                 .FirstOrDefault(u => u.Email == email);
             

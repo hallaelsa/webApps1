@@ -66,7 +66,7 @@
 
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    @if (!string.IsNullOrEmpty(Context.Session.GetString("_LoggedIn")))
+                    @if (!string.IsNullOrEmpty(Context.Session.GetString("_UserLoggedIn")))
                     {
                         <li><a asp-area="" asp-controller="Order" asp-action="MyOrders">My Orders</a></li>
                         <li><a asp-area="" asp-controller="User" asp-action="MyProfile">My Profile</a></li>
@@ -75,7 +75,7 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    @if (!string.IsNullOrEmpty(Context.Session.GetString("_LoggedIn")))
+                    @if (!string.IsNullOrEmpty(Context.Session.GetString("_UserLoggedIn")))
                     {
                         <li><a asp-area="" asp-controller="User" asp-action="Logout">Log out</a></li>
                     }

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Oblig1theAteam.Business.Movies;
 using Oblig1theAteam.Business.Orders;
 using Oblig1theAteam.Business.Users;
-using Oblig1theAteam.DependencyInjectionDemo;
 using Oblig1theAteam.Models;
 using Oblig1theAteam.ViewModels.Home;
 using Oblig1theAteam.Extensions;
@@ -23,8 +22,7 @@ namespace Oblig1theAteam.Controllers
         const string SessionDisplayType = "_DisplayType";
         const string SessionTitle = "_Title";
         const string SessionGenre = "_Genre";
-        const string SessionLoggedIn = "_LoggedIn";
-        const string SessionUserEmail = "_UserEmail"; // <-- Bruker vi denne variabelen?
+        const string SessionUserLoggedIn = "_UserLoggedIn";
         const string SessionCountShoppingCart = "_CountShoppingCart";
 
         public HomeController(
@@ -32,9 +30,6 @@ namespace Oblig1theAteam.Controllers
             OrderService orderService,
             MovieService movieService)
         {
-            // Vi henter inn userService for å jobbe med brukere. Vi skal aldri bruke dbModels direkte. 
-            // det er bare service som vet om databasen
-            // viewModel skal bruke User fra service, og ikke fra dbModel!
             this.userService = userService;
             this.orderService = orderService;
             this.movieService = movieService;
@@ -82,7 +77,7 @@ namespace Oblig1theAteam.Controllers
 
         private void setOwnedProperty(List<Movie> movies)
         {
-            var email = HttpContext.Session.GetString(SessionLoggedIn);
+            var email = HttpContext.Session.GetString(SessionUserLoggedIn);
             var ownedMovies = orderService.GetOwnedMovies(email);
             var cartIds = GetMoviesInCart();
 

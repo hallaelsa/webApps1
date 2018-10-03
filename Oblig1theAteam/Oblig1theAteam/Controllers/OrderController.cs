@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Oblig1theAteam.Business.Orders;
-using Oblig1theAteam.Business.Users.Models;
 using Oblig1theAteam.ViewModels.Order;
 using System;
 using System.Collections.Generic;
@@ -18,7 +17,7 @@ namespace Oblig1theAteam.Controllers
         private readonly MovieService movieService;
         private readonly UserService userService;
 
-        const string SessionLoggedIn = "_LoggedIn";
+        const string SessionUserLoggedIn = "_UserLoggedIn";
 
         public OrderController(OrderService orderService, MovieService movieService, UserService userService)
         {
@@ -30,7 +29,7 @@ namespace Oblig1theAteam.Controllers
         public IActionResult MyOrders()
         {
             var model = new MyOrdersViewModel();
-            var user = HttpContext.Session.GetString(SessionLoggedIn);
+            var user = HttpContext.Session.GetString(SessionUserLoggedIn);
             model.Orders = orderService.GetOrders(user);
 
             return View(model);
@@ -86,7 +85,7 @@ namespace Oblig1theAteam.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userId = HttpContext.Session.GetString(SessionLoggedIn);
+                var userId = HttpContext.Session.GetString(SessionUserLoggedIn);
                 var moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
 
                 if (moviesInCart == null || moviesInCart.Count < 1)
@@ -118,7 +117,7 @@ namespace Oblig1theAteam.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userId = HttpContext.Session.GetString(SessionLoggedIn);
+                var userId = HttpContext.Session.GetString(SessionUserLoggedIn);
                 var moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
 
                 if (moviesInCart == null || moviesInCart.Count < 1)
