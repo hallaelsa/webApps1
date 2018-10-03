@@ -27,6 +27,7 @@ namespace Oblig1theAteam.Business.Orders
         {
             var orders = dbService.Orders
                 .Where(o => o.User.Email == email)
+                .OrderByDescending(o => o.OrderDate)
                 .Select(o => ToOrder(o))
                 .ToList();
 
