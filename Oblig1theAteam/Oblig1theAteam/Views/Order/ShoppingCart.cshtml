@@ -56,7 +56,7 @@
             @if (!string.IsNullOrEmpty(Context.Session.GetString("_UserLoggedIn")))
             {
                 <div id="visa-form" class="panel-footer clearfix">
-                    @using (Html.BeginForm("PlaceOrder", "Order", FormMethod.Post))
+                    @using (Html.BeginForm("PlaceOrder", "Order", FormMethod.Post, new { @onsubmit = "return validateAll();" }))
                     {
                         @Html.AntiForgeryToken()
 
@@ -68,19 +68,35 @@
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                                 <div class="form-group visa-group">
-                                    @Html.EditorFor(Model => Model.CardNumber, new { htmlAttributes = new { @id = "CardNumber", placeholder = "card number", type = "text", @class = "form-control" } })
-                                    @Html.ValidationMessageFor(Model => Model.CardNumber, "", new { @class = "text-danger visa-error" })
-                                    @Html.EditorFor(Model => Model.CVV, new { htmlAttributes = new { @id = "CVV", placeholder = "cvv", type = "text", @class = "form-control" } })
+                                    @Html.EditorFor(Model => Model.CardNumber, new { htmlAttributes = new { @id = "CardNumber", placeholder = "card number", type = "text", @class = "form-control", @onchange = "validateCardNumber('#CardNumber')" } })
+                                    @Html.ValidationMessageFor(Model => Model.CardNumber, "", new { @class = "text-danger" })
+
+                                    <div style="display: none;" id="CardNumberError" class="alert alert-danger alert-dismissible">
+                                        <p>Card number is invalid, must be 16 digits!</p>
+                                    </div>
+
+                                    @Html.EditorFor(Model => Model.CVV, new { htmlAttributes = new { @id = "CVV", placeholder = "cvv", type = "text", @class = "form-control", @onchange = "validateCVV('#CVV')" } })
                                     @Html.ValidationMessageFor(Model => Model.CVV, "", new { @class = "text-danger visa-error" })
+
+                                    <div style="display: none;" id="CVVError" class="alert alert-danger alert-dismissible">
+                                        <p>CVV is invalid, must be 3 digits!</p>
+                                    </div>
+
                                     <div id="expirationDate">
                                         <div id="visa-YYMM">
-                                            @Html.EditorFor(Model => Model.ExpirationMonth, new { htmlAttributes = new { @id = "ExpirationMonth", placeholder = "MM", type = "text", @class = "form-control" } })
+                                            @Html.EditorFor(Model => Model.ExpirationMonth, new { htmlAttributes = new { @id = "ExpirationMonth", placeholder = "MM", type = "text", @class = "form-control", @onchange = "validateExpirationMonth('#ExpirationMonth')" } })
                                             <div> / </div>
-                                            @Html.EditorFor(Model => Model.ExpirationYear, new { htmlAttributes = new { @id = "ExpirationYear", placeholder = "YY", type = "text", @class = "form-control" } })
+                                            @Html.EditorFor(Model => Model.ExpirationYear, new { htmlAttributes = new { @id = "ExpirationYear", placeholder = "YY", type = "text", @class = "form-control", @onchange = "validateExpirationYear('#ExpirationYear')" } })
                                         </div>
                                         <div id="visa-YYMM-error">
                                             @Html.ValidationMessageFor(Model => Model.ExpirationMonth, "", new { @class = "text-danger visa-error" })
+
+                                            <div style="display: none;" id="ExpirationDate" class="alert alert-danger alert-dismissible">
+                                                <p>Expiration date must be in format MM/YY, e.g. 02/19</p>
+                                            </div>
+
                                             @Html.ValidationMessageFor(Model => Model.ExpirationYear, "", new { @class = "text-danger visa-error" })
+                                            
                                         </div>
                                     </div>
                                     <button class="btn btn-primary visa-btn" name="confirmButton" type="submit">Confirm Purchase</button>
