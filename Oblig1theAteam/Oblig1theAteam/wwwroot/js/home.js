@@ -22,6 +22,7 @@
 }
 
 $(document).ready(function () {
+    // Predictive search for movie titles.
     $(document).ready(function () {
         $('.typeahead').typeahead({
             autoSelect: true,
