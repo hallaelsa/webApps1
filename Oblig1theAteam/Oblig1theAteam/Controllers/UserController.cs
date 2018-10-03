@@ -4,7 +4,6 @@ using Oblig1theAteam.Business.Orders;
 using Oblig1theAteam.Business.Users;
 using Oblig1theAteam.Business.Users.Models;
 using Oblig1theAteam.ViewModels.User;
-using System;
 
 namespace Oblig1theAteam.Controllers
 {
@@ -12,7 +11,7 @@ namespace Oblig1theAteam.Controllers
     {
         private readonly UserService userService;
         private readonly OrderService orderService;
-        const string SessionLoggedIn = "_LoggedIn";
+        const string SessionUserLoggedIn = "_UserLoggedIn";
 
         public UserController(UserService userService, OrderService orderService)
         {
@@ -53,7 +52,7 @@ namespace Oblig1theAteam.Controllers
             if(user)
             {
                 orderService.CheckCartForOwnedItems(username, HttpContext);
-                HttpContext.Session.SetString(SessionLoggedIn, username);
+                HttpContext.Session.SetString(SessionUserLoggedIn, username);
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -68,7 +67,7 @@ namespace Oblig1theAteam.Controllers
             if (user)
             {
                 orderService.CheckCartForOwnedItems(username, HttpContext);
-                HttpContext.Session.SetString(SessionLoggedIn, username);
+                HttpContext.Session.SetString(SessionUserLoggedIn, username);
             }
             else
             {
@@ -80,13 +79,13 @@ namespace Oblig1theAteam.Controllers
 
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove(SessionLoggedIn);
+            HttpContext.Session.Remove(SessionUserLoggedIn);
             return RedirectToAction("Index", "Home");
         }
 
         public IActionResult MyProfile()
         {
-            var user = HttpContext.Session.GetString(SessionLoggedIn);
+            var user = HttpContext.Session.GetString(SessionUserLoggedIn);
             var model = new IndexViewModel();
             model.User = userService.GetUser(user);
             return View(model);

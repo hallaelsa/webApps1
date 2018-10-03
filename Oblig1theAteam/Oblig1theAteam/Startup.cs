@@ -8,10 +8,8 @@ using Oblig1theAteam.Business.Movies;
 using Oblig1theAteam.Business.Orders;
 using Oblig1theAteam.Business.Users;
 using Oblig1theAteam.DBModels;
-using Oblig1theAteam.DependencyInjectionDemo;
 using System;
 
-// NOTE! En av tingene med core er at man må konfigurere hva man skal bruke i startup.cs
 
 namespace Oblig1theAteam
 {
@@ -42,22 +40,12 @@ namespace Oblig1theAteam
                 options.IdleTimeout = TimeSpan.FromHours(1);
                 options.Cookie.HttpOnly = true;
             });
-
-
-            // Lagt til slik at UserService opprettes per request.
-            // må ha AddScoped for at HomeController og andre klasser skal få tak i disse:
-
+            
             services.AddDbContext<DBModels.DbService>(options => options.UseSqlServer(Configuration.GetConnectionString("DbService")));
-            //services.AddScoped<DBModels.DbService>();
-
             services.AddScoped<UserService>();
             services.AddScoped<OrderService>();
             services.AddScoped<MovieService>();
-
-            //services.AddSingleton legger til en instanse som gjenbrukes for alle requests
-            // EKSEMPEL på singleton. Sjekk ut ved å kjøre Home/Demo flere ganger(refresh).
-            // IDemoService er brukt HomeController, men HomeController kjenner ikke til DemoService
-            //services.AddSingleton<IDemoService, DemoService>();
+            
 
             services.AddMvc();
             

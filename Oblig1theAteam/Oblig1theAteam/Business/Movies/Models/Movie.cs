@@ -1,8 +1,4 @@
-﻿using Oblig1theAteam.DBModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Oblig1theAteam.Business.Movies.Models
 {

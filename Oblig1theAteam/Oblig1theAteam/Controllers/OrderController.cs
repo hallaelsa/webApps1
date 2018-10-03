@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Oblig1theAteam.Business.Orders;
-using Oblig1theAteam.Business.Users.Models;
 using Oblig1theAteam.ViewModels.Order;
 using System;
 using System.Collections.Generic;
@@ -17,10 +16,11 @@ namespace Oblig1theAteam.Controllers
         private readonly OrderService orderService;
         private readonly MovieService movieService;
         private readonly UserService userService;
-
+        
         const string SessionLoggedIn = "_LoggedIn";
         const string SessionMoviesInCart = "_MoviesInCart";
         const string SessionCountShoppingCart = "_CountShoppingCart";
+        const string SessionUserLoggedIn = "_UserLoggedIn";
 
         public OrderController(OrderService orderService, MovieService movieService, UserService userService)
         {
@@ -32,7 +32,7 @@ namespace Oblig1theAteam.Controllers
         public IActionResult MyOrders()
         {
             var model = new MyOrdersViewModel();
-            var user = HttpContext.Session.GetString(SessionLoggedIn);
+            var user = HttpContext.Session.GetString(SessionUserLoggedIn);
             model.Orders = orderService.GetOrders(user);
 
             return View(model);

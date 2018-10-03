@@ -53,7 +53,7 @@
     <div class="panel-footer clearfix">
         <div class="pull-left">
             <h3>Total Sum: @Model.TotalSum kr</h3>
-            @if (!string.IsNullOrEmpty(Context.Session.GetString("_LoggedIn")))
+            @if (!string.IsNullOrEmpty(Context.Session.GetString("_UserLoggedIn")))
             {
                 <div id="visa-form" class="panel-footer clearfix">
                     @using (Html.BeginForm())
