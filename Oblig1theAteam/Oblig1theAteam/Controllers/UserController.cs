@@ -38,9 +38,10 @@ namespace Oblig1theAteam.Controllers
             if (registerOK)
             {
                 return RedirectToAction("Index", "Home");
+            } else
+            {
+                return View("RegistrationFailed");
             }
-
-            return View();
         }
 
         [HttpPost]
