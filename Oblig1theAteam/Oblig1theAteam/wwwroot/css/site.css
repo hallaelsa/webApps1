@@ -278,3 +278,7 @@ table {
     margin-top: 4px;
 }
 
+#spinner-box {
+    display: inline-block;
+    width: 40px;
+}
