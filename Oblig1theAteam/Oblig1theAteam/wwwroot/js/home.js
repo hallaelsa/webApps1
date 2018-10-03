@@ -34,8 +34,7 @@ function getMovieList(title) {
 }
 
 $(document).ready(function () {
-    const suggestions = [{}];
-    var bloodhoundSuggestions = new Bloodhound({
+    const bloodhoundSuggestions = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('Value'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         sufficient: 3,
