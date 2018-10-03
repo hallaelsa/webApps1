@@ -86,13 +86,37 @@ function isValidDate(regEx, source) {
         let sourceBirthYear = $(source).val().substring(6);
         let yearNow = new Date().getFullYear();
 
-        if (sourceBirthYear.length !== 4 || (yearNow - 13) <= sourceBirthYear || (yearNow - 100) > sourceBirthYear) {
+        if (sourceBirthYear.length !== 4 || (yearNow - 13) < sourceBirthYear || (yearNow - 100) > sourceBirthYear) {
             displayError(source);
             return false;
         }
 
+
         clearError(source);
         return true;
+
+        //let sourceArray = $(source).val().split(".").map(Number);
+
+        //console.log("Array day =" + sourceArray[0]);
+        //console.log("Array month =" + sourceArray[1]);
+        //console.log("Array year =" + sourceArray[2]);
+
+        //let dayNow = parseInt(new Date().getDate());
+        //let monthNow = parseInt(new Date().getMonth());
+        //let yearNow = parseInt(new Date().getFullYear());
+
+        //console.log("2018-" + sourceArray[2] + "=" + (yearNow - sourceArray[2]));
+        //console.log("10-" + sourceArray[1] + " =" + (monthNow + 1 - sourceArray[1]));
+        //console.log("3-" + sourceArray[0] + "=" + (dayNow - sourceArray[0]));
+
+        //if ((yearNow - sourceArray[2]) > 13 && (yearNow - 100) > sourceArray[2]) {
+        //    if ((monthNow + 1 - sourceArray[1]) >= 0 && (monthNow - sourceArray[1]) != NaN) {
+        //        if ((dayNow - sourceArray[0]) > 0 && (dayNow - sourceArray[0]) != NaN) {
+        //            clearError(source);
+        //            return true;
+        //        }
+        //    }
+        //}
     }
 }
 
