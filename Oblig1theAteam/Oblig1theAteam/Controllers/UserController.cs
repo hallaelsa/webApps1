@@ -96,7 +96,6 @@ namespace Oblig1theAteam.Controllers
         {
             return userService.UserExists(email);
         }
-
     }
 
 

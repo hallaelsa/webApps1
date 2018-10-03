@@ -13,13 +13,13 @@ namespace Oblig1theAteam.Business.Users.Models
         [Required(ErrorMessage = "Missing first name.")]
         [Display(Name = "First name")]
         [RegularExpression(@"^[A-ZÆØÅa-zæøå]+(([\'\,\.\-][a-z])?[a-z]*)*$", ErrorMessage = "First name must contain only letters. Example: Charles")]
-        [StringLength(30, MinimumLength = 3)]
+        [StringLength(30, MinimumLength = 2)]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Missing last name.")]
         [Display(Name = "Last name")]
         [RegularExpression(@"^[A-ZÆØÅa-zæøå]+(([\'\,\.\-][a-z])?[a-z]*)*$", ErrorMessage = "Last name must contain only letters. Example: Darwin")]
-        [StringLength(30, MinimumLength = 3)]
+        [StringLength(30, MinimumLength = 2)]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Missing birthday.")]
