@@ -119,14 +119,8 @@ namespace Oblig1theAteam.Controllers
             setOwnedProperty(model.Movies);
             model.Genre = movieService.GetAllGenres();
             model.Skip = skip;
-<<<<<<< HEAD
-            
-            model.HasNext = (movieService.GetMoviesByTitle(title, skip + 20).Count > 0) ? true : false;
-=======
 
-            // check if there is a next page
             model.HasNext = (movieService.GetMoviesByTitle(title, skip + 20, age).Count > 0) ? true : false;
->>>>>>> ce1e2e038490bbeb25c716c74a1679364b96b054
 
             return View("Index", model);
         }
@@ -167,13 +161,8 @@ namespace Oblig1theAteam.Controllers
             model.Genre = movieService.GetAllGenres();
             model.Skip = skip;
             model.GenreIsSet = genre;
-
-<<<<<<< HEAD
-            model.HasNext = (movieService.GetMoviesByGenre(genre, skip + 20).Count > 0) ? true : false;
-=======
-            // check if there is a next page
+            
             model.HasNext = (movieService.GetMoviesByGenre(genre, skip + 20, age).Count > 0) ? true : false;
->>>>>>> ce1e2e038490bbeb25c716c74a1679364b96b054
 
             return View("Index", model);
         }
