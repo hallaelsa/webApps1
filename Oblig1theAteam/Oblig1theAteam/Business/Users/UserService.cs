@@ -86,7 +86,7 @@ namespace Oblig1theAteam.Business.Users
         public int GetAge(string email)
         {
             if (String.IsNullOrWhiteSpace(email))
-                return 100; // hvis bruker ikke er logget inn får de se alle filmer
+                return 100; // if user is not logged in, user can see all movies
 
             var user = GetUser(email);
             var agespan = DateTime.Now - user.BirthdayDateTime;
