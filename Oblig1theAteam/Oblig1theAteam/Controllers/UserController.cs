@@ -52,7 +52,7 @@ namespace Oblig1theAteam.Controllers
             var user = userService.Login(username, password);
             if(user)
             {
-                orderService.CheckCartForOwnedItems(username, HttpContext);
+                orderService.CheckCartForOwnedItems(username, HttpContext, userService.GetAge(username));
                 HttpContext.Session.SetString(SessionUserLoggedIn, username);
                 return RedirectToAction("Index", "Home");
             }
@@ -67,7 +67,7 @@ namespace Oblig1theAteam.Controllers
             var user = userService.Login(username, password);
             if (user)
             {
-                orderService.CheckCartForOwnedItems(username, HttpContext);
+                orderService.CheckCartForOwnedItems(username, HttpContext, userService.GetAge(username));
                 HttpContext.Session.SetString(SessionUserLoggedIn, username);
             }
             else

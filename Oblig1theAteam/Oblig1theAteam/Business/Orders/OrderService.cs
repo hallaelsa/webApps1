@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Oblig1theAteam.Business.Users;
 using Microsoft.AspNetCore.Http;
+using Oblig1theAteam.Business.Movies;
 
 namespace Oblig1theAteam.Business.Orders
 {
@@ -12,11 +13,14 @@ namespace Oblig1theAteam.Business.Orders
     {
         private readonly DbService dbService;
         private readonly UserService userService;
+        private readonly MovieService movieService;
 
-        public OrderService(DbService dbService, UserService userService)
+        public OrderService(DbService dbService, UserService userService, MovieService movieService)
         {
             this.dbService = dbService;
             this.userService = userService;
+            this.movieService = movieService;
+            
         }
 
         public List<Models.Order> GetOrders(string email)
@@ -41,7 +45,7 @@ namespace Oblig1theAteam.Business.Orders
             .ToList();
         }
 
-        internal void CheckCartForOwnedItems(string email, HttpContext httpContext)
+        internal void CheckCartForOwnedItems(string email, HttpContext httpContext, int age)
         {
             var moviesInCart = httpContext.Session.GetFromJson<List<Int32>>("_MoviesInCart");
 
@@ -50,9 +54,19 @@ namespace Oblig1theAteam.Business.Orders
 
             var ownedMovies = GetOwnedMovies(email);
             var updatedList = moviesInCart.Where(m => ownedMovies.All(om => om.Id != m)).ToList();
+            var updatedList2 = new List<Int32>();
 
-            httpContext.Session.SaveAsJson("_MoviesInCart", updatedList);
-            httpContext.Session.SetInt32("_CountShoppingCart", updatedList.Count);
+            foreach(var movieId in updatedList)
+            {
+                var movie = movieService.GetMovieById(movieId);
+                if(movie.AgeRestriction <= age)
+                {
+                    updatedList2.Add(movieId);
+                }
+            }
+
+            httpContext.Session.SaveAsJson("_MoviesInCart", updatedList2);
+            httpContext.Session.SetInt32("_CountShoppingCart", updatedList2.Count);
         }
 
         public List<Movies.Models.Movie> GetOwnedMovies(string email)
