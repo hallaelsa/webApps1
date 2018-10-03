@@ -44,7 +44,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.User.FirstName, htmlAttributes: new { @class = "control-label col-sm-2" })
         <div class="col-lg-6 col-md-6 col-sm-6">
-            @Html.EditorFor(model => model.User.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "FirstName", @placeholder = "First name", @maxlength = "30", @onchange = "validateFirstName('#FirstName')"} })
+            @Html.EditorFor(model => model.User.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "FirstName", @placeholder = "First name", @maxlength = "30", @minlength = "2", @onchange = "validateFirstName('#FirstName')"} })
             @Html.ValidationMessageFor(model => model.User.FirstName, "", new { @class = "text-danger" })
 
             <div style="display: none;" id="FirstNameError" class="alert alert-danger alert-dismissible">
@@ -56,7 +56,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.User.LastName, htmlAttributes: new { @class = "control-label col-sm-2" })
         <div class="col-lg-6 col-md-6 col-sm-6">
-            @Html.EditorFor(model => model.User.LastName, new { htmlAttributes = new { @class = "form-control", @id = "LastName", @placeholder = "Last name", @maxlength = "30", @onchange = "validateFirstName('#LastName')" } })
+            @Html.EditorFor(model => model.User.LastName, new { htmlAttributes = new { @class = "form-control", @id = "LastName", @placeholder = "Last name", @maxlength = "30", @minlength = "2", @onchange = "validateFirstName('#LastName')" } })
             @Html.ValidationMessageFor(model => model.User.LastName, "", new { @class = "text-danger" })
 
             <div style="display: none;" id="LastNameError" class="alert alert-danger alert-dismissible">
