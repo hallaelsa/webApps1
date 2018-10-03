@@ -56,7 +56,7 @@
             @if (!string.IsNullOrEmpty(Context.Session.GetString("_UserLoggedIn")))
             {
                 <div id="visa-form" class="panel-footer clearfix">
-                    @using (Html.BeginForm())
+                    @using (Html.BeginForm("PlaceOrder", "Order", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
 

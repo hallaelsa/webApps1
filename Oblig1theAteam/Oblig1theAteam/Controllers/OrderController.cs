@@ -54,7 +54,7 @@ namespace Oblig1theAteam.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult ShoppingCart(ShoppingCartViewModel shoppingCartViewModel)
+        public IActionResult PlaceOrder(ShoppingCartViewModel shoppingCartViewModel)
         {
             if (ModelState.IsValid)
             {
