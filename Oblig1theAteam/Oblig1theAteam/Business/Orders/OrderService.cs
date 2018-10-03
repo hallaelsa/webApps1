@@ -54,7 +54,7 @@ namespace Oblig1theAteam.Business.Orders
 
         internal void CheckCartForOwnedItems(string email, HttpContext httpContext)
         {
-            var moviesInCart = httpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
+            var moviesInCart = httpContext.Session.GetFromJson<List<Int32>>("_MoviesInCart");
 
             if (moviesInCart == null || moviesInCart.Count == 0)
                 return;
@@ -62,7 +62,7 @@ namespace Oblig1theAteam.Business.Orders
             var ownedMovies = GetOwnedMovies(email);
             var updatedList = moviesInCart.Where(m => ownedMovies.All(om => om.Id != m)).ToList();
 
-            httpContext.Session.SaveAsJson("moviesInCart", updatedList);
+            httpContext.Session.SaveAsJson("_MoviesInCart", updatedList);
             httpContext.Session.SetInt32("_CountShoppingCart", updatedList.Count);
         }
 

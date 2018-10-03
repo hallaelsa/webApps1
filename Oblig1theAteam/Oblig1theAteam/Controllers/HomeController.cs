@@ -26,6 +26,7 @@ namespace Oblig1theAteam.Controllers
         const string SessionLoggedIn = "_LoggedIn";
         const string SessionUserEmail = "_UserEmail"; // <-- Bruker vi denne variabelen?
         const string SessionCountShoppingCart = "_CountShoppingCart";
+        const string SessionMoviesInCart = "_MoviesInCart";
 
         public HomeController(
             UserService userService,
@@ -176,7 +177,7 @@ namespace Oblig1theAteam.Controllers
             if(!moviesInCart.Contains(id))
             {
                 moviesInCart.Add(id);
-                HttpContext.Session.SaveAsJson("moviesInCart", moviesInCart);
+                HttpContext.Session.SaveAsJson(SessionMoviesInCart, moviesInCart);
                 HttpContext.Session.SetInt32(SessionCountShoppingCart, moviesInCart.Count);
                 return true;
             }
@@ -185,7 +186,7 @@ namespace Oblig1theAteam.Controllers
 
         public List<Int32> GetMoviesInCart()
         {
-            var cart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
+            var cart = HttpContext.Session.GetFromJson<List<Int32>>(SessionMoviesInCart);
             if(cart == null)
             {
                 cart = new List<Int32>();

@@ -19,6 +19,8 @@ namespace Oblig1theAteam.Controllers
         private readonly UserService userService;
 
         const string SessionLoggedIn = "_LoggedIn";
+        const string SessionMoviesInCart = "_MoviesInCart";
+        const string SessionCountShoppingCart = "_CountShoppingCart";
 
         public OrderController(OrderService orderService, MovieService movieService, UserService userService)
         {
@@ -40,12 +42,45 @@ namespace Oblig1theAteam.Controllers
         {
             ShoppingCartViewModel viewModel = new ShoppingCartViewModel();
             List<Int32> moviesInCart;
-            moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
+            moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>(SessionMoviesInCart);
             if (moviesInCart == null)
             {
                 moviesInCart = new List<Int32>();
             }
             viewModel.Movies = GetMoviesFromIds(moviesInCart);
+            viewModel.TotalSum = GetTotalSum(viewModel.Movies);
+            return View(viewModel);
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public IActionResult ShoppingCart(ShoppingCartViewModel shoppingCartViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = HttpContext.Session.GetString(SessionLoggedIn);
+                var moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>(SessionMoviesInCart);
+
+                if (moviesInCart == null || moviesInCart.Count < 1)
+                {
+                    return View();
+                }
+                else
+                {
+                    orderService.CreateOrder(userId, moviesInCart);
+                    HttpContext.Session.Remove(SessionMoviesInCart);
+                    HttpContext.Session.SetInt32(SessionCountShoppingCart, 0);
+                    return RedirectToAction("MyOrders");
+                }
+            }
+            ShoppingCartViewModel viewModel = new ShoppingCartViewModel();
+            List<Int32> moviesInCart2;
+            moviesInCart2 = HttpContext.Session.GetFromJson<List<Int32>>(SessionMoviesInCart);
+            if (moviesInCart2 == null)
+            {
+                moviesInCart2 = new List<Int32>();
+            }
+            viewModel.Movies = GetMoviesFromIds(moviesInCart2);
             viewModel.TotalSum = GetTotalSum(viewModel.Movies);
             return View(viewModel);
         }
@@ -72,68 +107,12 @@ namespace Oblig1theAteam.Controllers
 
         public IActionResult RemoveFromCart(int movieId)
         {
-            List<Int32> moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
+            List<Int32> moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>(SessionMoviesInCart);
             moviesInCart.Remove(movieId);
-            HttpContext.Session.SaveAsJson("moviesInCart", moviesInCart);
-            HttpContext.Session.SetInt32("_CountShoppingCart", moviesInCart.Count);
+            HttpContext.Session.SaveAsJson(SessionMoviesInCart, moviesInCart);
+            HttpContext.Session.SetInt32(SessionCountShoppingCart, moviesInCart.Count);
 
             return RedirectToAction("ShoppingCart");
         }
-
-        [ValidateAntiForgeryToken]
-        [HttpPost]
-        public IActionResult ShoppingCart(ShoppingCartViewModel shoppingCartViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var userId = HttpContext.Session.GetString(SessionLoggedIn);
-                var moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
-
-                if (moviesInCart == null || moviesInCart.Count < 1)
-                {
-                    return View();
-                }
-                else
-                {
-                    orderService.CreateOrder(userId, moviesInCart);
-                    HttpContext.Session.Remove("moviesInCart");
-                    HttpContext.Session.SetInt32("_CountShoppingCart", 0);
-                    return RedirectToAction("MyOrders");
-                }
-            }
-            ShoppingCartViewModel viewModel = new ShoppingCartViewModel();
-            List<Int32> moviesInCart2;
-            moviesInCart2 = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
-            if (moviesInCart2 == null)
-            {
-                moviesInCart2 = new List<Int32>();
-            }
-            viewModel.Movies = GetMoviesFromIds(moviesInCart2);
-            viewModel.TotalSum = GetTotalSum(viewModel.Movies);
-            return View(viewModel);
-        }
-
-        /*[HttpPost]
-        public bool CompletePurchase(ShoppingCartViewModel shoppingCartViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var userId = HttpContext.Session.GetString(SessionLoggedIn);
-                var moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>("moviesInCart");
-
-                if (moviesInCart == null || moviesInCart.Count < 1)
-                {
-                    return false;
-                }
-                else
-                {
-                    orderService.CreateOrder(userId, moviesInCart);
-                    HttpContext.Session.Remove("moviesInCart");
-                    HttpContext.Session.SetInt32("_CountShoppingCart", 0);
-                    return true;
-                }
-            }
-            return false;
-        }*/
     }
 }
