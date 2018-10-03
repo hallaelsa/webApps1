@@ -47,7 +47,7 @@ $(document).ready(function () {
 
     $("#title").typeahead({
         hint: false,
-        highlight: false,
+        highlight: true,
         minLength: 1
     }, {
         name: 'suggestions',

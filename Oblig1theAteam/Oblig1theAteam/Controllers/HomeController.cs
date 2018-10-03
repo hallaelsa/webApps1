@@ -188,7 +188,8 @@ namespace Oblig1theAteam.Controllers
 
         public string GetMoviesByTitleJson(string title)
         {
-            var movies = movieService.GetMoviesByTitle(title);
+            var age = userService.GetAge(HttpContext.Session.GetString(SessionUserLoggedIn));
+            var movies = movieService.GetMoviesByTitle(title, age);
 
             var list = new List<KeyValuePair<string, string>>();
 
