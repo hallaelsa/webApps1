@@ -21,39 +21,24 @@
     });
 }
 
-function getMovieList(title) {
-    $.ajax({
-        url: '/Home/GetMoviesByTitleJson',
-        data: { title: title },
-        success: function (res) {
-            if (res) {
-                console.log(res);
-            }
-        }
-    })
-}
-
 $(document).ready(function () {
-    const bloodhoundSuggestions = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('Value'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        sufficient: 3,
-        remote: {
-            wildcard: '%QUERY',
-            url: '/Home/GetMoviesByTitleJson?title=%QUERY',
-        }
+    $(document).ready(function () {
+        $('.typeahead').typeahead({
+            autoSelect: true,
+            minLength: 1,
+            delay: 400,
+            source: function (query, process) {
+                return $.get('/Home/GetMoviesByTitleJson?title=' + $('#title').val(), { query: query }, function (data) {
+                    console.log(data);
+                    data = JSON.parse(data);
+                    return process(data);
+                });
+            }
+        });
     });
 
-    $("#title").typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1
-    }, {
-        name: 'suggestions',
-        displayKey: 'Value',
-        source: bloodhoundSuggestions
-    });
 
+    // When modal is clicked, populate it with the relevant movies information.
     $('a[data-movieModal=true]').click(function () {
         const movie_title = $(this).data('movie-title');
         $('#modal-movie-title').html(movie_title);
@@ -75,31 +60,39 @@ $(document).ready(function () {
 
         const movie_price = '<span class="modal-movie-heading">Price: </span>' + $(this).data('movie-price');
         $('#modal-movie-price').html(movie_price + ",-");
+        
+        const trailerLink = $(this).data('movie-trailer');
+        setTrailer(trailerLink);
+        
+        const movieId = $(this).data('movie-id');
+        setModalButton(movieId)
+    })
 
-        let trailer_link = $(this).data('movie-trailer');
-        if (trailer_link != "") {
+    // Set the trailer for the movie, if one exists.
+    function setTrailer(trailerLink) {
+        if (trailerLink != "") {
             $('#modal-movie-trailer').css('display', 'block');
-            $("#trailer").attr('src', trailer_link);
+            $("#trailer").attr('src', trailerLink);
         } else {
             $('#modal-movie-trailer').css('display', 'none');
         }
+    }
 
-        const movie_id = $(this).data('movie-id');
-
-        const inner = $('#' + movie_id + '-buy-button').text().trim();
-        console.log(inner);
+    // Following code determines which button to show in the modal: Add to Cart; In Cart and Owned.
+    function setModalButton(id) {
+        const inner = $('#' + id + '-buy-button').text().trim();
         const button = $('#modal-movie-buy-button');
-        console.log(inner);
 
         if (inner == "Owned") {
             button.replaceWith('<a id="modal-movie-buy-button" class="btn btn-default btn-lg disabled">Owned</a>');
         } else if (inner == "In Cart") {
             button.replaceWith('<a id="modal-movie-buy-button" class="btn btn-default btn-lg disabled">In Cart</a>');
         } else {
-            button.replaceWith('<a id="modal-movie-buy-button" class="btn btn-primary btn-lg" onclick="addToShoppingCart(' + movie_id + ')">Add to cart</a>');
+            button.replaceWith('<a id="modal-movie-buy-button" class="btn btn-primary btn-lg" onclick="addToShoppingCart(' + id + ')">Add to cart</a>');
         }
-    })
+    }
 
+    // code for closing the modal
     $('#movieModal').on('hide.bs.modal', function () {
         $('#trailer').attr('src', '');
     })

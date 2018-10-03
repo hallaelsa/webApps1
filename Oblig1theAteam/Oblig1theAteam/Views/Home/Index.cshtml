@@ -1,46 +1,35 @@
 ﻿@model Oblig1theAteam.ViewModels.Home.IndexViewModel
-@using Microsoft.AspNetCore.Http
 
 @{
+    // Viewet skal kun vise frem ViewModellen. Den skal ikke inneholde logikk.
     ViewData["Title"] = "Home Page";
 }
 @section scripts {
     <script src="~/js/home.js" type="text/javascript"></script>
 }
 
-<div class="form-inline home-forms">
-    @using (Html.BeginForm("MoviesByTitle", "Home", FormMethod.Post, new { @class = "form-group home-input" }))
-    {
-        <label for="title">Search title:</label>
-        <input class="form-control" id="title" name="title" type="text" method="post" autocomplete="off" />
-        <button class="btn btn-default">Search</button>
-    }
-
-    @using (Html.BeginForm("MoviesByGenre", "Home", FormMethod.Post, new { @class = "form-group home-dropdown", @id="movieDropdown" }))
-    {
-        <label for="title">Browse by Genre:</label>
-
-        var genres = Model.Genre
-            .Select(g => new SelectListItem { Text = g.GenreName, Value = g.GenreName })
-            .ToList();
-
-        genres.Insert(0, new SelectListItem("", "", true));
-
-        if(Model.GenreIsSet != null && Model.GenreIsSet != "")
+    <div class="form-inline home-forms">
+        @using (Html.BeginForm("MoviesByTitle", "Home", FormMethod.Post, new { @class = "form-group home-input" }))
         {
-             foreach(var genre in genres)
-            {
-                if (genre.Value.ToString().Equals(Model.GenreIsSet))
-                {
-                    genre.Selected = true;
-                }
-            }
+            <label for="title">Search title:</label>
+            <input class="form-control typeahead" id="title" name="title" type="text" method="post" autocomplete="off" spellcheck="false" data-provide="typeahead"/>
+            <button class="btn btn-default">Search</button>
         }
 
-        @Html.DropDownList("genre", genres, new { @class = "form-control" })
-        <button class="btn btn-default">Ok</button>
-    }
-</div>
+        @using (Html.BeginForm("MoviesByGenre", "Home", FormMethod.Post, new { @class = "form-group home-dropdown" }))
+        {
+            <label for="title">Browse by Genre:</label>
+
+            var genres = Model.Genre
+                .Select(g => new SelectListItem { Text = g.GenreName, Value = g.GenreName })
+                .ToList();
+
+            genres.Insert(0, new SelectListItem("", "", true));
+
+            @Html.DropDownList("genre", genres, new { @class = "form-control" })
+            <button class="btn btn-default">ok</button>
+        }
+    </div>
 
 <div class="navigation-buttons">
     @{var style = (Model.Skip != 0) ? "btn btn-default" : "btn btn-default disabled"; }

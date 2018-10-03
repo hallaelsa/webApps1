@@ -194,6 +194,7 @@ namespace Oblig1theAteam.Controllers
             var movies = movieService.GetMoviesByTitle(title, age);
 
             var list = new List<KeyValuePair<string, string>>();
+            var newList = new List<String>();
 
             var i = 0;
             foreach (var movie in movies)
@@ -206,9 +207,9 @@ namespace Oblig1theAteam.Controllers
                 var pair = new KeyValuePair<string, string>("", movie.Title);
 
                 list.Add(pair);
+                newList.Add(movie.Title);
             }
-
-            return JsonConvert.SerializeObject(list);
+            return JsonConvert.SerializeObject(newList);
         }
 
         public List<Int32> GetMoviesInCart()
