@@ -10,6 +10,8 @@ using Oblig1theAteam.ViewModels.Home;
 using Oblig1theAteam.Extensions;
 using Oblig1theAteam.Business.Movies.Models;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+
 
 namespace Oblig1theAteam.Controllers
 {
@@ -67,14 +69,16 @@ namespace Oblig1theAteam.Controllers
 
         public IActionResult AllMovies(int skip)
         {
+            var age = userService.GetAge(HttpContext.Session.GetString(SessionUserLoggedIn));
+
             var model = new IndexViewModel();
-            model.Movies = movieService.GetMovies(skip);
+            model.Movies = movieService.GetMovies(skip, age);
             setOwnedProperty(model.Movies);
             model.Genre = movieService.GetAllGenres();
             model.Skip = skip;
 
             // check if there is a next page
-            model.HasNext = (movieService.GetMovies(skip + 20).Count > 0) ? true : false;
+            model.HasNext = (movieService.GetMovies(skip + 20, age).Count > 0) ? true : false;
 
             return View("Index", model);
         }
@@ -108,14 +112,21 @@ namespace Oblig1theAteam.Controllers
 
         public IActionResult MoviesByTitle(int skip)
         {
+            var age = userService.GetAge(HttpContext.Session.GetString(SessionUserLoggedIn));
             var title = HttpContext.Session.GetString(SessionTitle);
             var model = new IndexViewModel();
-            model.Movies = movieService.GetMoviesByTitle(title, skip);
+            model.Movies = movieService.GetMoviesByTitle(title, skip, age);
             setOwnedProperty(model.Movies);
             model.Genre = movieService.GetAllGenres();
             model.Skip = skip;
+<<<<<<< HEAD
             
             model.HasNext = (movieService.GetMoviesByTitle(title, skip + 20).Count > 0) ? true : false;
+=======
+
+            // check if there is a next page
+            model.HasNext = (movieService.GetMoviesByTitle(title, skip + 20, age).Count > 0) ? true : false;
+>>>>>>> ce1e2e038490bbeb25c716c74a1679364b96b054
 
             return View("Index", model);
         }
@@ -131,6 +142,7 @@ namespace Oblig1theAteam.Controllers
 
             HttpContext.Session.SetString(SessionDisplayType, "TITLE");
             HttpContext.Session.SetString(SessionTitle, title);
+
             return MoviesByTitle(0);
         }
 
@@ -139,7 +151,7 @@ namespace Oblig1theAteam.Controllers
         {
             if (string.IsNullOrWhiteSpace(genre))
                 return RedirectToAction("Index");
-
+            
             HttpContext.Session.SetString(SessionDisplayType, "GENRE");
             HttpContext.Session.SetString(SessionGenre, genre);
             return MoviesByGenre(0);
@@ -147,15 +159,21 @@ namespace Oblig1theAteam.Controllers
 
         public IActionResult MoviesByGenre(int skip)
         {
+            var age = userService.GetAge(HttpContext.Session.GetString(SessionUserLoggedIn));
             var genre = HttpContext.Session.GetString(SessionGenre);
             var model = new IndexViewModel();
-            model.Movies = movieService.GetMoviesByGenre(genre, skip);
+            model.Movies = movieService.GetMoviesByGenre(genre, skip, age);
             setOwnedProperty(model.Movies);
             model.Genre = movieService.GetAllGenres();
             model.Skip = skip;
             model.GenreIsSet = genre;
 
+<<<<<<< HEAD
             model.HasNext = (movieService.GetMoviesByGenre(genre, skip + 20).Count > 0) ? true : false;
+=======
+            // check if there is a next page
+            model.HasNext = (movieService.GetMoviesByGenre(genre, skip + 20, age).Count > 0) ? true : false;
+>>>>>>> ce1e2e038490bbeb25c716c74a1679364b96b054
 
             return View("Index", model);
         }
@@ -179,6 +197,29 @@ namespace Oblig1theAteam.Controllers
                 return true;
             }
             return false;
+        }
+
+        public string GetMoviesByTitleJson(string title)
+        {
+            var age = userService.GetAge(HttpContext.Session.GetString(SessionUserLoggedIn));
+            var movies = movieService.GetMoviesByTitle(title, age);
+
+            var list = new List<KeyValuePair<string, string>>();
+
+            var i = 0;
+            foreach (var movie in movies)
+            {
+                if(i > 10)
+                {
+                    break;
+                }
+
+                var pair = new KeyValuePair<string, string>("", movie.Title);
+
+                list.Add(pair);
+            }
+
+            return JsonConvert.SerializeObject(list);
         }
 
         public List<Int32> GetMoviesInCart()

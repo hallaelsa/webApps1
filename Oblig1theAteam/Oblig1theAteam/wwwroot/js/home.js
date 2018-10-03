@@ -21,7 +21,40 @@
     });
 }
 
+function getMovieList(title) {
+    $.ajax({
+        url: '/Home/GetMoviesByTitleJson',
+        data: { title: title },
+        success: function (res) {
+            if (res) {
+                console.log(res);
+            }
+        }
+    })
+}
+
 $(document).ready(function () {
+    const suggestions = [{}];
+    var bloodhoundSuggestions = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('Value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        sufficient: 3,
+        remote: {
+            wildcard: '%QUERY',
+            url: '/Home/GetMoviesByTitleJson?title=%QUERY',
+        }
+    });
+
+    $("#title").typeahead({
+        hint: false,
+        highlight: true,
+        minLength: 1
+    }, {
+        name: 'suggestions',
+        displayKey: 'Value',
+        source: bloodhoundSuggestions
+    });
+
     $('a[data-movieModal=true]').click(function () {
         const movie_title = $(this).data('movie-title');
         $('#modal-movie-title').html(movie_title);
