@@ -58,7 +58,7 @@ namespace Oblig1theAteam.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userId = HttpContext.Session.GetString(SessionLoggedIn);
+                var userId = HttpContext.Session.GetString(SessionUserLoggedIn);
                 var moviesInCart = HttpContext.Session.GetFromJson<List<Int32>>(SessionMoviesInCart);
 
                 if (moviesInCart == null || moviesInCart.Count < 1)

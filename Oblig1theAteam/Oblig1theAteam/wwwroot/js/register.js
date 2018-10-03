@@ -23,32 +23,6 @@ function validateEmailForSubmit(source) {
     let regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return isValid(regEx, source);
 }
-//function validateEmailForSubmit(source) {
-//    function validateEmaile(source) {
-//        return $.ajax({
-//            url: '/User/CheckUserExists',
-//            data: { email: $(source).val() },
-//        });
-//    }
-
-//    $.when(validateEmaile(source)).done(function (res) {
-//        if (!res) {
-//            let regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-//            return isValid(regEx, source);
-//        } else {
-//            $(source).val("");
-//            $(source).attr("placeholder", inputEmail + " already exists");
-//            return false;
-//        }
-//    });
-//}
-
-//function validateEmaile(source) {
-//    return $.ajax({
-//        url: '/User/CheckUserExists',
-//        data: { email: $(source).val() },
-//    });
-//}
 
 function validateEmail(source) {
     var inputEmail = $(source).val();
@@ -75,7 +49,6 @@ function validateEmail(source) {
         }
     });
 }
-
 
 function validatePassword(source) {
     let regEx = /^(?=^.{8,15}$)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?!.*\s).*$/;
