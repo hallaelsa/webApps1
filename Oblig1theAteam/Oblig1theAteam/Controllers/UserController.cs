@@ -47,8 +47,6 @@ namespace Oblig1theAteam.Controllers
         [HttpPost]
         public IActionResult Login(string username, string password)
         {
-            // må ha sjekk for om feltene er fyllt ut. 
-            // så sjekke med databasen om brukeren finnes.
             var user = userService.Login(username, password);
             if(user)
             {
