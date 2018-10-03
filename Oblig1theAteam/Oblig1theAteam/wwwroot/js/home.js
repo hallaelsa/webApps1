@@ -10,7 +10,7 @@
                 $('#movieModal').modal('hide');
 
                 if (button != null) {
-                    $(button).replaceWith('<a id = "buy-button" class= "btn btn-default btn-buy-movie disabled" >In Cart</a >');
+                    $(button).replaceWith('<a id = "' + movie_id + '-buy-button" class= "btn btn-default btn-buy-movie disabled" >In Cart</a >');
                 } else {
                     $('#' + movie_id + '-buy-button').replaceWith('<a id = "buy-button" class= "btn btn-default btn-buy-movie disabled" >In Cart</a >');
                 }
@@ -55,7 +55,9 @@ $(document).ready(function () {
         const movie_id = $(this).data('movie-id');
 
         const inner = $('#' + movie_id + '-buy-button').text().trim();
+        console.log(inner);
         const button = $('#modal-movie-buy-button');
+        console.log(inner);
 
         if (inner == "Owned") {
             button.replaceWith('<a id="modal-movie-buy-button" class="btn btn-default btn-lg disabled">Owned</a>');
