@@ -1,5 +1,4 @@
-﻿@model Oblig1theAteam.Business.Users.Models.User
-
+﻿@model Oblig1theAteam.ViewModels.User.IndexViewModel
 @{
     ViewData["Title"] = "Register";
 }
@@ -7,38 +6,24 @@
 @section scripts {
     <script src="~/js/register.js" type="text/javascript"></script>
     <script>
-        // Registration validation. If it's not true the register button wont be triggered. 
+        // Registration validation. If it's not true the register button wont be triggered.
         function validateSubmitForm() {
             let submit = true;
             let validation;
             validation = validateFirstName('#FirstName');
             submit = submit && validation;
-            console.log("FirstName: " + submit + ", validation: " + validation);
-
             validation = validateLastName('#LastName');
             submit = submit && validation;
-            console.log("LastName: " + submit + ", validation: " + validation);
-
             validation = validateBirthday('#Birthday');
             submit = submit && validation;
-            console.log("Birthday: " + submit + ", validation: " + validation);
-
             validation = validatePhoneNumber('#PhoneNumber');
             submit = submit && validation;
-            console.log("PhoneNumber: " + submit + ", validation: " + validation);
-
             validation = validateEmailForSubmit('#Email');
             submit = submit && validation;
-            console.log("Email: " + submit + ", validation: " + validation);
-
             validation = validatePassword('#Password');
             submit = submit && validation;
-            console.log("Password: " + submit + ", validation: " + validation);
-
             validation = validateConfirmPassword('#Password', '#ConfirmPassword');
             submit = submit && validation;
-            console.log("ConfirmPassword: " + submit + ", validation: " + validation);
-
             return submit;
         }
     </script>
@@ -50,17 +35,17 @@
 
 @using (Html.BeginForm("Register", "User", FormMethod.Post, new { @onsubmit = "return validateSubmitForm();" }))
 {
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
 <div class="form-horizontal ">
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="form-group">
-        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-sm-2" })
+        @Html.LabelFor(model => model.User.FirstName, htmlAttributes: new { @class = "control-label col-sm-2" })
         <div class="col-lg-6 col-md-6 col-sm-6">
-            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "FirstName", @placeholder = "First name", @maxlength = "30", @onchange = "validateFirstName('#FirstName')"} })
-            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.User.FirstName, new { htmlAttributes = new { @class = "form-control", @id = "FirstName", @placeholder = "First name", @maxlength = "30", @onchange = "validateFirstName('#FirstName')"} })
+            @Html.ValidationMessageFor(model => model.User.FirstName, "", new { @class = "text-danger" })
 
             <div style="display: none;" id="FirstNameError" class="alert alert-danger alert-dismissible">
                 <p>First name must contain only letters. Example: Charles</p>
@@ -69,10 +54,10 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-sm-2" })
+        @Html.LabelFor(model => model.User.LastName, htmlAttributes: new { @class = "control-label col-sm-2" })
         <div class="col-lg-6 col-md-6 col-sm-6">
-            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id = "LastName", @placeholder = "Last name", @maxlength = "30", @onchange = "validateFirstName('#LastName')" } })
-            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.User.LastName, new { htmlAttributes = new { @class = "form-control", @id = "LastName", @placeholder = "Last name", @maxlength = "30", @onchange = "validateFirstName('#LastName')" } })
+            @Html.ValidationMessageFor(model => model.User.LastName, "", new { @class = "text-danger" })
 
             <div style="display: none;" id="LastNameError" class="alert alert-danger alert-dismissible">
                 <p>Last name must contain only letters. Example: Darwin</p>
@@ -81,23 +66,23 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-sm-2" })
+        @Html.LabelFor(model => model.User.Birthday, htmlAttributes: new { @class = "control-label col-sm-2" })
         <div class="col-lg-6 col-md-6 col-sm-6">
-            @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control", @id = "Birthday", @placeholder = "dd.mm.yyyy", @maxlength = "10", @onchange = "validateBirthday('#Birthday')" } })
-            @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.User.Birthday, new { htmlAttributes = new { @class = "form-control", @id = "Birthday", @placeholder = "dd.mm.yyyy", @maxlength = "10", @onchange = "validateBirthday('#Birthday')" } })
+            @Html.ValidationMessageFor(model => model.User.Birthday, "", new { @class = "text-danger" })
 
             <div style="display: none;" id="BirthdayError" class="alert alert-danger alert-dismissible">
-                <p>Format must be dd.mm.yyyy (Example: 01.01.1999 or 01-01-1999)</p>
+                <p>Format must be dd.mm.yyyy (Example: 01.01.1999)</p>
                 <p>And you must be over 13 years old to register</p>
             </div>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-sm-2" })
+        @Html.LabelFor(model => model.User.PhoneNumber, htmlAttributes: new { @class = "control-label col-sm-2" })
         <div class="col-lg-6 col-md-6 col-sm-6">
-            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @id = "PhoneNumber", @placeholder = "Phone number", @maxlength = "8", @onchange = "validatePhoneNumber('#PhoneNumber');" } })
-            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.User.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @id = "PhoneNumber", @placeholder = "Phone number", @maxlength = "8", @onchange = "validatePhoneNumber('#PhoneNumber');" } })
+            @Html.ValidationMessageFor(model => model.User.PhoneNumber, "", new { @class = "text-danger" })
 
             <div style="display: none;" id="PhoneNumberError" class="alert alert-danger alert-dismissible">
                 <p>Phone number must contain 8 numbers.</p>
@@ -106,10 +91,10 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-sm-2" })
+        @Html.LabelFor(model => model.User.Email, htmlAttributes: new { @class = "control-label col-sm-2" })
         <div class="col-lg-6 col-md-6 col-sm-6">
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "Email", @placeholder = "Email", @maxlength = "50", @onchange = "validateEmail('#Email');" } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.User.Email, new { htmlAttributes = new { @class = "form-control", @id = "Email", @placeholder = "Email", @maxlength = "50", @onchange = "validateEmail('#Email');" } })
+            @Html.ValidationMessageFor(model => model.User.Email, "", new { @class = "text-danger" })
 
             <div style="display: none;" id="EmailError" class="alert alert-danger alert-dismissible">
                 <p>Email is invalid. Example: example@gmail.com</p>
@@ -118,10 +103,10 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-sm-2" })
+        @Html.LabelFor(model => model.User.Password, htmlAttributes: new { @class = "control-label col-sm-2" })
         <div class="col-lg-6 col-md-6 col-sm-6">
-            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @id = "Password", type = "password", @placeholder = "Password", @maxlength = "15", @onchange = "validatePassword('#Password');" } })
-            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.User.Password, new { htmlAttributes = new { @class = "form-control", @id = "Password", type = "password", @placeholder = "Password", @maxlength = "15", @onchange = "validatePassword('#Password');" } })
+            @Html.ValidationMessageFor(model => model.User.Password, "", new { @class = "text-danger" })
 
             <div style="display: none;" id="PasswordError" class="alert alert-danger alert-dismissible">
                 <p>Between 8 and 15, contains atleast one digit, one upper case and one lower case and no whitespace.</p>
@@ -130,10 +115,10 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-sm-2" })
+        @Html.LabelFor(model => model.User.ConfirmPassword, htmlAttributes: new { @class = "control-label col-sm-2" })
         <div class="col-lg-6 col-md-6 col-sm-6">
-            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @id = "ConfirmPassword", type = "password", @placeholder = "Confirm password", @maxlength = "15", @onchange = "validateConfirmPassword('#Password','#ConfirmPassword');" } })
-            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.User.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @id = "ConfirmPassword", type = "password", @placeholder = "Confirm password", @maxlength = "15", @onchange = "validateConfirmPassword('#Password','#ConfirmPassword');" } })
+            @Html.ValidationMessageFor(model => model.User.ConfirmPassword, "", new { @class = "text-danger" })
 
             <div style="display: none;" id="ConfirmPasswordError" class="alert alert-danger alert-dismissible">
                 <p>The passwords do not match.</p>
@@ -144,7 +129,7 @@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <a href="@Url.Action("../Index/Home")" class="btn btn-primary">Go back</a>
-           @* @Html.ActionLink("Go back", "../Home/Index", new { tom = "" }, new { @class = "btn btn-primary" })*@
+            @* @Html.ActionLink("Go back", "../Home/Index", new { tom = "" }, new { @class = "btn btn-primary" })*@
             <input type="submit" value="Register" class="btn btn-success" />
         </div>
     </div>
