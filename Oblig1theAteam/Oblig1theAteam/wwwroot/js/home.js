@@ -29,9 +29,10 @@ $(document).ready(function () {
             minLength: 1,
             delay: 400,
             source: function (query, process) {
+                $('#spinner-box').html('<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>');
                 return $.get('/Home/GetMoviesByTitleJson?title=' + $('#title').val(), { query: query }, function (data) {
-                    console.log(data);
                     data = JSON.parse(data);
+                    $('#spinner-box').html('');
                     return process(data);
                 });
             }
