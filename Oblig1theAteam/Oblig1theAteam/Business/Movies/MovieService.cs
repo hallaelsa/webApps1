@@ -13,10 +13,10 @@ namespace Oblig1theAteam.Business.Movies
             this.dbService = dbService;
         }
 
-        public List<Movie> GetMoviesByGenre(string genre, int skip)
+        public List<Movie> GetMoviesByGenre(string genre, int skip, int age)
         {
             var movies = dbService.MovieGenre
-                .Where(mg => mg.Genre.GenreName == genre)
+                .Where(mg => mg.Genre.GenreName == genre && mg.Movie.AgeRestriction <= age)
                 .Skip(skip)
                 .Take(20)
                 .Select(mg => ToMovie(mg.Movie))
@@ -25,10 +25,10 @@ namespace Oblig1theAteam.Business.Movies
             return AddGenreToMovieModel(movies);
         }
 
-        public List<Movie> GetMoviesByTitle(string title, int skip)
+        public List<Movie> GetMoviesByTitle(string title, int skip, int age)
         {
             var movies = dbService.Movie
-                .Where(m => m.Title.Contains(title))
+                .Where(m => m.Title.Contains(title) && m.AgeRestriction <= age)
                 .Skip(skip)
                 .Take(20)
                 .Select(dbMovie => ToMovie(dbMovie))
@@ -37,9 +37,9 @@ namespace Oblig1theAteam.Business.Movies
             return AddGenreToMovieModel(movies);
         }
         
-        public List<Movie> GetMoviesByTitle(string title)
+        public List<Movie> GetMoviesByTitle(string title, int age)
         {
-            return GetMoviesByTitle(title, 0);
+            return GetMoviesByTitle(title, 0, age);
         }
         
         public Movie GetMovieById(int movieId)
@@ -59,15 +59,16 @@ namespace Oblig1theAteam.Business.Movies
             return movies;
         }
         
-        public List<Movie> GetMovies()
+        public List<Movie> GetMovies(int age)
         {
-            return GetMovies(0);
+            return GetMovies(0, age);
         }
 
-        public List<Movie> GetMovies(int skip)
+        public List<Movie> GetMovies(int skip, int age)
         {
             var allMovies = dbService.Movie
             .Skip(skip)
+            .Where(m => m.AgeRestriction <= age)
             .Take(20)
             .Select(dbMovie => ToMovie(dbMovie))
             .ToList();

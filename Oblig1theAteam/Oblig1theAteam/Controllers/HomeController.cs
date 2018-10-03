@@ -66,14 +66,16 @@ namespace Oblig1theAteam.Controllers
 
         public IActionResult AllMovies(int skip)
         {
+            var age = userService.GetAge(HttpContext.Session.GetString(SessionUserLoggedIn));
+
             var model = new IndexViewModel();
-            model.Movies = movieService.GetMovies(skip);
+            model.Movies = movieService.GetMovies(skip, age);
             setOwnedProperty(model.Movies);
             model.Genre = movieService.GetAllGenres();
             model.Skip = skip;
 
             // check if there is a next page
-            model.HasNext = (movieService.GetMovies(skip + 20).Count > 0) ? true : false;
+            model.HasNext = (movieService.GetMovies(skip + 20, age).Count > 0) ? true : false;
 
             return View("Index", model);
         }
@@ -107,15 +109,16 @@ namespace Oblig1theAteam.Controllers
 
         public IActionResult MoviesByTitle(int skip)
         {
+            var age = userService.GetAge(HttpContext.Session.GetString(SessionUserLoggedIn));
             var title = HttpContext.Session.GetString(SessionTitle);
             var model = new IndexViewModel();
-            model.Movies = movieService.GetMoviesByTitle(title, skip);
+            model.Movies = movieService.GetMoviesByTitle(title, skip, age);
             setOwnedProperty(model.Movies);
             model.Genre = movieService.GetAllGenres();
             model.Skip = skip;
 
             // check if there is a next page
-            model.HasNext = (movieService.GetMoviesByTitle(title, skip + 20).Count > 0) ? true : false;
+            model.HasNext = (movieService.GetMoviesByTitle(title, skip + 20, age).Count > 0) ? true : false;
 
             return View("Index", model);
         }
@@ -131,6 +134,7 @@ namespace Oblig1theAteam.Controllers
 
             HttpContext.Session.SetString(SessionDisplayType, "TITLE");
             HttpContext.Session.SetString(SessionTitle, title);
+
             return MoviesByTitle(0);
         }
 
@@ -139,7 +143,7 @@ namespace Oblig1theAteam.Controllers
         {
             if (string.IsNullOrWhiteSpace(genre))
                 return RedirectToAction("Index");
-
+            
             HttpContext.Session.SetString(SessionDisplayType, "GENRE");
             HttpContext.Session.SetString(SessionGenre, genre);
             return MoviesByGenre(0);
@@ -147,15 +151,16 @@ namespace Oblig1theAteam.Controllers
 
         public IActionResult MoviesByGenre(int skip)
         {
+            var age = userService.GetAge(HttpContext.Session.GetString(SessionUserLoggedIn));
             var genre = HttpContext.Session.GetString(SessionGenre);
             var model = new IndexViewModel();
-            model.Movies = movieService.GetMoviesByGenre(genre, skip);
+            model.Movies = movieService.GetMoviesByGenre(genre, skip, age);
             setOwnedProperty(model.Movies);
             model.Genre = movieService.GetAllGenres();
             model.Skip = skip;
 
             // check if there is a next page
-            model.HasNext = (movieService.GetMoviesByGenre(genre, skip + 20).Count > 0) ? true : false;
+            model.HasNext = (movieService.GetMoviesByGenre(genre, skip + 20, age).Count > 0) ? true : false;
 
             return View("Index", model);
         }
