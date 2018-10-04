@@ -94,19 +94,16 @@ function isValidDate(regEx, source) {
         const yearNow = dateNow.getFullYear();
 
         if (yearNow - yearBirth > 13) {
-            console.log("YEAR OK");
             clearError(source);
             return true;
         }
 
         if (yearNow - yearBirth == 13 && monthNow - monthBirth > 0) {
-            console.log("MONTH OK");
             clearError(source);
             return true;
         }
 
         if (yearNow - yearBirth == 13 && monthNow - monthBirth == 0 && dayNow - dayBirth >= 0) {
-            console.log("DAY OK");
             clearError(source);
             return true;
         }
