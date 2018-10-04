@@ -17,7 +17,6 @@ namespace Oblig1theAteam.Controllers
         private readonly MovieService movieService;
         private readonly UserService userService;
         
-        const string SessionLoggedIn = "_LoggedIn";
         const string SessionMoviesInCart = "_MoviesInCart";
         const string SessionCountShoppingCart = "_CountShoppingCart";
         const string SessionUserLoggedIn = "_UserLoggedIn";
