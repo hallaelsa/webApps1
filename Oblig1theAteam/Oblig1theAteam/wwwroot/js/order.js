@@ -9,12 +9,12 @@ function validateCVV(source) {
 }
 
 function validateExpirationMonth() {
-    var regEx = /^1[012]|0?[1-9]$/;
+    var regEx = /^1[012]$|^0?[1-9]$/;
     return regEx.test($("#ExpirationMonth").val());
 }
 
 function validateExpirationYear() {
-    var regEx = /^[1][8-9]|[2][0-9]$/;
+    var regEx = /^[1][8-9]$|^[2][0-9]$/;
     return regEx.test($("#ExpirationYear").val());
 }
 

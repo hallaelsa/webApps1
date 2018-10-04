@@ -56,6 +56,17 @@ namespace Oblig1theAteam.Controllers
         [HttpPost]
         public IActionResult PlaceOrder(ShoppingCartViewModel shoppingCartViewModel)
         {
+            string monthNow = DateTime.Now.ToString("MM");
+            string yearNow = DateTime.Now.ToString("yy");
+            string inputMonth = shoppingCartViewModel.ExpirationMonth;
+            string inputYear = shoppingCartViewModel.ExpirationYear;
+
+            if (int.Parse(inputYear) <= int.Parse(yearNow) 
+                && int.Parse(inputMonth)+1 <= int.Parse(monthNow))
+            {
+                ModelState.AddModelError("ExpirationMonth", "This card has expired");
+            }
+
             if (ModelState.IsValid)
             {
                 var userId = HttpContext.Session.GetString(SessionUserLoggedIn);
