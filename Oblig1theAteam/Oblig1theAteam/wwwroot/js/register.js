@@ -26,7 +26,6 @@ function validateEmailForSubmit(source) {
 
 function validateEmail(source) {
     var inputEmail = $(source).val();
-    console.log("input = " + inputEmail);
 
     if (inputEmail === "") {
         displayError(source);
@@ -37,7 +36,6 @@ function validateEmail(source) {
         url: '/User/CheckUserExists',
         data: { email: inputEmail },
         success: function (res) {
-            console.log("res " + res);
             if (!res) {
                 let regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 return isValid(regEx, source);
@@ -122,13 +120,11 @@ function compare(password, comparePassword) {
 }
 
 function displayError(target) {
-    console.log(target + ": no match");
     $(target).css("color", "red");
     $(target + "Error").show();
 }
 
 function clearError(target) {
-    console.log(target + ": match");
     $(target).css("color", "black");
     $(target + "Error").hide();
 }
