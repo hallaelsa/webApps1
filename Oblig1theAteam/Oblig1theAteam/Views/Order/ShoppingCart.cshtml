@@ -78,14 +78,14 @@
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                                 <div class="form-group visa-group">
-                                    @Html.EditorFor(Model => Model.CardNumber, new { htmlAttributes = new { @id = "CardNumber", placeholder = "card number", type = "text", @class = "form-control", @onchange = "validateCardNumber('#CardNumber')" } })
+                                    @Html.EditorFor(Model => Model.CardNumber, new { htmlAttributes = new { @id = "CardNumber", placeholder = "card number", type = "text", @class = "form-control", @onchange = "validateCardNumber('#CardNumber')", @maxlength = "16" } })
                                     @Html.ValidationMessageFor(Model => Model.CardNumber, "", new { @class = "text-danger" })
 
                                     <div style="display: none;" id="CardNumberError" class="alert alert-danger alert-dismissible">
                                         <p>Card number is invalid, must be 16 digits!</p>
                                     </div>
 
-                                    @Html.EditorFor(Model => Model.CVV, new { htmlAttributes = new { @id = "CVV", placeholder = "cvv", type = "text", @class = "form-control", @onchange = "validateCVV('#CVV')" } })
+                                    @Html.EditorFor(Model => Model.CVV, new { htmlAttributes = new { @id = "CVV", placeholder = "cvv", type = "text", @class = "form-control", @onchange = "validateCVV('#CVV')", @maxlength = "3" } })
                                     @Html.ValidationMessageFor(Model => Model.CVV, "", new { @class = "text-danger visa-error" })
 
                                     <div style="display: none;" id="CVVError" class="alert alert-danger alert-dismissible">
@@ -94,9 +94,9 @@
 
                                     <div id="expirationDate">
                                         <div id="visa-YYMM">
-                                            @Html.EditorFor(Model => Model.ExpirationMonth, new { htmlAttributes = new { @id = "ExpirationMonth", placeholder = "MM", type = "text", @class = "form-control", @onchange = "validateExpirationDate('#ExpirationMonth')" } })
+                                            @Html.EditorFor(Model => Model.ExpirationMonth, new { htmlAttributes = new { @id = "ExpirationMonth", placeholder = "MM", type = "text", @class = "form-control", @onchange = "validateExpirationDate('#ExpirationMonth')", @maxlength = "2" } })
                                             <div> / </div>
-                                            @Html.EditorFor(Model => Model.ExpirationYear, new { htmlAttributes = new { @id = "ExpirationYear", placeholder = "YY", type = "text", @class = "form-control", @onchange = "validateExpirationDate('#ExpirationYear')" } })
+                                            @Html.EditorFor(Model => Model.ExpirationYear, new { htmlAttributes = new { @id = "ExpirationYear", placeholder = "YY", type = "text", @class = "form-control", @onchange = "validateExpirationDate('#ExpirationYear')", @maxlength = "2" } })
                                         </div>
                                         <div id="visa-YYMM-error">
                                             @Html.ValidationMessageFor(Model => Model.ExpirationMonth, "", new { @class = "text-danger visa-error" })

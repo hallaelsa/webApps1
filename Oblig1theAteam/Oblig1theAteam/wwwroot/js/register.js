@@ -1,4 +1,25 @@
 ﻿
+// Registration validation. If it's not true the register button wont be triggered.
+function validateSubmitForm() {
+    let submit = true;
+    let validation;
+    validation = validateFirstName('#FirstName');
+    submit = submit && validation;
+    validation = validateLastName('#LastName');
+    submit = submit && validation;
+    validation = validateBirthday('#Birthday');
+    submit = submit && validation;
+    validation = validatePhoneNumber('#PhoneNumber');
+    submit = submit && validation;
+    validation = validateEmailForSubmit('#Email');
+    submit = submit && validation;
+    validation = validatePassword('#Password');
+    submit = submit && validation;
+    validation = validateConfirmPassword('#Password', '#ConfirmPassword');
+    submit = submit && validation;
+    return submit;
+}
+
 function validateFirstName(source) {
     let regEx = /^[A-ZÆØÅa-zæøå]+(([\'\,\.\-][a-z])?[a-zæøå]*)*$/;
     return isValid(regEx, source);
@@ -10,7 +31,7 @@ function validateLastName(source) {
 }
 
 function validateBirthday(source) {
-    let regEx = /^(?:(?:31(\.)(?:0?[13578]|1[02]|(?:Jan|Mar|May|Jul|Aug|Oct|Dec)))\1|(?:(?:29|30)(\.)(?:0?[1,3-9]|1[0-2]|(?:Jan|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec))\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\.)(?:0?2|(?:Feb))\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\.)(?:(?:0?[1-9]|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep))|(?:1[0-2]|(?:Oct|Nov|Dec)))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
+    let regEx = /^(?:(?:31(\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\.)(?:0?2)\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
     return isValidDate(regEx, source);
 }
 
@@ -37,8 +58,7 @@ function validateEmail(source) {
         data: { email: inputEmail },
         success: function (res) {
             if (!res) {
-                let regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                return isValid(regEx, source);
+                return validateEmailForSubmit(source);
             } else {
                 $(source).val("");
                 $(source).attr("placeholder", inputEmail + " already exists");
@@ -85,13 +105,21 @@ function isValidDate(regEx, source) {
         const dayBirth = parseInt(birthday.substring(0, 2));
         const monthBirth = parseInt(birthday.substring(3, 5));
         const yearBirth = parseInt(birthday.substring(6));
+        
 
         const dateNow = new Date();
         const dayNow = dateNow.getDate();
         const monthNow = dateNow.getMonth() + 1;
         const yearNow = dateNow.getFullYear();
+        console.log(yearNow - 100);
+        console.log(yearBirth)
 
-        if (yearNow - yearBirth > 13) {
+        if (birthday.substring(6).length !== 4) {
+            displayError(source);
+            return false;
+        }
+
+        if (yearNow - yearBirth > 13 && yearNow - 110 <= yearBirth) {
             clearError(source);
             return true;
         }
