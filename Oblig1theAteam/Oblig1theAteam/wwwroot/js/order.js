@@ -19,8 +19,8 @@ function validateExpirationYear() {
 }
 
 function validateExpirationDate(source) {
-    let OKMonth = validateExpirationMonth();
-    let OKYear = validateExpirationYear();
+    let OKMonth = $("#ExpirationMonth").val().length == 0 || validateExpirationMonth();
+    let OKYear = $("#ExpirationYear").val().length == 0 || validateExpirationYear();
     
     if (!OKMonth || !OKYear) {
         $(source).css("color", "red");
