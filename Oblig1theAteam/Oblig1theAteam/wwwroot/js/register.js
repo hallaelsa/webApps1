@@ -83,40 +83,36 @@ function isValidDate(regEx, source) {
         displayError(source);
         return false;
     } else {
-        let sourceBirthYear = $(source).val().substring(6);
-        let yearNow = new Date().getFullYear();
+        const birthday = $(source).val();
+        const dayBirth = parseInt(birthday.substring(0, 2));
+        const monthBirth = parseInt(birthday.substring(3, 5));
+        const yearBirth = parseInt(birthday.substring(6));
 
-        if (sourceBirthYear.length !== 4 || (yearNow - 13) < sourceBirthYear || (yearNow - 100) > sourceBirthYear) {
-            displayError(source);
-            return false;
+        const dateNow = new Date();
+        const dayNow = dateNow.getDate();
+        const monthNow = dateNow.getMonth() + 1;
+        const yearNow = dateNow.getFullYear();
+
+        if (yearNow - yearBirth > 13) {
+            console.log("YEAR OK");
+            clearError(source);
+            return true;
         }
 
+        if (yearNow - yearBirth == 13 && monthNow - monthBirth > 0) {
+            console.log("MONTH OK");
+            clearError(source);
+            return true;
+        }
 
-        clearError(source);
-        return true;
+        if (yearNow - yearBirth == 13 && monthNow - monthBirth == 0 && dayNow - dayBirth >= 0) {
+            console.log("DAY OK");
+            clearError(source);
+            return true;
+        }
 
-        //let sourceArray = $(source).val().split(".").map(Number);
-
-        //console.log("Array day =" + sourceArray[0]);
-        //console.log("Array month =" + sourceArray[1]);
-        //console.log("Array year =" + sourceArray[2]);
-
-        //let dayNow = parseInt(new Date().getDate());
-        //let monthNow = parseInt(new Date().getMonth());
-        //let yearNow = parseInt(new Date().getFullYear());
-
-        //console.log("2018-" + sourceArray[2] + "=" + (yearNow - sourceArray[2]));
-        //console.log("10-" + sourceArray[1] + " =" + (monthNow + 1 - sourceArray[1]));
-        //console.log("3-" + sourceArray[0] + "=" + (dayNow - sourceArray[0]));
-
-        //if ((yearNow - sourceArray[2]) > 13 && (yearNow - 100) > sourceArray[2]) {
-        //    if ((monthNow + 1 - sourceArray[1]) >= 0 && (monthNow - sourceArray[1]) != NaN) {
-        //        if ((dayNow - sourceArray[0]) > 0 && (dayNow - sourceArray[0]) != NaN) {
-        //            clearError(source);
-        //            return true;
-        //        }
-        //    }
-        //}
+        displayError(source);
+        return false;
     }
 }
 
