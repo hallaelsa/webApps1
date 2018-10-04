@@ -9,6 +9,16 @@
 }
 
 <h2>ShoppingCart</h2>
+@if (Context.Session.GetString("_UnderAge") == "TRUE")
+{
+    <div class="alert alert-danger">
+        You had films in your shopping cart which you are not old enough to purchase! They have been removed from your cart!
+    </div>
+
+
+   Context.Session.SetString("_UnderAge", "FALSE");
+
+}
 
 @if (Model.Movies.Any())
 {

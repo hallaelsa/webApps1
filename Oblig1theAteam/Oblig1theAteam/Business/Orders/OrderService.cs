@@ -66,6 +66,11 @@ namespace Oblig1theAteam.Business.Orders
                 }
             }
 
+            if(updatedList.Count != updatedList2.Count)
+            {
+                httpContext.Session.SetString("_UnderAge", "TRUE");
+            }
+
             httpContext.Session.SaveAsJson("_MoviesInCart", updatedList2);
             httpContext.Session.SetInt32("_CountShoppingCart", updatedList2.Count);
         }
