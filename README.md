@@ -1,4 +1,4 @@
-# Gruppe 13 Oblig 1
+# Gruppe 13, Gruppeoppgave 1
 
 Funksjonalitet utover kravspekk:
 - Man må være over 13 år for å kunne registrere seg.
@@ -7,5 +7,9 @@ Funksjonalitet utover kravspekk:
 det kjøres en sjekk for å se om man er gammel nok og om man har disse filmene fra før.
 Hvis man ikke er gammel nok eller har filmene fra før vil de bli fjernet fra handlekurven.
 
-Eksterne bibliotek: 
+Eksterne bibliotek og kode tatt fra andre steder: 
 - Vi har brukt bootstrap3-typeahead.js for å lage autocomplete når man søker etter filmer.
+- Hashing av passord følger eksempelet laget av faglærer.
+
+URL:
+- Ingen av oss fikk opprettet studentkonto på Azure så løsningen er ikke deployet.
