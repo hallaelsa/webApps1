@@ -21,7 +21,11 @@ function validateExpirationYear() {
 function validateExpirationDate(source) {
     let OKMonth = $("#ExpirationMonth").val().length == 0 || validateExpirationMonth();
     let OKYear = $("#ExpirationYear").val().length == 0 || validateExpirationYear();
-    
+
+    return checkYearAndMonth(OKMonth, OKYear, source);
+}
+
+function checkYearAndMonth(OKMonth, OKYear, source) {
     if (!OKMonth || !OKYear) {
         $(source).css("color", "red");
         $('#ExpirationDate').show();
@@ -38,6 +42,14 @@ function validateExpirationDate(source) {
         $('#ExpirationDate').hide();
         return true;
     }
+
+}
+
+function validateExpirationDateForSubmit(source) {
+    let OKMonth = $("#ExpirationMonth").val() || validateExpirationMonth();
+    let OKYear = $("#ExpirationYear").val() || validateExpirationYear();
+
+    return checkYearAndMonth(OKMonth, OKYear, source);
 }
 
 function validateAll() {
@@ -47,9 +59,9 @@ function validateAll() {
     submit = submit && validation;
     validation = validateCVV('#CVV');
     submit = submit && validation;
-    validation = validateExpirationDate("#ExpirationMonth");
+    validation = validateExpirationDateForSubmit("#ExpirationMonth");
     submit = submit && validation;
-    validation = validateExpirationDate("#ExpirationYear");
+    validation = validateExpirationDateForSubmit("#ExpirationYear");
     submit = submit && validation;
     return submit;
 }

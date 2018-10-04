@@ -5,6 +5,7 @@ Funksjonalitet utover kravspekk:
 - Er man under 18 år får man ikke opp filmer med 18-årsgrense.
 - Legger man filmer i handlekurven mens man er utlogget og senere logger inn vil 
 det kjøres en sjekk for å se om man er gammel nok og om man har disse filmene fra før.
+Hvis man ikke er gammel nok eller har filmene fra før vil de bli fjernet fra handlekurven.
 
 Eksterne bibliotek: 
 - Vi har brukt bootstrap3-typeahead.js for å lage autocomplete når man søker etter filmer.
