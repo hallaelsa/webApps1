@@ -111,8 +111,6 @@ function isValidDate(regEx, source) {
         const dayNow = dateNow.getDate();
         const monthNow = dateNow.getMonth() + 1;
         const yearNow = dateNow.getFullYear();
-        console.log(yearNow - 100);
-        console.log(yearBirth)
 
         if (birthday.substring(6).length !== 4) {
             displayError(source);
