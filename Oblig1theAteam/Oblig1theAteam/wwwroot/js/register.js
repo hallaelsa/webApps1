@@ -54,6 +54,7 @@ function validateEmail(source) {
     }
 
     $.ajax({
+        type: "POST",
         url: '/User/CheckUserExists',
         data: { email: inputEmail },
         success: function (res) {

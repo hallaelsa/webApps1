@@ -60,6 +60,7 @@ namespace Oblig1theAteam.Controllers
             }
         }
 
+        [HttpPost]
         public IActionResult LoginForPurchase(string username, string password)
         {
             var user = userService.Login(username, password);
@@ -90,6 +91,7 @@ namespace Oblig1theAteam.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public bool CheckUserExists(string email)
         {
             return userService.UserExists(email);
